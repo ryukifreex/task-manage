@@ -8,5 +8,5 @@ export interface TaskType  {
 export interface CreateTaskType  {
   title: string
   description?: string
-  completed: boolean
+  completed?: boolean
 }

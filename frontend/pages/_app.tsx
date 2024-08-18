@@ -1,4 +1,5 @@
 import { AppProps } from 'next/app';
+import { appWithTranslation } from 'next-i18next';
 import { MantineProvider, Container } from '@mantine/core';
 import '@mantine/core/styles.css';
 import Navbar from '../components/Navbar';
@@ -15,5 +16,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </MantineProvider>
   );
 }
-
-export default MyApp;
+export default appWithTranslation(MyApp)
