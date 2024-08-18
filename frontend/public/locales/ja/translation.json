@@ -1,11 +1,11 @@
 {
-  "app":{
+  "app": {
     "name": "Task Manage"
   },
-  "task":{
-    "title":"件名",
-    "description":"本文",
-    "completed":"完了",
+  "task": {
+    "title": "件名",
+    "description": "本文",
+    "completed": "完了",
     "add": "追加",
     "getError": "タスク取得エラー"
   }

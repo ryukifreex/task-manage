@@ -1,0 +1,12 @@
+{
+  "app": {
+    "name": "Task Manage"
+  },
+  "task": {
+    "title": "Title",
+    "description": "Description",
+    "completed": "Completed",
+    "add": "Add",
+    "getError": "Error retrieving tasks"
+  }
+}

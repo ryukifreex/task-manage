@@ -1,8 +1,15 @@
-// next-i18next.config.js
+const path = require('path');
+
 module.exports = {
   i18n: {
-    defaultLocale: 'en',
+    defaultLocale: 'ja',
     locales: ['en', 'ja'],
   },
-  localePath: './public/locales', // ロケールファイルのパス
+  localePath: '/locales', 
+
+  // localePath: path.resolve('/public/locales'), // ロケールファイルのパス
+  ns: ['translation'], // 使用するnamespace
+  defaultNS: 'translation',
+  serverSideTranslations: true,  // サーバーサイドでのロードを有効にする
+  reloadOnPrerender: process.env.NODE_ENV === 'development', // 開発環境でのホットリロード
 };
