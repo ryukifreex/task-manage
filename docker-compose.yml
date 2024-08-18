@@ -1,19 +1,16 @@
 version: '3.8'
 
 services:
-  web:
-    build: ./frontend
-    ports:
-      - "3000:3000"
+  db:
+    image: postgres:15
     volumes:
-      - ./frontend:/app
-    depends_on:
-      - api
+      - ./db_data:/var/lib/postgresql/data
     environment:
-      - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
-    command: sh -c "npm install && npm run dev --turbo"
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
 
   api:
     build: ./backend
@@ -31,13 +28,17 @@ services:
       - DB_PASSWORD=postgres
     command: sh -c "python manage.py check --deploy && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
-  db:
-    image: postgres:13
-    volumes:
-      - ./db_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+  web:
+    build: ./frontend
     ports:
-      - "5432:5432"
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - api
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm install && npm run dev --turbo"
+
