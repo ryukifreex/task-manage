@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Group, Anchor, Paper } from '@mantine/core';
+import LanguageSwitch from './LanguageSwitch';
 
 export default function Navbar() {
   return (
@@ -17,6 +18,9 @@ export default function Navbar() {
           </Anchor>
         </Group>
       </Container>
+        <Group justify={"end"} gap="xl">
+          <LanguageSwitch />
+        </Group>
     </Paper>
   )
 }

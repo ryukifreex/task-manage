@@ -1,7 +1,7 @@
 import { Modal, Button, TextInput, Flex } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { CreateTaskType } from '../types/task'
 import { useCreateTask } from '../hooks/api/useTask';
+import { useTranslation } from 'react-i18next';
 
 interface AddTaskModalProps {
   opened: boolean;
@@ -9,6 +9,7 @@ interface AddTaskModalProps {
 }
 
 export default function AddTaskModal({ opened, onClose }: AddTaskModalProps) {
+  const {t} = useTranslation()
   const [newTitle, setNewTitle] = useState('')
   const [newDescription, setNewDescription] = useState('');
   const [{ data, error }, createTask] = useCreateTask()
@@ -34,7 +35,7 @@ export default function AddTaskModal({ opened, onClose }: AddTaskModalProps) {
 
   return (
     <>
-      <Modal opened={opened} onClose={onClose} title="Task">
+      <Modal opened={opened} onClose={onClose} title={t("app.name")}>
         <TextInput
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}

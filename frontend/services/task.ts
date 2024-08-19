@@ -7,13 +7,13 @@ export const taskRequestConfig = (method:'GET' | 'POST', data?:CreateTaskType ):
   url: `${BASE_URL}/tasks/`,
   method,
   data
-});
+})
 
-export const createTask = async (taskData: CreateTaskType): Promise<AxiosResponse<any> | Error > => {
-  try {
-    const task = await axios.post(`${BASE_URL}/tasks/`, taskData)
-    return task
-  } catch (error) {
-    throw error
-  }
-}
+// export const createTask = async (taskData: CreateTaskType): Promise<AxiosResponse<any> | Error > => {
+//   try {
+//     const task = await axios.post(`${BASE_URL}/tasks/`, taskData)
+//     return task
+//   } catch (error) {
+//     throw error
+//   }
+// }
