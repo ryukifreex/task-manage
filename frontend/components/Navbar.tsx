@@ -1,25 +1,28 @@
-import {
-  Container,
-  Group,
-  Tabs,
-} from '@mantine/core';
-import Link from 'next/link';
-import LanguageSwitch from './LanguageSwitch';
+import { Container, Group, Tabs } from '@mantine/core'
+import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
+import LanguageSwitch from './LanguageSwitch'
+import { useRouter } from 'next/router'
 
 export default function Navbar() {
+  const { t } = useTranslation()
+  const router = useRouter()
+  const { pathname } = router
+
   const tabs = [
-    // { title: 'add', link: }
-    { title: 'Home', link: '/' },
-    { title: 'TEST', link: '/create-task' },
+    { title: t('menu.task.list'), link: '/' },
+    { title: t('menu.task.add'), link: '/task/create' },
+    { title: t('menu.user.list'), link: '/' },
+    { title: t('menu.user.self'), link: '/' },
   ]
 
-  const items = tabs.map((tab) => (
-    <Link href={tab.link} >
-      <Tabs.Tab value={tab.title} key={tab.title}>
+  const tabItems = tabs.map((tab) => (
+    <Link href={tab.link}>
+      <Tabs.Tab value={tab.link} key={tab.title}>
         {tab.title}
       </Tabs.Tab>
     </Link>
-  ));
+  ))
 
   return (
     <>
@@ -29,14 +32,10 @@ export default function Navbar() {
         </Group>
       </Container>
       <Container size="md">
-        <Tabs
-          defaultValue="Home"
-          variant="outline"
-          visibleFrom="sm"
-        >
-          <Tabs.List>{items}</Tabs.List>
+        <Tabs defaultValue={pathname} variant="outline" visibleFrom="sm">
+          <Tabs.List>{tabItems}</Tabs.List>
         </Tabs>
       </Container>
     </>
-  );
+  )
 }

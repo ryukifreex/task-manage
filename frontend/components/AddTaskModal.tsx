@@ -1,25 +1,20 @@
-import { Modal, Button, TextInput, Flex } from '@mantine/core';
-import { useEffect, useState } from 'react';
-import { useCreateTask } from '../hooks/api/useTask';
-import { useTranslation } from 'react-i18next';
-
-interface AddTaskModalProps {
-  opened: boolean;
-  onClose: () => void;
-}
+import { Modal, Button, TextInput, Flex } from '@mantine/core'
+import { useEffect, useState } from 'react'
+import { useCreateTask } from '../hooks/api/useTask'
+import { useTranslation } from 'react-i18next'
+import { AddTaskModalProps } from '../types/task'
 
 export default function AddTaskModal({ opened, onClose }: AddTaskModalProps) {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const [newTitle, setNewTitle] = useState('')
-  const [newDescription, setNewDescription] = useState('');
+  const [newDescription, setNewDescription] = useState('')
   const [{ data, error }, createTask] = useCreateTask()
 
-  const handleAddTask = async () => {
+  const onSubmit = async () => {
     if (newTitle.trim()) {
       createTask({
         title: newTitle,
         description: newDescription,
-        completed: false,
       })
     }
   }
@@ -35,24 +30,25 @@ export default function AddTaskModal({ opened, onClose }: AddTaskModalProps) {
 
   return (
     <>
-      <Modal opened={opened} onClose={onClose} title={t("app.name")}>
+      <Modal opened={opened} onClose={onClose} title={t('menu.task.add')}>
         <TextInput
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
-          placeholder="Add new task"
+          placeholder={t('task.form.title')}
           mt="md"
         />
+
         <TextInput
           value={newDescription}
           onChange={(e) => setNewDescription(e.target.value)}
-          placeholder="Add new description"
+          placeholder={t('task.form.description')}
           mt="md"
         />
-        <Flex justify={"flex-end"} mt={"md"}>
-          <Button onClick={handleAddTask}>Add Task</Button>
+
+        <Flex justify={'flex-end'} mt={'md'}>
+          <Button onClick={onSubmit}>{t('task.form.submit')}</Button>
         </Flex>
       </Modal>
-
     </>
   )
 }

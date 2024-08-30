@@ -2,11 +2,32 @@
   "app": {
     "name": "Task Manage"
   },
+  "menu": {
+    "task": {
+      "list": "Task list",
+      "add": "Task add"
+    },
+    "user": {
+      "list": "User List",
+      "self": "Information"
+    }
+  },
   "task": {
     "title": "Title",
     "description": "Description",
     "completed": "Completed",
-    "add": "Add",
-    "getError": "Error retrieving tasks"
+    "add": "Add Task",
+    "getError": "Error retrieving tasks",
+    "form": {
+      "title": "New title",
+      "description": "New description",
+      "submit": "Submit",
+      "validation": {
+        "required": "required"
+      },
+      "update": {
+        "failed": "Update failed"
+      }
+    }
   }
 }

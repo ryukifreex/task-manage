@@ -1,25 +1,28 @@
-import React, { ErrorInfo, ReactNode } from 'react';
+import React, { ErrorInfo, ReactNode } from 'react'
 
 interface ErrorBoundaryProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean;
+  hasError: boolean
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false };
+    super(props)
+    this.state = { hasError: false }
   }
 
   static getDerivedStateFromError(): ErrorBoundaryState {
-    return { hasError: true };
+    return { hasError: true }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Error caught in ErrorBoundary:', error, errorInfo);
+    console.error('Error caught in ErrorBoundary:', error, errorInfo)
   }
 
   render() {
@@ -30,11 +33,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
           <p>An error occurred. Please try again later.</p>
           <button onClick={() => window.location.reload()}>Refresh Page</button>
         </div>
-      );
+      )
     }
 
-    return this.props.children;
+    return this.props.children
   }
 }
 
-export default ErrorBoundary;
+export default ErrorBoundary

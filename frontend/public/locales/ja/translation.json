@@ -2,11 +2,32 @@
   "app": {
     "name": "タスク管理（後で修正）"
   },
+  "menu": {
+    "task": {
+      "list": "タスク一覧",
+      "add": "タスク追加"
+    },
+    "user": {
+      "list": "ユーサー一覧",
+      "self": "ユーザー情報"
+    }
+  },
   "task": {
     "title": "件名",
     "description": "本文",
     "completed": "完了",
-    "add": "追加",
-    "getError": "タスク取得エラー"
+    "add": "タスクを追加",
+    "getError": "タスク取得エラー",
+    "form": {
+      "title": "タイトル",
+      "description": "本文",
+      "submit": "送信",
+      "validation": {
+        "required": "必須"
+      },
+      "update": {
+        "failed": "更新に失敗しました"
+      }
+    }
   }
 }
