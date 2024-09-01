@@ -4,7 +4,7 @@ class Task(models.Model):
     class Status(models.TextChoices):
         NOT_STARTED = 'not_started', '未着手'
         IN_PROGRESS = 'in_progress', '処理中'
-        PENDING_REVIEW = 'pending_review', '処理済み'
+        PROCESSED = 'processed', '処理済み'
         COMPLETED = 'completed', '完了',
         PENDING = 'pending', '保留中'
 

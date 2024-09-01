@@ -14,7 +14,7 @@ export type TaskFormProps = {
   useForm: UseFormReturn<FormType>
   onSubmit: SubmitHandler<FormType>
 }
-
+// TODO:ロード中の処理
 export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
   const { t } = useTranslation()
 
@@ -28,8 +28,6 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
     <Box style={{ padding: '20px' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={'md'}>
-          <Title order={1}>{t('menu.task.add')}</Title>
-
           <TextInput
             label={t('task.form.title')}
             placeholder={t('task.form.title')}

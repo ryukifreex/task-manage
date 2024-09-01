@@ -1,11 +1,14 @@
 {
   "app": {
-    "name": "タスク管理（後で修正）"
+    "name": "タスク管理（後で修正）",
+    "back": "ホームへ戻る"
   },
   "menu": {
     "task": {
-      "list": "タスク一覧",
-      "add": "タスク追加"
+      "list": "タスクの一覧",
+      "add": "タスクの作成",
+      "edit": "タスクの編集",
+      "create": "タスク作成"
     },
     "user": {
       "list": "ユーサー一覧",
@@ -13,21 +16,48 @@
     }
   },
   "task": {
-    "title": "件名",
-    "description": "本文",
-    "completed": "完了",
+    "label": {
+      "title": "件名",
+      "description": "本文",
+      "status": "状態",
+      "edit": "編集",
+      "create": "作成日",
+      "update": "最終更新"
+    },
     "add": "タスクを追加",
-    "getError": "タスク取得エラー",
+    "error": {
+      "get": "タスク取得エラー"
+    },
+    "loading": "データ読み込み中",
     "form": {
       "title": "タイトル",
       "description": "本文",
+      "edit": "編集",
+      "update": "更新",
+      "cancel": "キャンセル",
       "submit": "送信",
+      "delete": "削除",
       "validation": {
         "required": "必須"
       },
-      "update": {
-        "failed": "更新に失敗しました"
+      "confirm": {
+        "delete": "削除してよろしいですか？"
+      },
+      "success": {
+        "update": "更新しました",
+        "create": "作成しました",
+        "delete": "削除しました"
+      },
+      "failed": {
+        "update": "更新に失敗しました"
       }
+    },
+    "status": {
+      "not_started": "未着手",
+      "in_progress": "進行中",
+      "processed": "処理済",
+      "completed": "完了",
+      "pending": "保留中"
     }
   }
 }

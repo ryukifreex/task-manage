@@ -1,70 +1,40 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, Flex, Loader, Notification, Table } from '@mantine/core'
-import { TaskType } from '../../types/task'
-import AddTaskModal from '../../components/AddTaskModal'
-import { useGetTaskList } from '../../hooks/api/useTask'
+import { Button, Flex, Loader, Modal, Notification, Title } from '@mantine/core'
+import { useGetTaskList } from '../../services/taskService'
+import TaskCreate from '../../components/task/TaskCreate'
+import useModal from '../../hooks/useModal'
+import TaskListTable from '../../components/task/TaskListTable'
+import TaskError from '../../components/task/TaskError'
 
-// TODO分割
 export default function Task() {
   const { t } = useTranslation()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [taskList, setTaskList] = useState<TaskType[]>([])
   const [{ data, loading, error }, getTaskList] = useGetTaskList()
-
-  // get Tasks
+  const { isModalOpen, openModal, closeModal } = useModal()
   useEffect(() => {
     getTaskList()
   }, [])
 
-  useEffect(() => {
-    if (data) {
-      setTaskList(data)
-    }
-  }, [data])
-
-  const head = (
-    <Table.Tr>
-      <Table.Th>{t('task.title')}</Table.Th>
-      <Table.Th>{t('task.description')}</Table.Th>
-      <Table.Th>{t('task.completed')}</Table.Th>
-    </Table.Tr>
-  )
-
-  const rows = taskList.map((task) => (
-    <Table.Tr key={task.id}>
-      <Table.Td>{task.title}</Table.Td>
-      <Table.Td>{task.description}</Table.Td>
-      <Table.Td>{task.status}</Table.Td>
-    </Table.Tr>
-  ))
-
-  if (loading) return <Loader />
-  if (error)
-    return (
-      <Notification color="red" title="Error">
-        {t('task.getError')}
-      </Notification>
-    )
+  if (error) {
+    return <TaskError />
+  }
 
   return (
     <>
-      <h1>{t('app.name')}</h1>
+      <Title order={2}>{t('app.name')}</Title>
       <Flex justify={'flex-end'} mb={'md'}>
-        <Button onClick={() => setIsModalOpen(true)}>{t('task.add')}</Button>
+        <Button onClick={() => openModal()}>{t('task.add')}</Button>
       </Flex>
-      <AddTaskModal
+      <Modal
         opened={isModalOpen}
         onClose={() => {
-          setIsModalOpen(false)
+          closeModal()
           getTaskList()
         }}
-      />
-
-      <Table miw={700}>
-        <Table.Thead>{head}</Table.Thead>
-        {taskList && <Table.Tbody>{rows}</Table.Tbody>}
-      </Table>
+      >
+        <TaskCreate />
+      </Modal>
+      {data && !loading ? <TaskListTable taskList={data} /> : <Loader />}
     </>
   )
 }
