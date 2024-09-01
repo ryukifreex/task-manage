@@ -1,4 +1,9 @@
+# on local
+.memo
+.devcontainer
+setup.cfg
 # database
+
 db_data
 # next.js build output
 .next
