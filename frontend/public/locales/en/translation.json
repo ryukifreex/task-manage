@@ -19,18 +19,20 @@
       "title": "TITLE",
       "description": "DESCRIPTION",
       "status": "STATUS",
-      "edit": "Edit",
-      "create": "Create",
-      "update": "Update"
+      "edit": "EDIT",
+      "create": "CREATE",
+      "update": "UPDATE"
     },
     "add": "Add Task",
     "error": {
+      "status": "Error retrieving status label",
       "get": "Error retrieving tasks"
     },
     "loading": "data loading",
     "form": {
-      "title": "New Title",
-      "description": "New Description",
+      "title": "Title",
+      "description": "Description",
+      "status": "Status",
       "edit": "Edit",
       "update": "Update",
       "delete": "Delete",
@@ -51,11 +53,11 @@
       }
     },
     "status": {
-      "not_started": "NOT STARTED",
-      "in_progress": "IN PROGRESS",
-      "processed": "PROCESSED",
-      "completed": "COMPLETED",
-      "pending": "PENDING"
+      "open": "Open",
+      "in_progress": "In Progress",
+      "done": "Done",
+      "closed": "Closed",
+      "pending": "Pending"
     }
   }
 }

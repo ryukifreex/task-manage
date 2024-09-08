@@ -1,6 +1,10 @@
 import { useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { CreateTaskType } from '../../types/task'
+import {
+  TaskFormType,
+  TaskStatusListType,
+  TaskStatusType,
+} from '../../types/task'
 import { useTranslation } from 'react-i18next'
 import { useCreateTask } from '../../services/taskService'
 import React from 'react'
@@ -9,21 +13,26 @@ import useModal from '../../hooks/useModal'
 import { Button, Modal, Text, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
 
-export default function TaskCreate() {
+export type TaskCreateProps = {
+  statusList: TaskStatusListType
+}
+export default function TaskCreate({ statusList }: TaskCreateProps) {
   const { t } = useTranslation()
   const [{ data, error }, createTask] = useCreateTask()
   const { isModalOpen, openModal, closeModal } = useModal()
   const router = useRouter()
-
-  const useFormReturn = useForm<CreateTaskType>({
+  const defaultStatus = Object.keys(statusList)[0] as TaskStatusType
+  const useFormReturn = useForm<TaskFormType>({
     defaultValues: {
       title: '',
       description: '',
+      status: defaultStatus,
     },
   })
   const { reset, setError } = useFormReturn
+  console.log({ defaultStatus })
 
-  const onSubmit: SubmitHandler<CreateTaskType> = (formData) => {
+  const onSubmit: SubmitHandler<TaskFormType> = (formData) => {
     if (!formData.title.trim()) {
       setError('title', {
         type: 'manual',
@@ -36,6 +45,7 @@ export default function TaskCreate() {
       data: {
         title: formData.title,
         description: formData.description,
+        status: formData.status,
       },
     })
     openModal()

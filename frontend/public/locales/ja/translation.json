@@ -26,12 +26,14 @@
     },
     "add": "タスクを追加",
     "error": {
+      "status": "ステータス取得エラー",
       "get": "タスク取得エラー"
     },
     "loading": "データ読み込み中",
     "form": {
       "title": "タイトル",
       "description": "本文",
+      "status": "ステータス",
       "edit": "編集",
       "update": "更新",
       "cancel": "キャンセル",
@@ -53,10 +55,10 @@
       }
     },
     "status": {
-      "not_started": "未着手",
+      "open": "未着手",
       "in_progress": "進行中",
-      "processed": "処理済",
-      "completed": "完了",
+      "done": "処理済",
+      "closed": "完了",
       "pending": "保留中"
     }
   }

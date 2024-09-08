@@ -21,7 +21,7 @@ export type TaskDetailProps = {
 
 export default function TaskDetail({ task }: TaskDetailProps) {
   const { t } = useTranslation()
-  const [{ data, loading, error }, deleteTask] = useDeleteTask(task.id)
+  const [{ data, error }, deleteTask] = useDeleteTask(task.id)
   const { isModalOpen, openModal, closeModal } = useModal()
   const [deleted, setDeleted] = useState(false)
   const router = useRouter()
@@ -40,7 +40,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
   return (
     <>
       <Title order={2}>{task.title}</Title>
-      <span>{task.status}</span>
+      <span>{t(`task.status.${task.status}`)}</span>
       <p>{task.description}</p>
       {!deleted && (
         <Flex gap={'lg'}>
@@ -62,6 +62,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
         centered
       >
         {deleted ? (
+          // 削除後の表示
           <>
             <Text ta={'center'}>{t('task.form.success.delete')}</Text>
             <Flex justify={'center'}>
@@ -77,6 +78,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
             </Flex>
           </>
         ) : (
+          // 削除前の表示
           <>
             <Text ta={'center'}>{t('task.form.confirm.delete')}</Text>
             <Flex justify={'space-evenly'}>

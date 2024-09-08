@@ -1,29 +1,30 @@
-import { Box, Button, Stack, Textarea, TextInput, Title } from '@mantine/core'
+import { Box, Button, Select, Stack, Textarea, TextInput } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
-import {
-  UseFormRegister,
-  FieldErrors,
-  SubmitHandler,
-  FieldValues,
-  UseFormReturn,
-} from 'react-hook-form'
-import { CreateTaskType, TaskFormType, UpdateTaskType } from '../../types/task'
-
-export type FormType = CreateTaskType | UpdateTaskType
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { TaskStatusType, TaskFormType } from '../../types/task'
+import { useGetTaskStatusList } from '../../services/taskService'
+import { useEffect } from 'react'
 export type TaskFormProps = {
-  useForm: UseFormReturn<FormType>
-  onSubmit: SubmitHandler<FormType>
+  useForm: UseFormReturn<TaskFormType>
+  onSubmit: SubmitHandler<TaskFormType>
 }
-// TODO:ロード中の処理
+
 export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
   const { t } = useTranslation()
-
   const {
+    watch,
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm
+  const [{ data: statusList, error: statusError }] = useGetTaskStatusList()
 
+  useEffect(() => {
+    console.log({ statusError })
+  }, [statusError])
+
+  const statusValue = watch('status')
   return (
     <Box style={{ padding: '20px' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -31,7 +32,9 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
           <TextInput
             label={t('task.form.title')}
             placeholder={t('task.form.title')}
-            {...register('title', { required: t('task.form.title.required') })}
+            {...register('title', {
+              required: t('task.form.validation.required'),
+            })}
             error={errors.title?.message}
           />
 
@@ -44,8 +47,24 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
             minRows={4}
           />
 
-          {/* TODO: status管理をDjangoで編集して */}
-          {/* <Checkbox label="Completed" {...register('completed')} /> */}
+          {statusList && (
+            <Select
+              label={t('task.form.status')}
+              data={Object.keys(statusList).map((status: TaskStatusType) => ({
+                key: status,
+                value: status,
+                label: t(`task.status.${status}`),
+              }))}
+              {...register('status', {
+                required: t('task.form.validation.required'),
+              })}
+              defaultValue={statusValue}
+              error={errors.status?.message}
+              onChange={(selected) => {
+                setValue('status', selected)
+              }}
+            />
+          )}
           <Button type="submit" mt="md">
             {t('task.form.submit')}
           </Button>

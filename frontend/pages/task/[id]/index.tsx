@@ -10,16 +10,12 @@ export default function Detail() {
   const { t } = useTranslation()
   const { query } = useRouter()
   const id = query.id ? Number(query.id) : undefined
-  const [{ data, loading, error }, getTask] = useGetTask(id)
-
-  useEffect(() => {
-    getTask()
-  }, [id])
+  const [{ data, loading, error }] = useGetTask(id)
 
   if (loading || !data) return <Loader />
   if (error) {
     console.log({ error })
-    return <TaskError />
+    return <TaskError type="GET" message={t('task.error.get')} />
   }
 
   return <TaskDetail task={data} />

@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, Flex, Loader, Modal, Notification, Title } from '@mantine/core'
-import { useGetTaskList } from '../../services/taskService'
+import {
+  useGetTaskList,
+  useGetTaskStatusList,
+} from '../../services/taskService'
 import TaskCreate from '../../components/task/TaskCreate'
 import useModal from '../../hooks/useModal'
 import TaskListTable from '../../components/task/TaskListTable'
@@ -10,6 +13,8 @@ import TaskError from '../../components/task/TaskError'
 export default function Task() {
   const { t } = useTranslation()
   const [{ data, loading, error }, getTaskList] = useGetTaskList()
+  const [{ data: statusList, loading: statusLoading, error: statusError }] =
+    useGetTaskStatusList()
   const { isModalOpen, openModal, closeModal } = useModal()
   useEffect(() => {
     getTaskList()
@@ -32,7 +37,7 @@ export default function Task() {
           getTaskList()
         }}
       >
-        <TaskCreate />
+        <TaskCreate statusList={statusList} />
       </Modal>
       {data && !loading ? <TaskListTable taskList={data} /> : <Loader />}
     </>

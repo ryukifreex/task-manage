@@ -1,18 +1,20 @@
 import useAxios from 'axios-hooks'
 import { API_BASE_URL } from '../config/api'
+import { TaskStatusListType, TaskStatusType, TaskType } from '../types/task'
 
 export const useGetTask = (id: number) => {
-  return useAxios(
+  console.log({ id })
+  return useAxios<TaskType>(
     {
       url: `${API_BASE_URL}/task/${id}`,
       method: 'GET',
     },
-    { manual: true }
+    { manual: false }
   )
 }
 
 export const useGetTaskList = () => {
-  return useAxios(
+  return useAxios<TaskType[]>(
     {
       url: `${API_BASE_URL}/task/`,
       method: 'GET',
@@ -22,7 +24,7 @@ export const useGetTaskList = () => {
 }
 
 export const useUpdateTask = (id: number) => {
-  return useAxios(
+  return useAxios<TaskType>(
     {
       url: `${API_BASE_URL}/task/${id}/`,
       method: 'PUT',
@@ -32,7 +34,7 @@ export const useUpdateTask = (id: number) => {
 }
 
 export const useCreateTask = () => {
-  return useAxios(
+  return useAxios<TaskType>(
     {
       url: `${API_BASE_URL}/task/`,
       method: 'POST',
@@ -42,11 +44,21 @@ export const useCreateTask = () => {
 }
 
 export const useDeleteTask = (id: number) => {
-  return useAxios(
+  return useAxios<void>(
     {
       url: `${API_BASE_URL}/task/${id}/`,
       method: 'DELETE',
     },
     { manual: true }
+  )
+}
+
+export const useGetTaskStatusList = () => {
+  return useAxios<TaskStatusListType>(
+    {
+      url: `${API_BASE_URL}/task/status_label/`,
+      method: 'GET',
+    },
+    { manual: false }
   )
 }

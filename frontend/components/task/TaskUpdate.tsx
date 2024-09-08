@@ -3,7 +3,7 @@ import { useUpdateTask } from '../../services/taskService'
 import { useTranslation } from 'react-i18next'
 import TaskForm from './TaskForm'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { UpdateTaskType } from '../../types/task'
+import { TaskFormType } from '../../types/task'
 import { TaskType } from '../../types/task'
 import { Button, Modal, Text, Title } from '@mantine/core'
 import useModal from '../../hooks/useModal'
@@ -22,7 +22,7 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
   ] = useUpdateTask(task.id)
   const router = useRouter()
 
-  const useFormReturn = useForm<UpdateTaskType>({
+  const useFormReturn = useForm<TaskFormType>({
     defaultValues: {
       title: task.title,
       description: task.description,
@@ -31,7 +31,7 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
   })
   const { setError, reset } = useFormReturn
 
-  const onSubmit: SubmitHandler<UpdateTaskType> = (formData) => {
+  const onSubmit: SubmitHandler<TaskFormType> = (formData) => {
     if (!formData.title.trim()) {
       setError('title', {
         type: 'manual',

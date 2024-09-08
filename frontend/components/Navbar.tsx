@@ -17,10 +17,8 @@ export default function Navbar() {
   ]
 
   const tabItems = tabs.map((tab) => (
-    <Link href={tab.link}>
-      <Tabs.Tab value={tab.link} key={tab.title}>
-        {tab.title}
-      </Tabs.Tab>
+    <Link href={tab.link} key={tab.title}>
+      <Tabs.Tab value={tab.link}>{tab.title}</Tabs.Tab>
     </Link>
   ))
 

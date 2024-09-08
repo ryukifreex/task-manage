@@ -2,26 +2,24 @@ export type TaskType = {
   id: number
   title: string
   description?: string
-  status: string
+  status: TaskStatusType
   created_at?: string
   updated_at?: string
 }
 
-export type CreateTaskType = {
-  title: string
-  description?: string
-  status?: string
-}
-
-export type UpdateTaskType = {
-  title: string
-  description?: string
-  status?: string
-}
-
 export type TaskFormType = {
-  id?: number
   title: string
   description?: string
-  status?: string
+  status: string
+}
+
+export type TaskStatusType =
+  | 'open'
+  | 'in_progress'
+  | 'done'
+  | 'closed'
+  | 'pending'
+
+export type TaskStatusListType = {
+  [key in TaskStatusType]: string
 }
