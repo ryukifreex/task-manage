@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { TaskStatusProvider } from '../context/TaskStatusContext'
 import i18n from '../i18n'
 
 export default function Layout({ children }) {
@@ -11,5 +12,5 @@ export default function Layout({ children }) {
     }
   }, [router.locale])
 
-  return <>{children}</>
+  return <TaskStatusProvider>{children}</TaskStatusProvider>
 }

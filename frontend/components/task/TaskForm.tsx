@@ -2,7 +2,8 @@ import { Box, Button, Select, Stack, Textarea, TextInput } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { TaskStatusType, TaskFormType } from '../../types/task'
-import { useGetTaskStatusList } from '../../services/taskService'
+// import { useGetTaskStatusList } from '../../services/taskService'
+import { useTaskStatusList } from '../../context/TaskStatusContext'
 import { useEffect } from 'react'
 export type TaskFormProps = {
   useForm: UseFormReturn<TaskFormType>
@@ -10,7 +11,7 @@ export type TaskFormProps = {
 }
 
 export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
-  const { t } = useTranslation()
+  const { t, ready } = useTranslation()
   const {
     watch,
     setValue,
@@ -18,17 +19,13 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
     handleSubmit,
     formState: { errors },
   } = useForm
-  const [{ data: statusList, error: statusError }] = useGetTaskStatusList()
+  const { statusList } = useTaskStatusList()
 
-  useEffect(() => {
-    console.log({ statusError })
-  }, [statusError])
-
-  const statusValue = watch('status')
   return (
     <Box style={{ padding: '20px' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={'md'}>
+          {/* Title */}
           <TextInput
             label={t('task.form.title')}
             placeholder={t('task.form.title')}
@@ -38,6 +35,7 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
             error={errors.title?.message}
           />
 
+          {/* Description */}
           <Textarea
             label={t('task.form.description')}
             placeholder={t('task.form.description')}
@@ -47,7 +45,8 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
             minRows={4}
           />
 
-          {statusList && (
+          {/* Status */}
+          {ready && (
             <Select
               label={t('task.form.status')}
               data={Object.keys(statusList).map((status: TaskStatusType) => ({
@@ -58,7 +57,7 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
               {...register('status', {
                 required: t('task.form.validation.required'),
               })}
-              defaultValue={statusValue}
+              defaultValue={watch('status')}
               error={errors.status?.message}
               onChange={(selected) => {
                 setValue('status', selected)

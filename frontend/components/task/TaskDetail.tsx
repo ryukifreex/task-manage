@@ -1,19 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import {
-  Alert,
-  Button,
-  Flex,
-  Loader,
-  Modal,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core'
+import { Button, Flex, Modal, Text, Title } from '@mantine/core'
 import { TaskType } from '../../types/task'
-import { useDeleteTask } from '../../services/taskService'
+import { useDeleteTask } from '../../hooks/task/useDeleteTask'
 import useModal from '../../hooks/useModal'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export type TaskDetailProps = {
   task: TaskType
@@ -21,16 +12,10 @@ export type TaskDetailProps = {
 
 export default function TaskDetail({ task }: TaskDetailProps) {
   const { t } = useTranslation()
-  const [{ data, error }, deleteTask] = useDeleteTask(task.id)
+  const { deleteTask } = useDeleteTask(task.id)
   const { isModalOpen, openModal, closeModal } = useModal()
   const [deleted, setDeleted] = useState(false)
   const router = useRouter()
-
-  useEffect(() => {
-    if (error) {
-      console.log({ data, error })
-    }
-  }, [error])
 
   const handleDelete = () => {
     deleteTask()

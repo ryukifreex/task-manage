@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useUpdateTask } from '../../services/taskService'
+import { useUpdateTask } from '../../hooks/task/useUpdateTask'
 import { useTranslation } from 'react-i18next'
 import TaskForm from './TaskForm'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -16,10 +16,7 @@ export type TaskUpdateFormProps = {
 export default function TaskUpdate({ task }: TaskUpdateFormProps) {
   const { t } = useTranslation()
   const { isModalOpen, openModal, closeModal } = useModal()
-  const [
-    { data: updateData, loading: updateLoading, error: updateError },
-    updateTask,
-  ] = useUpdateTask(task.id)
+  const { updateTask } = useUpdateTask(task.id)
   const router = useRouter()
 
   const useFormReturn = useForm<TaskFormType>({
@@ -41,11 +38,9 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
     }
     try {
       updateTask({
-        data: {
-          title: formData.title,
-          description: formData.description,
-          status: formData.status,
-        },
+        title: formData.title,
+        description: formData.description,
+        status: formData.status,
       })
       openModal()
     } catch (error) {
@@ -64,13 +59,6 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
       })
     }
   }, [task])
-
-  useEffect(() => {
-    if (updateError) {
-      alert(t('task.form.update.failed'))
-      console.log({ updateError })
-    }
-  }, [updateData, updateError])
 
   return (
     <>

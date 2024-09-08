@@ -1,24 +1,17 @@
-import { useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import {
-  TaskFormType,
-  TaskStatusListType,
-  TaskStatusType,
-} from '../../types/task'
+import { TaskFormType, TaskStatusType } from '../../types/task'
 import { useTranslation } from 'react-i18next'
-import { useCreateTask } from '../../services/taskService'
-import React from 'react'
+import { useCreateTask } from '../../hooks/task/useCreateTask'
+import { useTaskStatusList } from '../../context/TaskStatusContext'
 import TaskForm from './TaskForm'
 import useModal from '../../hooks/useModal'
 import { Button, Modal, Text, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
 
-export type TaskCreateProps = {
-  statusList: TaskStatusListType
-}
-export default function TaskCreate({ statusList }: TaskCreateProps) {
+export default function TaskCreate() {
   const { t } = useTranslation()
-  const [{ data, error }, createTask] = useCreateTask()
+  const { createTask } = useCreateTask()
+  const { statusList } = useTaskStatusList()
   const { isModalOpen, openModal, closeModal } = useModal()
   const router = useRouter()
   const defaultStatus = Object.keys(statusList)[0] as TaskStatusType
@@ -29,7 +22,7 @@ export default function TaskCreate({ statusList }: TaskCreateProps) {
       status: defaultStatus,
     },
   })
-  const { reset, setError } = useFormReturn
+  const { setError } = useFormReturn
   console.log({ defaultStatus })
 
   const onSubmit: SubmitHandler<TaskFormType> = (formData) => {
@@ -42,21 +35,12 @@ export default function TaskCreate({ statusList }: TaskCreateProps) {
     }
 
     createTask({
-      data: {
-        title: formData.title,
-        description: formData.description,
-        status: formData.status,
-      },
+      title: formData.title,
+      description: formData.description,
+      status: formData.status,
     })
     openModal()
   }
-
-  useEffect(() => {
-    if (data) {
-      reset()
-    }
-    if (error) console.log({ error })
-  }, [data, error, reset])
 
   return (
     <>
