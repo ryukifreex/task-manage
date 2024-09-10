@@ -11,6 +11,7 @@ export default function Navbar() {
 
   const tabs = [
     { title: t('menu.task.list'), link: '/' },
+    { title: t('menu.task.board'), link: '/task/board' },
     { title: t('menu.task.add'), link: '/task/create' },
     { title: t('menu.user.list'), link: '/' },
     { title: t('menu.user.self'), link: '/' },

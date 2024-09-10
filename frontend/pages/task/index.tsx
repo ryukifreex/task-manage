@@ -18,9 +18,13 @@ export default function Task() {
   return (
     <>
       <Title order={2}>{t('app.name')}</Title>
+
+      {/* タスク追加ボタン */}
       <Flex justify={'flex-end'} mb={'md'}>
         <Button onClick={() => openModal()}>{t('task.add')}</Button>
       </Flex>
+
+      {/* タスク追加モーダル */}
       <Modal
         opened={isModalOpen}
         onClose={() => {
@@ -28,9 +32,10 @@ export default function Task() {
           mutate()
         }}
       >
-        {/* <TaskCreate statusList={statusList} /> */}
         <TaskCreate />
       </Modal>
+
+      {/* タスク一覧テーブル */}
       {data ? <TaskListTable taskList={data} /> : <Loader />}
     </>
   )

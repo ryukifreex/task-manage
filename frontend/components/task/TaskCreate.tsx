@@ -23,7 +23,6 @@ export default function TaskCreate() {
     },
   })
   const { setError } = useFormReturn
-  console.log({ defaultStatus })
 
   const onSubmit: SubmitHandler<TaskFormType> = (formData) => {
     if (!formData.title.trim()) {

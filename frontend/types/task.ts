@@ -21,5 +21,5 @@ export type TaskStatusType =
   | 'pending'
 
 export type TaskStatusListType = {
-  [key in TaskStatusType]: string
+  [key in TaskStatusType]: TaskStatusType
 }

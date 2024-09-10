@@ -7,6 +7,8 @@ import Navbar from '../components/Navbar'
 import { I18nextProvider } from 'react-i18next'
 import i18n from '../i18n'
 import '@mantine/core/styles.css'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,9 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ErrorBoundary>
           <Layout>
             <Navbar />
-            <Container style={{ padding: '20px', marginTop: '20px' }}>
-              <Component {...pageProps} />
-            </Container>
+            <DndProvider backend={HTML5Backend}>
+              <Container style={{ padding: '20px', marginTop: '20px' }}>
+                <Component {...pageProps} />
+              </Container>
+            </DndProvider>
           </Layout>
         </ErrorBoundary>
       </MantineProvider>
