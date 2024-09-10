@@ -32,7 +32,6 @@ export default function TaskCreate() {
       })
       return
     }
-
     createTask({
       title: formData.title,
       description: formData.description,
@@ -43,7 +42,9 @@ export default function TaskCreate() {
 
   return (
     <>
-      <Title order={2}>{t('menu.task.create')}</Title>
+      <TaskForm useForm={useFormReturn} onSubmit={onSubmit} />
+
+      {/* 完了時のモーダル */}
       <Modal
         opened={isModalOpen}
         onClose={() => {
@@ -66,7 +67,6 @@ export default function TaskCreate() {
           OK
         </Button>
       </Modal>
-      <TaskForm useForm={useFormReturn} onSubmit={onSubmit} />
     </>
   )
 }

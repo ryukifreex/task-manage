@@ -24,8 +24,6 @@ export default function TaskDetail({ task }: TaskDetailProps) {
 
   return (
     <>
-      <Title order={2}>{task.title}</Title>
-      <span>{t(`task.status.${task.status}`)}</span>
       <p>{task.description}</p>
       {!deleted && (
         <Flex gap={'lg'}>
@@ -37,6 +35,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
           </Button>
         </Flex>
       )}
+      {/* 削除関連モーダル */}
       <Modal
         opened={isModalOpen}
         onClose={() => {

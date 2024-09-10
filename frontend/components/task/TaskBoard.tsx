@@ -3,6 +3,7 @@ import { useDrop } from 'react-dnd'
 import BoardItem from '../BoardItem'
 import { TaskStatusType, TaskType } from '../../types/task'
 import { useTranslation } from 'react-i18next'
+import StatusBadge from '../StatusBadge'
 
 export type TaskBoardProps = {
   status: TaskStatusType
@@ -35,7 +36,7 @@ export default function TaskBoard({
       ref={dropRef}
       style={{ padding: '1rem', border: '1px solid black', width: '300px' }}
     >
-      <h2>{t(`task.status.${status}`)}</h2>
+      <StatusBadge status={status} />
       {taskList.map((task) => (
         <BoardItem key={task.id} id={task.id} label={task.title} />
       ))}

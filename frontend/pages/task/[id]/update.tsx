@@ -1,7 +1,7 @@
 import { useGetTask } from '../../../hooks/task/useGetTask'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-import { Loader } from '@mantine/core'
+import { Loader, Title } from '@mantine/core'
 import TaskUpdate from '../../../components/task/TaskUpdate'
 import TaskError from '../../../components/task/TaskError'
 
@@ -16,5 +16,12 @@ export default function Edit() {
     return <TaskError type="GET" message={t('task.error.get')} />
   }
 
-  return data ? <TaskUpdate task={data} /> : <Loader />
+  return data ? (
+    <>
+      <Title order={2}>{t('menu.task.edit')}</Title>
+      <TaskUpdate task={data} />
+    </>
+  ) : (
+    <Loader />
+  )
 }

@@ -2,9 +2,7 @@ import { Box, Button, Select, Stack, Textarea, TextInput } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { TaskStatusType, TaskFormType } from '../../types/task'
-// import { useGetTaskStatusList } from '../../services/taskService'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
-import { useEffect } from 'react'
 export type TaskFormProps = {
   useForm: UseFormReturn<TaskFormType>
   onSubmit: SubmitHandler<TaskFormType>

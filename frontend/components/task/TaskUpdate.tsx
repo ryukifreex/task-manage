@@ -62,7 +62,6 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
 
   return (
     <>
-      <Title order={2}>{t('menu.task.edit')}</Title>
       <Modal
         opened={isModalOpen}
         onClose={() => {

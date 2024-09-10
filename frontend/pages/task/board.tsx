@@ -1,10 +1,7 @@
-// pages/index.tsx
 import { useEffect, useState, useTransition } from 'react'
 import TaskBoard from '../../components/task/TaskBoard'
 import { useGetTaskList } from '../../hooks/task/useGetTaskList'
-// import { TaskType } from '../types/task';
-import { Loader } from '@mantine/core'
-import TaskError from '../../components/task/TaskError'
+import { Loader, Title } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { TaskStatusType, TaskType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
@@ -27,19 +24,21 @@ export default function Board() {
       )
     )
   }
-
-  console.log({ data })
+  // TODO:drag and drop　した時にDBにrequest
   if (!data || !taskList) return <Loader />
   return (
-    <div style={{ display: 'flex', gap: '1rem' }}>
-      {Object.keys(statusList).map((status: TaskStatusType) => (
-        <TaskBoard
-          key={status}
-          status={status}
-          taskList={taskList.filter((task) => task.status === status)}
-          onMoveTask={handleMoveTask}
-        />
-      ))}
-    </div>
+    <>
+      <Title order={2}>{t('menu.task.board')}</Title>
+      <div style={{ display: 'flex', gap: '1rem' }}>
+        {Object.keys(statusList).map((status: TaskStatusType) => (
+          <TaskBoard
+            key={status}
+            status={status}
+            taskList={taskList.filter((task) => task.status === status)}
+            onMoveTask={handleMoveTask}
+          />
+        ))}
+      </div>
+    </>
   )
 }

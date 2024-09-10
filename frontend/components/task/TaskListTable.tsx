@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, Table } from '@mantine/core'
 import { TaskType } from '../../types/task'
 import { useRouter } from 'next/router'
+import StatusBadge from '../StatusBadge'
 
 export type TaskListTableProps = {
   taskList: TaskType[]
@@ -27,7 +28,9 @@ export default function TaskListTable({ taskList }: TaskListTableProps) {
       <Table.Td>{task.created_at}</Table.Td>
       <Table.Td>{task.title}</Table.Td>
       <Table.Td>{task.description}</Table.Td>
-      <Table.Td>{t(`task.status.${task.status}`)}</Table.Td>
+      <Table.Td>
+        <StatusBadge status={task.status} />
+      </Table.Td>
       <Table.Td>
         <Button onClick={() => router.push(`/task/${task.id}`)}>
           {t(`task.form.edit`)}
