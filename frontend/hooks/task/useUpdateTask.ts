@@ -4,13 +4,20 @@ import { TaskFormType } from '../../types/task'
 import { fetcher } from '../fetcher'
 import axios from 'axios'
 
-export const useUpdateTask = (id: number) => {
-  const { mutate } = useSWR(null, fetcher, {
+// TODOこれでいいなら他も同じようにして(コールバック)
+export const useUpdateTask = () => {
+  const { mutate } = useSWR(`${API_BASE_URL}/task/`, fetcher, {
     revalidateOnMount: false,
   })
+
   const updateTask = async (task: TaskFormType) => {
-    await axios.put(`${API_BASE_URL}/task/${id}/`, task)
-    mutate()
+    try {
+      await axios.put(`${API_BASE_URL}/task/${task.id}/`, task)
+      mutate()
+    } catch (error) {
+      console.error('Failed to update task:', error)
+    }
   }
+
   return { updateTask }
 }

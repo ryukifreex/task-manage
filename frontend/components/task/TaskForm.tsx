@@ -28,6 +28,10 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
             label={t('task.form.title')}
             placeholder={t('task.form.title')}
             {...register('title', {
+              maxLength: {
+                value: 100,
+                message: t('task.form.validation.maxLength'),
+              },
               required: t('task.form.validation.required'),
             })}
             error={errors.title?.message}

@@ -8,6 +8,7 @@ export type TaskType = {
 }
 
 export type TaskFormType = {
+  id?: number
   title: string
   description?: string
   status: string

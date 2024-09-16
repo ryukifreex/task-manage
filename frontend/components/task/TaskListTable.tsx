@@ -8,6 +8,7 @@ export type TaskListTableProps = {
   taskList: TaskType[]
 }
 
+// TODOラベルごとにソート順を作って
 export default function TaskListTable({ taskList }: TaskListTableProps) {
   const { t } = useTranslation()
   const router = useRouter()

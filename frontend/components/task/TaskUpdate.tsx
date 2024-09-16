@@ -16,7 +16,7 @@ export type TaskUpdateFormProps = {
 export default function TaskUpdate({ task }: TaskUpdateFormProps) {
   const { t } = useTranslation()
   const { isModalOpen, openModal, closeModal } = useModal()
-  const { updateTask } = useUpdateTask(task.id)
+  const { updateTask } = useUpdateTask()
   const router = useRouter()
 
   const useFormReturn = useForm<TaskFormType>({
@@ -38,6 +38,7 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
     }
     try {
       updateTask({
+        id: task.id,
         title: formData.title,
         description: formData.description,
         status: formData.status,

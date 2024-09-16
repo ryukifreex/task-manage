@@ -5,6 +5,7 @@
   "menu": {
     "task": {
       "list": "Task list",
+      "dashboard": "Dashboard",
       "add": "Task add",
       "edit": "Task edit",
       "create": "Task create"

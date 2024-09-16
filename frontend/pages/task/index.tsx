@@ -11,9 +11,7 @@ export default function Task() {
   const { data, error, mutate } = useGetTaskList()
   const { isModalOpen, openModal, closeModal } = useModal()
 
-  if (error) {
-    return <TaskError />
-  }
+  if (error) return <TaskError />
 
   return (
     <>
