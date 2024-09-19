@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, Flex, Modal, Text, Title } from '@mantine/core'
 import { TaskType } from '../../types/task'
 import { useDeleteTask } from '../../hooks/task/useDeleteTask'
-import useModal from '../../hooks/useModal'
+import { useModal } from '../../hooks/useModal'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 

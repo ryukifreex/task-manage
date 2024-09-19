@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, Flex, Loader, Modal, Title } from '@mantine/core'
 import { useGetTaskList } from '../../hooks/task/useGetTaskList'
 import TaskCreate from '../../components/task/TaskCreate'
-import useModal from '../../hooks/useModal'
+import { useModal } from '../../hooks/useModal'
 import TaskListTable from '../../components/task/TaskListTable'
 import TaskError from '../../components/task/TaskError'
 

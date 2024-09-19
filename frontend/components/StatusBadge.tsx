@@ -24,7 +24,7 @@ export default function StatusBadge({ status, size = 'lg' }: StatusBadgeProps) {
   const color = statusColors[status]
 
   return (
-    <Group justify={'center'}>
+    <Group style={{ width: '100%' }} justify={'center'}>
       <Badge size={size} color={color}>
         {t(`task.status.${status}`)}
       </Badge>

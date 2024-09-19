@@ -7,7 +7,7 @@ import { TaskStatusType, TaskType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
 import { useUpdateTask } from '../../hooks/task/useUpdateTask'
 import TaskDetail from '../../components/task/TaskDetail'
-import useModal from '../../hooks/useModal'
+import { useModal } from '../../hooks/useModal'
 
 export default function TaskDashboard() {
   const { t } = useTranslation()
@@ -48,6 +48,7 @@ export default function TaskDashboard() {
   return (
     <>
       <Title order={2}>{t('menu.task.dashboard')}</Title>
+
       <div style={{ display: 'flex', gap: '1rem' }}>
         {Object.keys(statusList).map((status: TaskStatusType) => (
           <Dashboard
@@ -59,9 +60,7 @@ export default function TaskDashboard() {
           />
         ))}
       </div>
-
       {/* タスク詳細モーダル */}
-      {/* TODO：うまく読み込めていない */}
       {taskDetail && (
         <Modal
           opened={isModalOpen}
@@ -69,6 +68,7 @@ export default function TaskDashboard() {
             closeModal()
           }}
         >
+          <Title order={3}>{taskDetail.title}</Title>
           <TaskDetail task={taskDetail} />
         </Modal>
       )}

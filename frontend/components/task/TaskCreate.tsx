@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useCreateTask } from '../../hooks/task/useCreateTask'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
 import TaskForm from './TaskForm'
-import useModal from '../../hooks/useModal'
+import { useModal } from '../../hooks/useModal'
 import { Button, Modal, Text, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
 

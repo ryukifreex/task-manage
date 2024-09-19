@@ -5,8 +5,8 @@ import TaskForm from './TaskForm'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TaskFormType } from '../../types/task'
 import { TaskType } from '../../types/task'
-import { Button, Modal, Text, Title } from '@mantine/core'
-import useModal from '../../hooks/useModal'
+import { Button, Modal, Text } from '@mantine/core'
+import { useModal } from '../../hooks/useModal'
 import { useRouter } from 'next/router'
 
 export type TaskUpdateFormProps = {
