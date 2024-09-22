@@ -28,7 +28,7 @@ export default function TaskCreate() {
     if (!formData.title.trim()) {
       setError('title', {
         type: 'manual',
-        message: t('task.form.validation.required'),
+        message: t('form.validation.required'),
       })
       return
     }
@@ -55,7 +55,7 @@ export default function TaskCreate() {
         radius={5}
         centered
       >
-        <Text ta="center">{t('task.form.success.create')}</Text>
+        <Text ta="center">{t('form.success.create')}</Text>
         <Button
           mt="md"
           fullWidth

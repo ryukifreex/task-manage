@@ -28,10 +28,10 @@ export default function TaskDetail({ task }: TaskDetailProps) {
       {!deleted && (
         <Flex gap={'lg'}>
           <Button onClick={() => router.push(`/task/${task.id}/update`)}>
-            {t('task.form.edit')}
+            {t('task.label.edit')}
           </Button>
           <Button color={'red'} onClick={() => openModal()}>
-            {t('task.form.delete')}
+            {t('form.delete')}
           </Button>
         </Flex>
       )}
@@ -48,7 +48,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
         {deleted ? (
           // 削除後の表示
           <>
-            <Text ta={'center'}>{t('task.form.success.delete')}</Text>
+            <Text ta={'center'}>{t('form.success.delete')}</Text>
             <Flex justify={'center'}>
               <Button
                 mt={'md'}
@@ -64,7 +64,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
         ) : (
           // 削除前の表示
           <>
-            <Text ta={'center'}>{t('task.form.confirm.delete')}</Text>
+            <Text ta={'center'}>{t('form.confirm.delete')}</Text>
             <Flex justify={'space-evenly'}>
               <Button
                 mt={'md'}
@@ -72,7 +72,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
                   closeModal()
                 }}
               >
-                {t('task.form.cancel')}
+                {t('form.cancel')}
               </Button>
               <Button
                 mt={'md'}
@@ -81,7 +81,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
                   handleDelete()
                 }}
               >
-                {t('task.form.delete')}
+                {t('form.delete')}
               </Button>
             </Flex>
           </>

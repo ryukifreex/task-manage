@@ -38,22 +38,16 @@ export default function TaskListTable({ taskList }: TaskListTableProps) {
 
   const rows = taskList.map((task) => (
     <Table.Tr key={task.id}>
-      <Table.Td style={{ ...tdFullStyle }}>
-        {useConvertToLocalTime(task.created_at)}
-      </Table.Td>
+      <Table.Td style={{ ...tdFullStyle }}>{useConvertToLocalTime(task.created_at)}</Table.Td>
       <Table.Td style={{ ...tdReadStyle }}>{task.title}</Table.Td>
       <Table.Td style={{ ...tdReadStyle }}>{task.description}</Table.Td>
       <Table.Td style={{ ...tdFullStyle }}>
         <StatusBadge status={task.status} />
       </Table.Td>
       <Table.Td style={{ ...tdFullStyle }}>
-        <Button onClick={() => router.push(`/task/${task.id}`)}>
-          {t(`task.form.edit`)}
-        </Button>
+        <Button onClick={() => router.push(`/task/${task.id}`)}>{t('form.edit')}</Button>
       </Table.Td>
-      <Table.Td style={{ ...tdFullStyle }}>
-        {useConvertToLocalTime(task.updated_at)}
-      </Table.Td>
+      <Table.Td style={{ ...tdFullStyle }}>{useConvertToLocalTime(task.updated_at)}</Table.Td>
     </Table.Tr>
   ))
 

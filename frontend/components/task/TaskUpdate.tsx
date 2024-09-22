@@ -32,7 +32,7 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
     if (!formData.title.trim()) {
       setError('title', {
         type: 'manual',
-        message: t('task.form.validation.required'),
+        message: t('form.validation.required'),
       })
       return
     }
@@ -73,7 +73,7 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
         radius={5}
         centered
       >
-        <Text ta={'center'}>{t('task.form.success.update')}</Text>
+        <Text ta={'center'}>{t('form.success.update')}</Text>
         <Button
           mt="md"
           fullWidth

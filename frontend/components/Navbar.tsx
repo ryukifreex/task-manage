@@ -17,7 +17,7 @@ export default function Navbar() {
     { title: t('menu.task.dashboard'), link: '/task/dashboard' },
     { title: t('menu.task.add'), link: '/task/create' },
     { title: t('menu.task.chart'), link: '/task/ganttchart' },
-    { title: t('menu.user.list'), link: '/' },
+    { title: t('menu.user.list'), link: '/user' },
   ]
 
   const tabItems = tabs.map((tab) => (

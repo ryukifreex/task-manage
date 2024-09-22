@@ -25,22 +25,22 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
         <Stack gap={'md'}>
           {/* Title */}
           <TextInput
-            label={t('task.form.title')}
-            placeholder={t('task.form.title')}
+            label={t('task.label.title')}
+            placeholder={t('task.label.title')}
             {...register('title', {
               maxLength: {
                 value: 100,
-                message: t('task.form.validation.maxLength'),
+                message: t('form.validation.maxLength'),
               },
-              required: t('task.form.validation.required'),
+              required: t('form.validation.required'),
             })}
             error={errors.title?.message}
           />
 
           {/* Description */}
           <Textarea
-            label={t('task.form.description')}
-            placeholder={t('task.form.description')}
+            label={t('task.label.description')}
+            placeholder={t('task.label.description')}
             {...register('description')}
             error={errors.description?.message}
             autosize
@@ -50,14 +50,14 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
           {/* Status */}
           {ready && (
             <Select
-              label={t('task.form.status')}
+              label={t('task.label.status')}
               data={Object.keys(statusList).map((status: TaskStatusType) => ({
                 key: status,
                 value: status,
                 label: t(`task.status.${status}`),
               }))}
               {...register('status', {
-                required: t('task.form.validation.required'),
+                required: t('form.validation.required'),
               })}
               defaultValue={watch('status')}
               error={errors.status?.message}
@@ -67,7 +67,7 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
             />
           )}
           <Button type="submit" mt="md">
-            {t('task.form.submit')}
+            {t('form.submit')}
           </Button>
         </Stack>
       </form>
