@@ -1,7 +1,11 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 class Task(models.Model):
+    User = get_user_model()
+
+    # ステータスリスト
     class Status(models.TextChoices):
         OPEN = "open"
         IN_PROGRESS = "in_progress"
@@ -12,6 +16,14 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.OPEN)
+    created_by = models.ForeignKey(
+        User, null=True, on_delete=models.PROTECT, related_name="created_tasks"
+    )
+    assigned_to = models.ForeignKey(
+        User, on_delete=models.PROTECT, null=True, blank=True, related_name="assigned_tasks"
+    )
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -4,12 +4,14 @@ import { useRouter } from 'next/router'
 import { Loader, Title } from '@mantine/core'
 import TaskUpdate from '../../../components/task/TaskUpdate'
 import TaskError from '../../../components/task/TaskError'
+import { useAuthCheck } from '../../../hooks/useAuthCheck'
 
 export default function Edit() {
   const { t } = useTranslation()
   const { query } = useRouter()
   const id = query.id ? Number(query.id) : undefined
   const { data, error } = useGetTask(id)
+  if (!useAuthCheck()) return <Loader />
 
   if (error) {
     console.log('pare', { error })

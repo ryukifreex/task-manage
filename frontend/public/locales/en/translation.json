@@ -8,9 +8,12 @@
       "dashboard": "Dashboard",
       "add": "Task add",
       "edit": "Task edit",
-      "create": "Task create"
+      "create": "Task create",
+      "chart": "Gantt chart"
     },
     "user": {
+      "logout": "logout",
+      "login": "login",
       "list": "User list",
       "self": "Information"
     }
@@ -47,7 +50,8 @@
       },
       "success": {
         "update": "updated!",
-        "create": "created!"
+        "create": "created!",
+        "delete": "deleted!"
       },
       "failed": {
         "update": "Update failed"
@@ -60,5 +64,8 @@
       "closed": "Closed",
       "pending": "Pending"
     }
+  },
+  "user": {
+    "error": {}
   }
 }

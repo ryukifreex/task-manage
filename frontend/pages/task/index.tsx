@@ -5,11 +5,13 @@ import TaskCreate from '../../components/task/TaskCreate'
 import { useModal } from '../../hooks/useModal'
 import TaskListTable from '../../components/task/TaskListTable'
 import TaskError from '../../components/task/TaskError'
+import { useAuthCheck } from '../../hooks/useAuthCheck'
 
 export default function Task() {
   const { t } = useTranslation()
   const { data, error, mutate } = useGetTaskList()
   const { isModalOpen, openModal, closeModal } = useModal()
+  if (!useAuthCheck()) return <Loader />
 
   if (error) return <TaskError />
 

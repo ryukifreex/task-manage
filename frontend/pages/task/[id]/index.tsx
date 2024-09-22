@@ -5,12 +5,14 @@ import { useRouter } from 'next/router'
 import TaskDetail from '../../../components/task/TaskDetail'
 import TaskError from '../../../components/task/TaskError'
 import StatusBadge from '../../../components/StatusBadge'
+import { useAuthCheck } from '../../../hooks/useAuthCheck'
 
 export default function Detail() {
   const { t } = useTranslation()
   const { query } = useRouter()
   const id = query.id ? Number(query.id) : undefined
   const { data, error } = useGetTask(id)
+  if (!useAuthCheck()) return <Loader />
 
   if (error) {
     console.log({ error })

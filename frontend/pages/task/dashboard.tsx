@@ -8,6 +8,7 @@ import { useTaskStatusList } from '../../context/TaskStatusContext'
 import { useUpdateTask } from '../../hooks/task/useUpdateTask'
 import TaskDetail from '../../components/task/TaskDetail'
 import { useModal } from '../../hooks/useModal'
+import { useAuthCheck } from '../../hooks/useAuthCheck'
 
 export default function TaskDashboard() {
   const { t } = useTranslation()
@@ -17,6 +18,7 @@ export default function TaskDashboard() {
   const { updateTask } = useUpdateTask()
   const [taskDetail, setTaskDetail] = useState<TaskType | null>(null)
   const { isModalOpen, openModal, closeModal } = useModal()
+  if (!useAuthCheck()) return <Loader />
 
   useEffect(() => {
     setTaskList(data)
@@ -27,9 +29,7 @@ export default function TaskDashboard() {
     const newTaskList: TaskType[] = taskList.map((task) =>
       task.id === taskId ? { ...task, status: newStatus } : task
     )
-    const selectedTask: TaskType = newTaskList.find(
-      (task) => task.id === taskId
-    )
+    const selectedTask: TaskType = newTaskList.find((task) => task.id === taskId)
     setTaskList(newTaskList)
     updateTask(selectedTask)
   }

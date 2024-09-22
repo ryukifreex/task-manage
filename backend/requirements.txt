@@ -1,5 +1,10 @@
-Django>=4.0,<5.0
-djangorestframework
-django-cors-headers
-gunicorn
-psycopg2-binary
+asgiref==3.8.1
+Django==4.2.15
+django-cors-headers==4.4.0
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+gunicorn==23.0.0
+packaging==24.1
+psycopg2-binary==2.9.9
+PyJWT==2.9.0
+sqlparse==0.5.1

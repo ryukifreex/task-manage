@@ -1,20 +1,18 @@
 import React, { createContext, useContext, ReactNode } from 'react'
-import useSWR from 'swr'
-import { fetcher } from '../hooks/fetcher'
-import { API_BASE_URL } from '../config/api'
 import { TaskStatusListType } from '../types/task'
 import { useGetTaskStatusList } from '../hooks/task/useGetTaskStatusList'
 
-// コンテキストの作成
-const TaskStatusContext = createContext<
+type TaskStatusContextType =
   | {
       statusList: TaskStatusListType | undefined
       error: any
     }
   | undefined
->(undefined)
 
-// Providerの作成
+// Context
+const TaskStatusContext = createContext<TaskStatusContextType>(undefined)
+
+// Provider
 export const TaskStatusProvider = ({ children }: { children: ReactNode }) => {
   const { data: statusList, error } = useGetTaskStatusList()
 
@@ -25,11 +23,11 @@ export const TaskStatusProvider = ({ children }: { children: ReactNode }) => {
   )
 }
 
-// Contextのカスタムフック
+// Contextのhook
 export const useTaskStatusList = () => {
   const context = useContext(TaskStatusContext)
   if (!context) {
-    throw new Error('status error')
+    throw new Error('useTaskStatusList must be within a TaskStatusProvider')
   }
   return context
 }
