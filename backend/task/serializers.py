@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Task
-from user.serializers import UserSerializer
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -13,7 +12,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "description",
             "status",
             "created_by",
-            "assigned_to",
+            "assignee",
             "start_date",
             "end_date",
             "created_at",

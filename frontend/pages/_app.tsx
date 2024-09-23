@@ -23,9 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <TaskStatusProvider>
                 <Navbar />
                 <DndProvider backend={HTML5Backend}>
-                  <Container style={{ padding: '20px', marginTop: '20px' }}>
-                    <Component {...pageProps} />
-                  </Container>
+                  <Component {...pageProps} />
                 </DndProvider>
               </TaskStatusProvider>
             </LanguageProvider>

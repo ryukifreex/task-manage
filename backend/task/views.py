@@ -31,12 +31,10 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         user = request.user
-        print("requestttttt")
-        print(request)
         if user.organization:
             queryset = self.get_queryset().filter(organization=user.organization)
         else:
-            queryset = self.get_queryset().filter(created_by=user)
+            queryset = self.get_queryset().filter(created_by=user, organization=None)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -59,7 +57,7 @@ class TaskViewSet(viewsets.ModelViewSet):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def update(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         user = request.user
         task = self.get_object()
 

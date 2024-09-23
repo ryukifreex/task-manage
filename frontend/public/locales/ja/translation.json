@@ -47,8 +47,12 @@
       "status": "ステータス",
       "edit": "編集",
       "create": "作成日",
-      "update": "最終更新"
+      "update": "最終更新",
+      "start_date": "開始日",
+      "end_date": "終了日",
+      "assignee": "担当者"
     },
+    "date_format": "yyyy/MM/dd",
     "add": "タスクを追加",
     "error": {
       "status": "ステータス取得エラー",

@@ -20,7 +20,7 @@ class Task(models.Model):
     created_by = models.ForeignKey(
         User, null=True, on_delete=models.PROTECT, related_name="created_tasks"
     )
-    assigned_to = models.ForeignKey(
+    assignee = models.ForeignKey(
         User, on_delete=models.PROTECT, null=True, blank=True, related_name="assigned_tasks"
     )
     start_date = models.DateField(null=True, blank=True)

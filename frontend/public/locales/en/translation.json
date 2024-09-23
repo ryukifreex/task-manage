@@ -46,8 +46,12 @@
       "status": "STATUS",
       "edit": "EDIT",
       "create": "CREATE",
-      "update": "UPDATE"
+      "update": "UPDATE",
+      "start_date": "START",
+      "end_date": "END",
+      "assignee": "ASSIGNEE"
     },
+    "date_format": "MMM/dd/yyyy",
     "add": "Add Task",
     "error": {
       "status": "Error retrieving status label",

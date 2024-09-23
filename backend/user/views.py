@@ -13,12 +13,14 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         user = request.user
-        if user.is_admin:
+        if user.organization:
             queryset = self.get_queryset().filter(organization=user.organization)
             # 親の list メソッドを呼び出して、シリアライズとレスポンスを処理
             serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
-        return Response({"message": "You do not have permission"}, status=status.HTTP_403_FORBIDDEN)
+        else:
+            queryset = self.get_queryset().filter(user=user)
+            serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class UserInfoView(generics.GenericAPIView):

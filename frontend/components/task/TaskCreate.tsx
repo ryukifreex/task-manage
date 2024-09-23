@@ -7,6 +7,7 @@ import TaskForm from './TaskForm'
 import { useModal } from '../../hooks/useModal'
 import { Button, Modal, Text, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
+import { useConvertToUtcDate } from '../../hooks/useConvertToUtcDate'
 
 export default function TaskCreate() {
   const { t } = useTranslation()
@@ -32,11 +33,17 @@ export default function TaskCreate() {
       })
       return
     }
-    // TODO:作成失敗時のエラーはドリング
+    const start_date = useConvertToUtcDate(formData.start_date)
+    const end_date = useConvertToUtcDate(formData.end_date)
+
+    // TODO:作成失敗時のエラーハドリング
     createTask({
       title: formData.title,
       description: formData.description,
       status: formData.status,
+      assignee: formData.assignee,
+      start_date: start_date,
+      end_date: end_date,
     })
     openModal()
   }

@@ -2,8 +2,12 @@ import { Group, Menu, Burger, UnstyledButton, rem, useMantineTheme } from '@mant
 import { AiOutlineGlobal } from 'react-icons/ai'
 import { useDisclosure } from '@mantine/hooks'
 import i18n from '../i18n'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export default function LanguageSwitch() {
+  const router = useRouter()
+  const { pathname, query, asPath } = router
   const [opened, { toggle }] = useDisclosure(false)
   const languageList = { ja: '日本語', en: 'English' }
   const theme = useMantineTheme()
@@ -11,6 +15,7 @@ export default function LanguageSwitch() {
   const handleSelect = (selectedLanguage) => {
     i18n.changeLanguage(selectedLanguage)
   }
+
   return (
     <>
       <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
@@ -35,10 +40,17 @@ export default function LanguageSwitch() {
         </Menu.Target>
         <Menu.Dropdown>
           {Object.entries(languageList).map(([key, value]) => (
-            <Menu.Item key={key} onClick={() => handleSelect(key)} style={{ textAlign: 'center' }}>
+            <Menu.Item
+              key={key}
+              component={Link}
+              href={{ pathname, query }}
+              as={asPath}
+              locale={key}
+              style={{ textAlign: 'center' }}
+            >
               {value}
             </Menu.Item>
-          ))}
+          ))}{' '}
         </Menu.Dropdown>
       </Menu>
     </>

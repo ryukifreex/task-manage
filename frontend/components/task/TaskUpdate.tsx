@@ -8,6 +8,7 @@ import { TaskType } from '../../types/task'
 import { Button, Modal, Text } from '@mantine/core'
 import { useModal } from '../../hooks/useModal'
 import { useRouter } from 'next/router'
+import { useConvertToUtcDate } from '../../hooks/useConvertToUtcDate'
 
 export type TaskUpdateFormProps = {
   task: TaskType
@@ -24,6 +25,9 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
       title: task.title,
       description: task.description,
       status: task.status,
+      assignee: task.assignee,
+      start_date: task.start_date,
+      end_date: task.end_date,
     },
   })
   const { setError, reset } = useFormReturn
@@ -37,14 +41,20 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
       return
     }
     try {
+      const start_date = useConvertToUtcDate(formData.start_date)
+      const end_date = useConvertToUtcDate(formData.end_date)
       updateTask({
         id: task.id,
         title: formData.title,
         description: formData.description,
         status: formData.status,
+        assignee: formData.assignee,
+        start_date: start_date,
+        end_date: end_date,
       })
       openModal()
     } catch (error) {
+      // TODO:エラーハドリング成功時のみモーダル開いて
       console.log({ error })
       return
     }

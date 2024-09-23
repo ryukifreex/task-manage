@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import { useDrop } from 'react-dnd'
 import DashboardItem from './DashboardItem'
 import { TaskStatusType, TaskType } from '../types/task'
-import { useTranslation } from 'react-i18next'
 import StatusBadge from './StatusBadge'
 
 export type TaskBoardProps = {
@@ -12,12 +11,7 @@ export type TaskBoardProps = {
   onClick?: (id: number) => void
 }
 
-export default function DashBoard({
-  label,
-  itemList,
-  onMove,
-  onClick,
-}: TaskBoardProps) {
+export default function DashBoard({ label, itemList, onMove, onClick }: TaskBoardProps) {
   const dropRef = useRef()
 
   // ドロップ処理
@@ -33,18 +27,10 @@ export default function DashBoard({
   }, [drop])
 
   return (
-    <div
-      ref={dropRef}
-      style={{ padding: '1rem', border: '1px solid black', width: '300px' }}
-    >
+    <div ref={dropRef} style={{ padding: '1rem', border: '1px solid black', width: '300px' }}>
       <StatusBadge status={label} />
       {itemList.map((task) => (
-        <DashboardItem
-          key={task.id}
-          id={task.id}
-          label={task.title}
-          onClick={onClick}
-        />
+        <DashboardItem key={task.id} id={task.id} label={task.title} onClick={onClick} />
       ))}
     </div>
   )

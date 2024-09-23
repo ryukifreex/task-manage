@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode } from 'react'
+import React, { createContext, useContext, ReactNode, useMemo } from 'react'
 import { TaskStatusListType } from '../types/task'
 import { useGetTaskStatusList } from '../hooks/task/useGetTaskStatusList'
 
@@ -16,11 +16,8 @@ const TaskStatusContext = createContext<TaskStatusContextType>(undefined)
 export const TaskStatusProvider = ({ children }: { children: ReactNode }) => {
   const { data: statusList, error } = useGetTaskStatusList()
 
-  return (
-    <TaskStatusContext.Provider value={{ statusList, error }}>
-      {children}
-    </TaskStatusContext.Provider>
-  )
+  const contextValue = useMemo(() => ({ statusList, error }), [statusList, error])
+  return <TaskStatusContext.Provider value={contextValue}>{children}</TaskStatusContext.Provider>
 }
 
 // Contextのhook
