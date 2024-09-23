@@ -1,12 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import UserViewSet
+from .views import UserInfoView, UserViewSet
 
 router = DefaultRouter()
 router.register(r"", UserViewSet)
 
-urlpatterns = router.urls
-
-# urlpatterns = [
-#     path("", include(router.urls)),
-# ]
+urlpatterns = [
+    path("self-info/", UserInfoView.as_view()),
+    path("", include(router.urls)),
+]

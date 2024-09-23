@@ -4,8 +4,14 @@ import axios from 'axios'
 
 export const useUpdateTask = () => {
   const updateTask = async (task: TaskFormType) => {
+    const token = localStorage.getItem('auth')
+
     try {
-      await axios.put(`${API_BASE_URL}/task/${task.id}/`, task)
+      await axios.put(`${API_BASE_URL}/task/${task.id}/`, task, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
     } catch (error) {
       console.error('Failed to update task:', error)
     }

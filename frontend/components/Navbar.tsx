@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext'
 
 export default function Navbar() {
   const { t } = useTranslation()
-  const { isAuthenticated } = useAuth()
+  const { isAdmin, isAuthenticated } = useAuth()
   const router = useRouter()
   const { pathname } = router
   const { logout } = useAuth()
@@ -17,9 +17,8 @@ export default function Navbar() {
     { title: t('menu.task.dashboard'), link: '/task/dashboard' },
     { title: t('menu.task.add'), link: '/task/create' },
     { title: t('menu.task.chart'), link: '/task/ganttchart' },
-    { title: t('menu.user.list'), link: '/user' },
   ]
-
+  if (isAdmin) tabs.push({ title: t('menu.user.list'), link: '/user' })
   const tabItems = tabs.map((tab) => (
     <Link href={tab.link} key={tab.title}>
       <Tabs.Tab value={tab.link}>{tab.title}</Tabs.Tab>

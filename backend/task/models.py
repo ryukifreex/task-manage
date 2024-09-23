@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from user.models import Organization
 
 
 class Task(models.Model):
@@ -24,6 +25,12 @@ class Task(models.Model):
     )
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
+    organization = models.ForeignKey(
+        Organization,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -18,7 +18,7 @@ export default function TaskDashboard() {
   const { updateTask } = useUpdateTask()
   const [taskDetail, setTaskDetail] = useState<TaskType | null>(null)
   const { isModalOpen, openModal, closeModal } = useModal()
-  if (!useAuthCheck()) return <Loader />
+  const isAuthenticated = useAuthCheck()
 
   useEffect(() => {
     setTaskList(data)
@@ -43,6 +43,8 @@ export default function TaskDashboard() {
     openModal()
   }
 
+  if (!isAuthenticated) return <Loader />
+
   if (!data || !taskList) return <Loader />
 
   return (
@@ -50,15 +52,16 @@ export default function TaskDashboard() {
       <Title order={2}>{t('menu.task.dashboard')}</Title>
 
       <div style={{ display: 'flex', gap: '1rem' }}>
-        {Object.keys(statusList).map((status: TaskStatusType) => (
-          <Dashboard
-            key={status}
-            label={status}
-            itemList={taskList.filter((task) => task.status === status)}
-            onMove={onMoveTask}
-            onClick={onClick}
-          />
-        ))}
+        {statusList &&
+          Object.keys(statusList).map((status: TaskStatusType) => (
+            <Dashboard
+              key={status}
+              label={status}
+              itemList={taskList.filter((task: TaskType) => task.status === status)}
+              onMove={onMoveTask}
+              onClick={onClick}
+            />
+          ))}
       </div>
       {/* タスク詳細モーダル */}
       {taskDetail && (

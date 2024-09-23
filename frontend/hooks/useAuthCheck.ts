@@ -2,14 +2,16 @@ import { useAuth } from '../context/AuthContext' // AuthContextをインポー�
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+// TODO：画面更新時に戻らないようにする
 export const useAuthCheck = () => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, loading } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !isAuthenticated) {
       router.push('/login')
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, loading])
+
   return isAuthenticated
 }

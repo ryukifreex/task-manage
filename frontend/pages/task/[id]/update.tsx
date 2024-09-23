@@ -11,7 +11,9 @@ export default function Edit() {
   const { query } = useRouter()
   const id = query.id ? Number(query.id) : undefined
   const { data, error } = useGetTask(id)
-  if (!useAuthCheck()) return <Loader />
+  const isAuthenticated = useAuthCheck()
+
+  if (!isAuthenticated) return <Loader />
 
   if (error) {
     console.log('pare', { error })

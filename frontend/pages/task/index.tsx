@@ -11,7 +11,9 @@ export default function Task() {
   const { t } = useTranslation()
   const { data, error, mutate } = useGetTaskList()
   const { isModalOpen, openModal, closeModal } = useModal()
-  if (!useAuthCheck()) return <Loader />
+  const isAuthenticated = useAuthCheck()
+
+  if (!isAuthenticated) return <Loader />
 
   if (error) return <TaskError />
 

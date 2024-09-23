@@ -5,7 +5,9 @@ import { useAuthCheck } from '../../hooks/useAuthCheck'
 
 export default function Create() {
   const { t } = useTranslation()
-  if (!useAuthCheck()) return <Loader />
+  const isAuthenticated = useAuthCheck()
+
+  if (!isAuthenticated) return <Loader />
 
   return (
     <>

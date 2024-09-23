@@ -12,8 +12,9 @@ export default function Detail() {
   const { query } = useRouter()
   const id = query.id ? Number(query.id) : undefined
   const { data, error } = useGetTask(id)
-  if (!useAuthCheck()) return <Loader />
+  const isAuthenticated = useAuthCheck()
 
+  if (!isAuthenticated) return <Loader />
   if (error) {
     console.log({ error })
     return <TaskError type="GET" message={t('task.error.get')} />

@@ -48,7 +48,7 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
           />
 
           {/* Status */}
-          {ready && (
+          {ready && statusList && (
             <Select
               label={t('task.label.status')}
               data={Object.keys(statusList).map((status: TaskStatusType) => ({

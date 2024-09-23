@@ -14,7 +14,7 @@ export default function TaskCreate() {
   const { statusList } = useTaskStatusList()
   const { isModalOpen, openModal, closeModal } = useModal()
   const router = useRouter()
-  const defaultStatus = Object.keys(statusList)[0] as TaskStatusType
+  const defaultStatus = statusList ? (Object.keys(statusList)[0] as TaskStatusType) : undefined
   const useFormReturn = useForm<TaskFormType>({
     defaultValues: {
       title: '',
@@ -32,6 +32,7 @@ export default function TaskCreate() {
       })
       return
     }
+    // TODO:作成失敗時のエラーはドリング
     createTask({
       title: formData.title,
       description: formData.description,

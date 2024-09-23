@@ -4,8 +4,18 @@ from user.serializers import UserSerializer
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer(read_only=True)
 
     class Meta:
         model = Task
-        fields = "__all__"
+        fields = (
+            "id",
+            "title",
+            "description",
+            "status",
+            "created_by",
+            "assigned_to",
+            "start_date",
+            "end_date",
+            "created_at",
+            "updated_at",
+        )
