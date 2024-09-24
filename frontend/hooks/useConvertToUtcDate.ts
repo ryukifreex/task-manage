@@ -2,11 +2,11 @@ import { format, toZonedTime } from 'date-fns-tz'
 
 /**
  * ユーザーの日付をUTCフォーマットにして返す
- * @param {string | null} date
+ * @param {Date | null} date
  * @returns {string} formattedDate
  */
 
-export const useConvertToUtcDate = (date: string) => {
+export const useConvertToUtcDate = (date: Date) => {
   // UTC時間に変換
   if (date) {
     const utcDate = toZonedTime(date, 'UTC')

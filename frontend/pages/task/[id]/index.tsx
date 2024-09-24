@@ -1,6 +1,6 @@
 import { useGetTask } from '../../../hooks/task/useGetTask'
 import { useTranslation } from 'react-i18next'
-import { Group, Loader, Title } from '@mantine/core'
+import { Container, Group, Loader, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
 import TaskDetail from '../../../components/task/TaskDetail'
 import TaskError from '../../../components/task/TaskError'
@@ -20,15 +20,14 @@ export default function Detail() {
     return <TaskError type="GET" message={t('task.error.get')} />
   }
 
-  return data ? (
-    <>
+  if (!data) return <Loader />
+  return (
+    <Container>
       <Group justify={'space-between'}>
         <Title order={2}>{data.title}</Title>
         <StatusBadge status={data.status} />
       </Group>
       <TaskDetail task={data} />
-    </>
-  ) : (
-    <Loader />
+    </Container>
   )
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Dashboard from '../../components/Dashboard'
 import { useGetTaskList } from '../../hooks/task/useGetTaskList'
-import { Loader, Modal, Title } from '@mantine/core'
+import { Container, Loader, Modal, Title } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { TaskStatusType, TaskType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
@@ -49,9 +49,10 @@ export default function TaskDashboard() {
 
   return (
     <>
-      <Title order={2}>{t('menu.task.dashboard')}</Title>
-
-      <div style={{ display: 'flex', gap: '1rem' }}>
+      <Container my={'lg'}>
+        <Title order={2}>{t('menu.task.dashboard')}</Title>
+      </Container>
+      <Container style={{ display: 'flex', gap: '1rem' }}>
         {statusList &&
           Object.keys(statusList).map((status: TaskStatusType) => (
             <Dashboard
@@ -62,7 +63,7 @@ export default function TaskDashboard() {
               onClick={onClick}
             />
           ))}
-      </div>
+      </Container>
       {/* タスク詳細モーダル */}
       {taskDetail && (
         <Modal

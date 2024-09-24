@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext' // AuthContextをインポー�
 import LoginForm from '../components/user/LoginForm'
 import { LoginFormType } from '../types/user'
 import router from 'next/router'
+import { Container } from '@mantine/core'
 
 export default function Login() {
   const { login, isAuthenticated } = useAuth()
@@ -13,5 +14,9 @@ export default function Login() {
 
   if (isAuthenticated) router.push('/')
 
-  return <LoginForm onSubmit={onSubmit} />
+  return (
+    <Container>
+      <LoginForm onSubmit={onSubmit} />
+    </Container>
+  )
 }

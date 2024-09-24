@@ -35,7 +35,6 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
   const { data: userList, error, mutate } = useGetUserList()
 
   return (
-    // <Box style={{ padding: '20px' }}>
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack gap={'md'}>
         {/* Title */}
@@ -63,6 +62,7 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
         />
 
         {/* Status */}
+        {/* TODO:並びを綺麗に */}
         <Flex justify={'space-between'}>
           {ready && statusList && (
             <Controller
@@ -93,7 +93,6 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
               render={({ field }) => (
                 <Select
                   label={t('task.label.assignee')}
-                  // placeholder="Pick value or enter anything"
                   data={Object.values(userList).map((user) => ({
                     key: user.id,
                     label: user.username,
@@ -114,7 +113,7 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
                 <div>{t('task.label.start_date')}</div>
                 <ReactDatePicker
                   dateFormat={t('task.date_format')}
-                  // selected={field.value}
+                  selected={field.value}
                   onChange={field.onChange}
                   error={errors.start_date?.message}
                 />
@@ -132,7 +131,7 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
                 <ReactDatePicker
                   label={t('task.label.end_date')}
                   dateFormat={t('task.date_format')}
-                  // selected={field.value}
+                  selected={field.value}
                   onChange={field.onChange}
                   error={errors.end_date?.message}
                 />
@@ -145,6 +144,5 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
         </Button>
       </Stack>
     </form>
-    // </Box>
   )
 }

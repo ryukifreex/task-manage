@@ -5,10 +5,10 @@ export type TaskType = {
   status: TaskStatusType
   assignee?: string
   created_by: string
-  end_date?: string
-  start_date?: string
-  created_at?: string
-  updated_at?: string
+  end_date?: Date
+  start_date?: Date
+  created_at?: Date
+  updated_at?: Date
 }
 
 export type TaskFormType = {
@@ -17,8 +17,8 @@ export type TaskFormType = {
   description?: string
   status: string
   assignee?: string
-  end_date?: string
-  start_date?: string
+  end_date?: Date
+  start_date?: Date
 }
 
 export type TaskStatusType = 'open' | 'in_progress' | 'done' | 'closed' | 'pending'
