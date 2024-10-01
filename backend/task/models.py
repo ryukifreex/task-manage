@@ -23,8 +23,8 @@ class Task(models.Model):
     assignee = models.ForeignKey(
         User, on_delete=models.PROTECT, null=True, blank=True, related_name="assigned_tasks"
     )
-    start_date = models.DateField(null=True, blank=True)
-    end_date = models.DateField(null=True, blank=True)
+    start_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True, blank=True)
     organization = models.ForeignKey(
         Organization,
         null=True,

@@ -3,10 +3,10 @@ import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 
 /**
- * UTC日時をユーザーのタイムゾーンに合わせたフォーマットにして返す
+ * UTC日時をユーザーのタイムゾーンに合わせた表示形式にして返す
  * @param {Date} date
- * @returns {Function} convertDate - 日付のみをフォーマットする関数
- * @returns {Function} convertDateTime - 日付と時刻をフォーマットする関数
+ * @returns {Function} toLocalDate - 日付のみをフォーマットする関数
+ * @returns {Function} toLocalDateTime - 日付と時刻をフォーマットする関数
  *  */
 export const useConvertToLocal = () => {
   // ユーザーのローカルタイムゾーンを取得
@@ -18,12 +18,12 @@ export const useConvertToLocal = () => {
   const dateFormat = locale === 'ja' ? 'yyyy年MM月dd日' : 'MMM/dd/yyyy'
 
   // UTCからローカルタイムゾーンに変換
-  const convertDateTime = useMemo(() => {
+  const toLocalDateTime = useMemo(() => {
     return (utcDate: Date) => {
       if (!utcDate) return ''
       try {
         const localTime = toZonedTime(utcDate, timeZone)
-        return format(localTime, dateTimeFormat, { timeZone })
+        return format(localTime, dateTimeFormat)
       } catch (error) {
         console.error('Invalid UTC date string:', error)
         return ''
@@ -31,17 +31,17 @@ export const useConvertToLocal = () => {
     }
   }, [timeZone, dateTimeFormat])
 
-  const convertDate = useMemo(() => {
+  const toLocalDate = useMemo(() => {
     return (utcDate: Date) => {
       if (!utcDate) return ''
       try {
         const localTime = toZonedTime(utcDate, timeZone)
-        return format(localTime, dateFormat, { timeZone })
+        return format(localTime, dateFormat)
       } catch (error) {
         console.error('Invalid UTC date string:', error)
         return ''
       }
     }
   }, [timeZone, dateFormat])
-  return { convertDate, convertDateTime }
+  return { toLocalDate, toLocalDateTime }
 }

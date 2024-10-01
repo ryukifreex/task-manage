@@ -16,7 +16,7 @@ export type TaskListTableProps = {
 export default function TaskListTable({ taskList, userList }: TaskListTableProps) {
   const { t } = useTranslation()
   const router = useRouter()
-  const { convertDate, convertDateTime } = useConvertToLocal()
+  const { toLocalDate, toLocalDateTime } = useConvertToLocal()
   const thStyle: CSSProperties = { minWidth: '6rem', textAlign: 'center' }
   const tdFullStyle: CSSProperties = {
     textWrap: 'nowrap',
@@ -29,7 +29,7 @@ export default function TaskListTable({ taskList, userList }: TaskListTableProps
   }
   const labelName = (id) => {
     const user = userList && userList.find((user) => user.id === id)
-    return user ? user.username : 'Unknown'
+    return user ? user.username : ''
   }
   const head = (
     <Table.Tr>
@@ -47,19 +47,19 @@ export default function TaskListTable({ taskList, userList }: TaskListTableProps
 
   const rows = taskList.map((task) => (
     <Table.Tr key={task.id}>
-      <Table.Td style={{ ...tdFullStyle }}>{convertDateTime(task.created_at)}</Table.Td>
+      <Table.Td style={{ ...tdFullStyle }}>{toLocalDateTime(task.created_at)}</Table.Td>
       <Table.Td style={{ ...tdReadStyle }}>{task.title}</Table.Td>
       <Table.Td style={{ ...tdReadStyle }}>{task.description}</Table.Td>
       <Table.Td style={{ ...tdFullStyle }}>
         <StatusBadge status={task.status} />
       </Table.Td>
       <Table.Td style={{ ...tdReadStyle }}>{labelName(task.assignee)}</Table.Td>
-      <Table.Td style={{ ...tdReadStyle }}>{convertDate(task.start_date)}</Table.Td>
-      <Table.Td style={{ ...tdReadStyle }}>{convertDate(task.end_date)}</Table.Td>
+      <Table.Td style={{ ...tdReadStyle }}>{toLocalDate(task.start_date)}</Table.Td>
+      <Table.Td style={{ ...tdReadStyle }}>{toLocalDate(task.end_date)}</Table.Td>
       <Table.Td style={{ ...tdFullStyle }}>
         <Button onClick={() => router.push(`/task/${task.id}`)}>{t('form.edit')}</Button>
       </Table.Td>
-      <Table.Td style={{ ...tdFullStyle }}>{convertDateTime(task.updated_at)}</Table.Td>
+      <Table.Td style={{ ...tdFullStyle }}>{toLocalDateTime(task.updated_at)}</Table.Td>
     </Table.Tr>
   ))
 
