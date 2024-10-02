@@ -1,7 +1,6 @@
 # on local
 .memo
 .devcontainer
-setup.cfg
 # database
 
 db_data
