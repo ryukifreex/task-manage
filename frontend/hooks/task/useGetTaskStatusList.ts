@@ -5,7 +5,7 @@ import { fetcher } from '../fetcher'
 
 export const useGetTaskStatusList = () => {
   const { data, error } = useSWR<TaskStatusListType>(
-    `${API_BASE_URL}/task/status_label/`,
+    `${API_BASE_URL}/task/status-label/`,
     fetcher
   )
   return { data, error }
