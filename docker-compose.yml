@@ -21,11 +21,15 @@ services:
     depends_on:
       - db
     environment:
+    # Should change to prod enviroment
       - DB_HOST=db
       - DB_PORT=5432
       - DB_NAME=postgres
       - DB_USER=postgres
       - DB_PASSWORD=postgres
+      - FRONTEND_BASE_URL=http://localhost:3000
+      - EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+
     command: sh -c "python /app/wait_for_db.py && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
   web:
@@ -37,6 +41,7 @@ services:
     depends_on:
       - api
     environment:
+    # Should change to prod enviroment
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true

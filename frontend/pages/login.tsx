@@ -2,21 +2,26 @@ import { SubmitHandler } from 'react-hook-form'
 import { useAuth } from '../context/AuthContext' // AuthContextをインポート
 import LoginForm from '../components/user/LoginForm'
 import { LoginFormType } from '../types/user'
-import router from 'next/router'
-import { Container } from '@mantine/core'
+import { useRouter } from 'next/router'
+import { Row, Col } from 'antd'
 
 export default function Login() {
   const { login, isAuthenticated } = useAuth()
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<LoginFormType> = (data) => {
     login(data.email, data.password)
   }
 
-  if (isAuthenticated) router.push('/')
+  if (isAuthenticated) {
+    router.push('/')
+  }
 
   return (
-    <Container>
-      <LoginForm onSubmit={onSubmit} />
-    </Container>
+    <Row justify="center" align="middle" style={{ minHeight: '100vh' }}>
+      <Col xs={24} sm={12} md={8}>
+        <LoginForm onSubmit={onSubmit} />
+      </Col>
+    </Row>
   )
 }

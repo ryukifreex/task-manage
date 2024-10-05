@@ -65,10 +65,10 @@ class CustomUserManager(UserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
-# class CustomUser(AbstractBaseUser, PermissionsMixin):
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    username = models.CharField(max_length=150)
     email = models.EmailField(max_length=255, unique=True)
     is_admin = models.BooleanField(default=False)
 
