@@ -1,8 +1,14 @@
 import router from 'next/router'
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
-import { Loader } from '@mantine/core'
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react'
 import axios from 'axios'
 import { API_BASE_URL } from '../config/api'
+import { Loading } from '../components/Loading'
 
 type AuthContextType = {
   loading: boolean
@@ -35,11 +41,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // 自分の権限情報を取得
       if (isAuthenticated) {
         try {
-          const userInfoResponse = await axios.get(`${API_BASE_URL}/user/self-info/`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          const userInfoResponse = await axios.get(
+            `${API_BASE_URL}/user/self-info/`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           setIsAdmin(userInfoResponse.data.is_admin)
         } catch (error) {
           router.push('/')
@@ -76,8 +85,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ loading, isAuthenticated, isAdmin, login, logout }}>
-      {loading ? <Loader /> : children}
+    <AuthContext.Provider
+      value={{ loading, isAuthenticated, isAdmin, login, logout }}
+    >
+      {loading ? <Loading /> : children}
     </AuthContext.Provider>
   )
 }

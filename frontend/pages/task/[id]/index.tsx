@@ -1,11 +1,12 @@
 import { useGetTask } from '../../../hooks/task/useGetTask'
 import { useTranslation } from 'react-i18next'
-import { Container, Group, Loader, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
 import TaskDetail from '../../../components/task/TaskDetail'
 import TaskError from '../../../components/task/TaskError'
 import StatusBadge from '../../../components/StatusBadge'
 import { useAuthCheck } from '../../../hooks/useAuthCheck'
+import { Col, Typography } from 'antd'
+import { Loading } from '../../../components/Loading'
 
 export default function Detail() {
   const { t } = useTranslation()
@@ -14,20 +15,18 @@ export default function Detail() {
   const { data, error } = useGetTask(id)
   const isAuthenticated = useAuthCheck()
 
-  if (!isAuthenticated) return <Loader />
+  if (!isAuthenticated) return <Loading />
   if (error) {
     console.log({ error })
     return <TaskError type="GET" message={t('task.error.get')} />
   }
 
-  if (!data) return <Loader />
+  if (!data) return <Loading />
   return (
-    <Container>
-      <Group justify={'space-between'}>
-        <Title order={2}>{data.title}</Title>
-        <StatusBadge status={data.status} />
-      </Group>
+    <Col style={{ padding: '2rem' }}>
+      <Typography.Title>{data.title}</Typography.Title>
+      <StatusBadge status={data.status} />
       <TaskDetail task={data} />
-    </Container>
+    </Col>
   )
 }

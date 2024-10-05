@@ -5,9 +5,9 @@ import TaskForm from './TaskForm'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TaskFormType } from '../../types/task'
 import { TaskType } from '../../types/task'
-import { Button, Modal, Text } from '@mantine/core'
 import { useModal } from '../../hooks/useModal'
 import { useRouter } from 'next/router'
+import { Button, Modal, Typography } from 'antd'
 
 export type TaskUpdateFormProps = {
   task: TaskType
@@ -71,26 +71,23 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
   return (
     <>
       <Modal
-        opened={isModalOpen}
-        onClose={() => {
+        open={isModalOpen}
+        onCancel={() => {
           closeModal()
           router.push('/')
         }}
-        withCloseButton={false}
-        radius={5}
-        centered
+        footer={
+          <Button
+            onClick={() => {
+              closeModal()
+              router.push('/')
+            }}
+          >
+            OK
+          </Button>
+        }
       >
-        <Text ta={'center'}>{t('form.success.update')}</Text>
-        <Button
-          mt="md"
-          fullWidth
-          onClick={() => {
-            closeModal()
-            router.push('/')
-          }}
-        >
-          OK
-        </Button>
+        <Typography.Text>{t('form.success.update')}</Typography.Text>
       </Modal>
       <TaskForm useForm={useFormReturn} onSubmit={onSubmit} />
     </>

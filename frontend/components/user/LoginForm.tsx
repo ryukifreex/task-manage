@@ -1,6 +1,6 @@
-import { Button, Form, Input, Space, Typography } from 'antd'
+import { Button, Flex, Form, Input, Space } from 'antd'
 import { LoginFormType } from '../../types/user'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 
@@ -11,7 +11,7 @@ export type LoginFormProps = {
 export default function LoginForm({ onSubmit }: LoginFormProps) {
   const { t } = useTranslation()
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormType>()
@@ -19,7 +19,7 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
   return (
     <Form
       layout="vertical"
-      onFinish={handleSubmit(onSubmit)}
+      onSubmitCapture={handleSubmit(onSubmit)}
       style={{
         borderRadius: '8px',
         border: '1px solid #d9d9d9',
@@ -31,15 +31,19 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
         validateStatus={errors.email ? 'error' : ''}
         help={errors.email?.message}
       >
-        <Input
-          placeholder={t('user.label.email')}
-          {...register('email', {
+        <Controller
+          name="email"
+          control={control}
+          rules={{
             required: t('form.validation.required'),
             pattern: {
               value: /^\S+@\S+$/,
               message: t('form.validation.type_email'),
             },
-          })}
+          }}
+          render={({ field }) => (
+            <Input placeholder={t('user.label.email')} {...field} />
+          )}
         />
       </Form.Item>
 
@@ -48,21 +52,23 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
         validateStatus={errors.password ? 'error' : ''}
         help={errors.password?.message}
       >
-        <Input.Password
-          placeholder={t('user.label.password')}
-          {...register('password', {
-            required: t('form.validation.required'),
-          })}
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: t('form.validation.required') }}
+          render={({ field }) => (
+            <Input.Password placeholder={t('user.label.password')} {...field} />
+          )}
         />
       </Form.Item>
 
       <Form.Item>
-        <Space>
+        <Flex justify={'space-evenly'}>
           <Button type="primary" htmlType="submit">
             {t('user.label.login')}
           </Button>
-          <Link href={'/register'}>{t('user.register')}</Link>
-        </Space>
+          <Link href={'/register'}>{t('user.label.new')}</Link>
+        </Flex>
       </Form.Item>
     </Form>
   )

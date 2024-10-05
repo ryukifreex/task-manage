@@ -65,9 +65,7 @@ class UserRegisterView(views.APIView):
             )
 
             return Response(
-                {
-                    "message": "Registration successful. Please check your email to activate your account."
-                },
+                {"message": "success"},
                 status=status.HTTP_201_CREATED,
             )
 
@@ -88,9 +86,5 @@ class ActivateAccountView(views.APIView):
             user.is_active = True
             user.save()
             # 認証完了後、Next.jsの認証完了画面にリダイレクトする
-            return Response(
-                {"message": "Account activated successfully."}, status=status.HTTP_200_OK
-            )
-        return Response(
-            {"message": "Activation link is invalid."}, status=status.HTTP_400_BAD_REQUEST
-        )
+            return Response({"message": "activate_success."}, status=status.HTTP_200_OK)
+        return Response({"message": "activate_failed."}, status=status.HTTP_400_BAD_REQUEST)

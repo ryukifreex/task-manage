@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Dashboard from '../../components/Dashboard'
 import { useGetTaskList } from '../../hooks/task/useGetTaskList'
-import { Container, Loader, Modal, Title } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { TaskStatusType, TaskType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
@@ -9,6 +8,8 @@ import { useUpdateTask } from '../../hooks/task/useUpdateTask'
 import TaskDetail from '../../components/task/TaskDetail'
 import { useModal } from '../../hooks/useModal'
 import { useAuthCheck } from '../../hooks/useAuthCheck'
+import { Button, Flex, Modal, Row, Typography } from 'antd'
+import { Loading } from '../../components/Loading'
 
 export default function TaskDashboard() {
   const { t } = useTranslation()
@@ -29,7 +30,9 @@ export default function TaskDashboard() {
     const newTaskList: TaskType[] = taskList.map((task) =>
       task.id === taskId ? { ...task, status: newStatus } : task
     )
-    const selectedTask: TaskType = newTaskList.find((task) => task.id === taskId)
+    const selectedTask: TaskType = newTaskList.find(
+      (task) => task.id === taskId
+    )
     setTaskList(newTaskList)
     updateTask(selectedTask)
   }
@@ -43,36 +46,40 @@ export default function TaskDashboard() {
     openModal()
   }
 
-  if (!isAuthenticated) return <Loader />
+  if (!isAuthenticated) return <Loading />
 
-  if (!data || !taskList) return <Loader />
+  if (!data || !taskList) return <Loading />
 
   return (
     <>
-      <Container my={'lg'}>
-        <Title order={2}>{t('menu.task.dashboard')}</Title>
-      </Container>
-      <Container style={{ display: 'flex', gap: '1rem' }}>
+      <Row justify="center">
+        <Typography.Title>{t('menu.task.dashboard')}</Typography.Title>
+      </Row>
+      <Flex justify="space-evenly">
         {statusList &&
           Object.keys(statusList).map((status: TaskStatusType) => (
             <Dashboard
               key={status}
               label={status}
-              itemList={taskList.filter((task: TaskType) => task.status === status)}
+              itemList={taskList.filter(
+                (task: TaskType) => task.status === status
+              )}
               onMove={onMoveTask}
               onClick={onClick}
             />
           ))}
-      </Container>
+      </Flex>
       {/* タスク詳細モーダル */}
       {taskDetail && (
         <Modal
-          opened={isModalOpen}
-          onClose={() => {
-            closeModal()
-          }}
+          open={isModalOpen}
+          footer={
+            <Button type="primary" onClick={() => closeModal()}>
+              OK
+            </Button>
+          }
         >
-          <Title order={3}>{taskDetail.title}</Title>
+          <Typography.Title>{taskDetail.title}</Typography.Title>
           <TaskDetail task={taskDetail} />
         </Modal>
       )}

@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { API_BASE_URL } from '../../config/api'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
+import { Button, Col, Typography } from 'antd'
 
 export default function () {
   const router = useRouter()
+  const { t } = useTranslation()
   const { uidb64, token } = router.query
   const [message, setMessage] = useState('')
   console.log({ uidb64, token })
@@ -15,25 +18,27 @@ export default function () {
       axios
         .get(`${API_BASE_URL}/user/activate/${uidb64}/${token}/`)
         .then((response) => {
-          setMessage(response.data.message)
+          setMessage(t(`user.message.${response.data.message}`))
           // 認証が完了したらトップページに2秒後に遷移
           setTimeout(() => {
             router.push('/')
           }, 2000)
         })
         .catch((error) => {
-          setMessage('Activation failed. The link may be invalid or expired.')
+          setMessage(t('user.message.activate_failed'))
         })
     }
   }, [uidb64, token, router])
 
   return (
-    <div>
-      <h2>{message}</h2>
-      <p>Redirecting to homepage...</p>
-      <button>
-        <Link href={'/'}>back to home</Link>
-      </button>
-    </div>
+    <Col style={{ padding: '2rem' }}>
+      <Typography.Title level={2}>{message}</Typography.Title>
+      <Typography.Paragraph>
+        {t('user.message.redirecting')}
+      </Typography.Paragraph>
+      <Button type="primary">
+        <Link href="/">{t('app.back_login')}</Link>
+      </Button>
+    </Col>
   )
 }

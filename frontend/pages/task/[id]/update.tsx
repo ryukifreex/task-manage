@@ -1,10 +1,11 @@
 import { useGetTask } from '../../../hooks/task/useGetTask'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-import { Container, Loader, Title } from '@mantine/core'
 import TaskUpdate from '../../../components/task/TaskUpdate'
 import TaskError from '../../../components/task/TaskError'
 import { useAuthCheck } from '../../../hooks/useAuthCheck'
+import { Col, Typography } from 'antd'
+import { Loading } from '../../../components/Loading'
 
 export default function Edit() {
   const { t } = useTranslation()
@@ -13,17 +14,17 @@ export default function Edit() {
   const { data, error } = useGetTask(id)
   const isAuthenticated = useAuthCheck()
 
-  if (!isAuthenticated) return <Loader />
+  if (!isAuthenticated) return <Loading />
 
   if (error) {
     console.log('pare', { error })
     return <TaskError type="GET" message={t('task.error.get')} />
   }
-  if (!data) return <Loader />
+  if (!data) return <Loading />
   return (
-    <Container>
-      <Title order={2}>{t('menu.task.edit')}</Title>
+    <Col style={{ padding: '2rem' }}>
+      <Typography.Title>{t('menu.task.edit')}</Typography.Title>
       <TaskUpdate task={data} />
-    </Container>
+    </Col>
   )
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useDrag } from 'react-dnd'
-import { Card } from '@mantine/core'
+import { Card } from 'antd'
 
 type BoardCardProps = {
   id: number
@@ -28,7 +28,7 @@ export default function BoardItem({ id, label, onClick }: BoardCardProps) {
 
   return (
     <div ref={cardRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <Card onClick={() => onClick(id)} shadow="sm" padding="lg">
+      <Card onClick={() => onClick(id)} hoverable>
         {label}
       </Card>
     </div>

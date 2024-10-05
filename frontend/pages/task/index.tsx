@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-import { Button, Flex, Loader, Modal, Title } from '@mantine/core'
 import { useGetTaskList } from '../../hooks/task/useGetTaskList'
 import TaskCreate from '../../components/task/TaskCreate'
 import { useModal } from '../../hooks/useModal'
@@ -7,6 +6,8 @@ import TaskListTable from '../../components/task/TaskListTable'
 import TaskError from '../../components/task/TaskError'
 import { useAuthCheck } from '../../hooks/useAuthCheck'
 import { useGetUserList } from '../../hooks/user/useGetUserList'
+import { Button, Col, Flex, Modal } from 'antd'
+import { Loading } from '../../components/Loading'
 
 export default function Task() {
   const { t } = useTranslation()
@@ -15,32 +16,37 @@ export default function Task() {
   const { isModalOpen, openModal, closeModal } = useModal()
   const isAuthenticated = useAuthCheck()
 
-  if (!isAuthenticated) return <Loader />
+  if (!isAuthenticated) return <Loading />
 
   if (error || userError) return <TaskError />
 
   return (
-    <>
-      {/* <Title order={2}>{t('app.name')}</Title> */}
-
+    <Col style={{ padding: '2rem' }}>
       {/* タスク追加ボタン */}
-      <Flex justify={'flex-end'} mb={'md'}>
-        <Button onClick={() => openModal()}>{t('task.add')}</Button>
+      <Flex justify={'flex-end'}>
+        <Button type="primary" onClick={() => openModal()}>
+          {t('task.add')}
+        </Button>
       </Flex>
 
       {/* タスク追加モーダル */}
       <Modal
-        opened={isModalOpen}
-        onClose={() => {
+        open={isModalOpen}
+        onOk={() => {
           closeModal()
           mutate()
         }}
+        onCancel={() => closeModal()}
       >
         <TaskCreate />
       </Modal>
 
       {/* タスク一覧テーブル */}
-      {data ? <TaskListTable taskList={data} userList={userList} /> : <Loader />}
-    </>
+      {data ? (
+        <TaskListTable taskList={data} userList={userList} />
+      ) : (
+        <Loading />
+      )}
+    </Col>
   )
 }

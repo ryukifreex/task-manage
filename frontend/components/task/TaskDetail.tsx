@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import { Button, Flex, Modal, Text, Title } from '@mantine/core'
 import { TaskType } from '../../types/task'
 import { useDeleteTask } from '../../hooks/task/useDeleteTask'
 import { useModal } from '../../hooks/useModal'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { Button, Flex, Modal, Typography } from 'antd'
 
 export type TaskDetailProps = {
   task: TaskType
@@ -26,48 +26,48 @@ export default function TaskDetail({ task }: TaskDetailProps) {
     <>
       <p>{task.description}</p>
       {!deleted && (
-        <Flex gap={'lg'}>
-          <Button onClick={() => router.push(`/task/${task.id}/update`)}>
+        <Flex>
+          <Button
+            type="primary"
+            onClick={() => router.push(`/task/${task.id}/update`)}
+          >
             {t('task.label.edit')}
           </Button>
-          <Button color={'red'} onClick={() => openModal()}>
+          <Button danger={true} onClick={() => openModal()}>
             {t('form.delete')}
           </Button>
         </Flex>
       )}
       {/* 削除関連モーダル */}
       <Modal
-        opened={isModalOpen}
-        onClose={() => {
+        open={isModalOpen}
+        onCancel={() => {
           closeModal()
         }}
-        withCloseButton={false}
-        radius={5}
         centered
       >
         {deleted ? (
           // 削除後の表示
           <>
-            <Text ta={'center'}>{t('form.success.delete')}</Text>
+            <Typography.Text>{t('form.success.delete')}</Typography.Text>
             <Flex justify={'center'}>
               <Button
-                mt={'md'}
                 onClick={() => {
                   closeModal()
                   router.push('/')
                 }}
               >
-                {t('app.back')}
+                {t('app.back_home')}
               </Button>
             </Flex>
           </>
         ) : (
           // 削除前の表示
           <>
-            <Text ta={'center'}>{t('form.confirm.delete')}</Text>
+            <Typography.Text>{t('form.confirm.delete')}</Typography.Text>
             <Flex justify={'space-evenly'}>
               <Button
-                mt={'md'}
+                type="primary"
                 onClick={() => {
                   closeModal()
                 }}
@@ -75,8 +75,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
                 {t('form.cancel')}
               </Button>
               <Button
-                mt={'md'}
-                color={'red'}
+                danger={true}
                 onClick={() => {
                   handleDelete()
                 }}

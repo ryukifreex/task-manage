@@ -1,4 +1,5 @@
 import React, { ErrorInfo, ReactNode } from 'react'
+import ErrorScreen from './ErrorScreen'
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -27,13 +28,7 @@ class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>
-          <h1>Something went wrong</h1>
-          <p>An error occurred. Please try again later.</p>
-          <button onClick={() => window.location.reload()}>Refresh Page</button>
-        </div>
-      )
+      return <ErrorScreen error={500} />
     }
 
     return this.props.children

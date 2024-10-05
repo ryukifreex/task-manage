@@ -5,8 +5,8 @@ import { useCreateTask } from '../../hooks/task/useCreateTask'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
 import TaskForm from './TaskForm'
 import { useModal } from '../../hooks/useModal'
-import { Button, Modal, Text } from '@mantine/core'
 import { useRouter } from 'next/router'
+import { Modal, Typography } from 'antd'
 
 export default function TaskCreate() {
   const { t } = useTranslation()
@@ -14,7 +14,9 @@ export default function TaskCreate() {
   const { statusList } = useTaskStatusList()
   const { isModalOpen, openModal, closeModal } = useModal()
   const router = useRouter()
-  const defaultStatus = statusList ? (Object.keys(statusList)[0] as TaskStatusType) : undefined
+  const defaultStatus = statusList
+    ? (Object.keys(statusList)[0] as TaskStatusType)
+    : undefined
   const useFormReturn = useForm<TaskFormType>({
     defaultValues: {
       title: '',
@@ -50,26 +52,16 @@ export default function TaskCreate() {
 
       {/* 完了時のモーダル */}
       <Modal
-        opened={isModalOpen}
-        onClose={() => {
+        open={isModalOpen}
+        onOk={() => {
           router.push('/')
           closeModal()
         }}
-        withCloseButton={false}
-        radius={5}
-        centered
+        onCancel={() => {
+          closeModal()
+        }}
       >
-        <Text ta="center">{t('form.success.create')}</Text>
-        <Button
-          mt="md"
-          fullWidth
-          onClick={() => {
-            router.push('/')
-            closeModal()
-          }}
-        >
-          OK
-        </Button>
+        <Typography.Text>{t('form.success.create')}</Typography.Text>
       </Modal>
     </>
   )

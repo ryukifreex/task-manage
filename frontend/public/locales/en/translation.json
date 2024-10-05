@@ -1,6 +1,25 @@
 {
   "app": {
-    "name": "Task Manage"
+    "name": "Task Manage",
+    "back_home": "Back to Home",
+    "back_login": "Back to Login",
+    "error": {
+      "title": "Something went wrong",
+      "description": "An error occurred. Please try again later.",
+      "refresh": "Refresh Page",
+      "404": {
+        "title": "Page Not Found",
+        "description": "The page you are looking for does not exist."
+      },
+      "500": {
+        "title": "Internal Server Error",
+        "description": "An unexpected error occurred. Please try again later."
+      },
+      "general": {
+        "title": "Something Went Wrong",
+        "description": "An error occurred. Please try again later."
+      }
+    }
   },
   "menu": {
     "task": {
@@ -23,8 +42,11 @@
     "delete": "Delete",
     "cancel": "cancel",
     "submit": "Submit",
+    "register": "Register",
     "validation": {
       "required": "Required",
+      "min3": "Required3",
+      "min6": "Required6",
       "type_email": "Invalid email format",
       "email_exist": "Email already in use"
     },
@@ -37,7 +59,8 @@
       "delete": "deleted!"
     },
     "failed": {
-      "update": "Update failed"
+      "update": "Update failed",
+      "register": "Register failed"
     }
   },
   "task": {
@@ -69,12 +92,24 @@
   },
   "user": {
     "label": {
+      "name": "name",
       "email": "Email",
       "password": "Password",
-      "login": "Login"
+      "login": "Login",
+      "new": "Sign up",
+      "organization": "Organization",
+      "username": "name",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "active": "Active",
+      "admin": "Admin Permission"
     },
-    "form": {
-      "email_sent": "Email sent!"
+    "message": {
+      "activate_success": "Account activated successfully.",
+      "register_success": "Registration successful. ",
+      "email_sent": "Email sent! Please check your email to activate your account.",
+      "redirecting": "Redirecting to homepage...",
+      "activate_failed": "Activation failed. The link may be invalid or expired."
     }
   }
 }

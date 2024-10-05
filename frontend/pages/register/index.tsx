@@ -1,8 +1,11 @@
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { Controller, useForm, SubmitHandler } from 'react-hook-form'
 import axios from 'axios'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
+import { Form, Input, Button, Typography, message, Col, Flex, Row } from 'antd'
+import { API_BASE_URL } from '../../config/api'
+import Link from 'next/link'
 
 // フォーム入力の型定義
 type UserRegisterFormInputs = {
@@ -13,25 +16,21 @@ type UserRegisterFormInputs = {
 
 export default function UserRegister() {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<UserRegisterFormInputs>()
   const { t } = useTranslation()
-  const [message, setMessage] = useState('')
-  const [errorMessages, setErrorMessages] = useState<string[]>([])
   const router = useRouter()
+  const [errorMessages, setErrorMessages] = useState<string[]>([])
 
   // フォーム送信時の処理
   const onSubmit: SubmitHandler<UserRegisterFormInputs> = async (data) => {
     try {
-      const response = await axios.post(
-        'http://localhost:8000/api/user/register/',
-        data
-      )
-      setMessage(response.data.message)
+      const response = await axios.post(`${API_BASE_URL}/user/register/`, data)
+      message.success(t(`user.message.${response.data.message}`)) // Ant Designのメッセージコンポーネントを使用
       // 登録が成功したら次のページに遷移
-      router.push('/register/success')
+      router.push('/register/sent')
     } catch (error) {
       // バックエンドからのエラーメッセージを取得
       if (axios.isAxiosError(error) && error.response) {
@@ -46,63 +45,90 @@ export default function UserRegister() {
         }
         setErrorMessages(errorsList)
       } else {
-        setMessage('登録に失敗しました。もう一度お試しください。')
+        message.error(t('form.failed.register'))
       }
     }
   }
+
   return (
-    <div>
-      <h2>新規登録</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            {...register('email', {
-              required: t('form.required'),
-              pattern: /^\S+@\S+$/i,
-            })}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
+    <Row justify="center" align="middle">
+      <Col xs={24} sm={12} md={8}>
+        <Typography.Title level={2}>{t('user.label.new')}</Typography.Title>
+        <Form onFinish={handleSubmit(onSubmit)}>
+          <Form.Item
+            label={t('user.label.email')}
+            validateStatus={errors.email ? 'error' : ''}
+            help={errors.email?.message}
+          >
+            <Controller
+              name="email"
+              control={control}
+              rules={{
+                required: t('form.required'),
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: t('form.validation.type_email'),
+                },
+              }}
+              render={({ field }) => <Input type="email" {...field} />}
+            />
+          </Form.Item>
 
-        <div>
-          <label>ユーザー名:</label>
-          <input
-            type="text"
-            {...register('username', {
-              required: t('form.required'),
-              minLength: { value: 3, message: '3文字以上入力してください' },
-            })}
-          />
-          {errors.username && <p>{errors.username.message}</p>}
-        </div>
+          <Form.Item
+            label={t('user.label.name')}
+            validateStatus={errors.username ? 'error' : ''}
+            help={errors.username?.message}
+          >
+            <Controller
+              name="username"
+              control={control}
+              rules={{
+                required: t('form.required'),
+                minLength: { value: 3, message: t('form.validation.min3') },
+              }}
+              render={({ field }) => <Input type="text" {...field} />}
+            />
+          </Form.Item>
 
-        <div>
-          <label>パスワード:</label>
-          <input
-            type="password"
-            {...register('password', {
-              required: t('form.required'),
-              minLength: { value: 6, message: '6文字以上入力してください' },
-            })}
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
+          <Form.Item
+            label={t('user.label.password')}
+            validateStatus={errors.password ? 'error' : ''}
+            help={errors.password?.message}
+          >
+            <Controller
+              name="password"
+              control={control}
+              rules={{
+                required: t('form.required'),
+                minLength: { value: 6, message: t('form.validation.min6') },
+              }}
+              render={({ field }) => <Input.Password {...field} />}
+            />
+          </Form.Item>
 
-        <button type="submit">登録</button>
-      </form>
-      {message && <p>{message}</p>}
-      {/* ユニークエラーの表示 */}
-      {errorMessages.length > 0 && (
-        <div>
-          {errorMessages.map((error, index) => (
-            <p key={index} style={{ color: 'red' }}>
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
-    </div>
+          <Form.Item>
+            <Flex justify={'space-evenly'}>
+              <Button type="primary" htmlType="submit">
+                {t('form.register')}
+              </Button>
+              <Button type="primary">
+                <Link href="/">{t('app.back_home')}</Link>
+              </Button>
+            </Flex>
+          </Form.Item>
+        </Form>
+
+        {/* ユニークエラーの表示 */}
+        {errorMessages.length > 0 && (
+          <div>
+            {errorMessages.map((error, index) => (
+              <p key={index} style={{ color: 'red' }}>
+                {error}
+              </p>
+            ))}
+          </div>
+        )}
+      </Col>
+    </Row>
   )
 }

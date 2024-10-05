@@ -1,21 +1,10 @@
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Flex,
-  Group,
-  Select,
-  Stack,
-  Textarea,
-  TextInput,
-} from '@mantine/core'
+import { Button, Form, Input, Select, Space, Flex } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { SubmitHandler, UseFormReturn, Controller } from 'react-hook-form'
 import { TaskStatusType, TaskFormType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
-import ReactDatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
 import { useGetUserList } from '../../hooks/user/useGetUserList'
+import ReactDatePicker from 'react-datepicker'
 
 export type TaskFormProps = {
   useForm: UseFormReturn<TaskFormType>
@@ -26,123 +15,142 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
   const { t, ready } = useTranslation()
   const {
     control,
-    watch,
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm
+
   const { statusList } = useTaskStatusList()
   const { data: userList, error, mutate } = useGetUserList()
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack gap={'md'}>
+    <Form onFinish={handleSubmit(onSubmit)}>
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {/* Title */}
-        <TextInput
+        <Form.Item
           label={t('task.label.title')}
-          placeholder={t('task.label.title')}
-          {...register('title', {
-            maxLength: {
-              value: 100,
-              message: t('form.validation.maxLength'),
-            },
-            required: t('form.validation.required'),
-          })}
-          error={errors.title?.message}
-        />
+          validateStatus={errors.title ? 'error' : ''}
+          help={errors.title?.message}
+        >
+          <Controller
+            name="title"
+            control={control}
+            rules={{
+              maxLength: {
+                value: 100,
+                message: t('form.validation.maxLength'),
+              },
+              required: t('form.validation.required'),
+            }}
+            render={({ field }) => (
+              <Input placeholder={t('task.label.title')} {...field} />
+            )}
+          />
+        </Form.Item>
 
         {/* Description */}
-        <Textarea
+        <Form.Item
           label={t('task.label.description')}
-          placeholder={t('task.label.description')}
-          {...register('description')}
-          error={errors.description?.message}
-          autosize
-          minRows={4}
-        />
+          validateStatus={errors.description ? 'error' : ''}
+          help={errors.description?.message}
+        >
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <Input.TextArea
+                placeholder={t('task.label.description')}
+                {...field}
+                autoSize={{ minRows: 4 }}
+              />
+            )}
+          />
+        </Form.Item>
 
         {/* Status */}
-        {/* TODO:並びを綺麗に */}
-        <Flex justify={'space-between'}>
+        <Form.Item
+          label={t('task.label.status')}
+          validateStatus={errors.status ? 'error' : ''}
+          help={errors.status?.message}
+        >
           {ready && statusList && (
             <Controller
               name="status"
               control={control}
-              defaultValue={watch('status')}
+              defaultValue=""
               render={({ field }) => (
                 <Select
-                  label={t('task.label.status')}
-                  data={Object.keys(statusList).map((status: TaskStatusType) => ({
-                    key: status,
+                  placeholder={t('task.label.status')}
+                  options={Object.keys(statusList).map((status) => ({
                     value: status,
                     label: t(`task.status.${status}`),
                   }))}
-                  value={field.value}
-                  onChange={(selected) => {
-                    field.onChange(selected)
-                  }}
-                  error={errors.status?.message}
+                  {...field}
+                  onChange={(value) => field.onChange(value)}
                 />
               )}
             />
           )}
+        </Form.Item>
+
+        {/* Assignee */}
+        <Form.Item label={t('task.label.assignee')}>
           {userList && (
             <Controller
               name="assignee"
               control={control}
               render={({ field }) => (
                 <Select
-                  label={t('task.label.assignee')}
-                  data={Object.values(userList).map((user) => ({
-                    key: user.id,
-                    label: user.username,
+                  placeholder={t('task.label.assignee')}
+                  options={userList.map((user) => ({
                     value: user.id,
+                    label: user.username,
                   }))}
+                  {...field}
                   onChange={field.onChange}
                 />
               )}
             />
           )}
+        </Form.Item>
 
-          {/* Start Dates */}
-          <Controller
-            name="start_date"
-            control={control}
-            render={({ field }) => (
-              <Box>
-                <div>{t('task.label.start_date')}</div>
-                <ReactDatePicker
-                  dateFormat={t('task.date_format')}
-                  selected={field.value}
-                  onChange={field.onChange}
-                  error={errors.start_date?.message}
-                />
-              </Box>
-            )}
-          />
+        {/* Start Dates */}
+        <Controller
+          name="start_date"
+          control={control}
+          render={({ field }) => (
+            <Form.Item
+              label={t('task.label.start_date')}
+              help={errors.start_date?.message}
+            >
+              <ReactDatePicker
+                dateFormat={t('task.date_format')}
+                selected={field.value}
+                onChange={field.onChange}
+              />
+            </Form.Item>
+          )}
+        />
 
-          {/* End Dates */}
-          <Controller
-            name="end_date"
-            control={control}
-            render={({ field }) => (
-              <Box>
-                <div>{t('task.label.end_date')}</div>
-                <ReactDatePicker
-                  label={t('task.label.end_date')}
-                  dateFormat={t('task.date_format')}
-                  selected={field.value}
-                  onChange={field.onChange}
-                  error={errors.end_date?.message}
-                />
-              </Box>
-            )}
-          />
-        </Flex>
-        <Button type="submit" mt="md">
-          {t('form.submit')}
-        </Button>
-      </Stack>
-    </form>
+        {/* End Dates */}
+        <Controller
+          name="end_date"
+          control={control}
+          render={({ field }) => (
+            <Form.Item
+              label={t('task.label.end_date')}
+              help={errors.end_date?.message}
+            >
+              <ReactDatePicker
+                dateFormat={t('task.date_format')}
+                selected={field.value}
+                onChange={field.onChange}
+              />
+            </Form.Item>
+          )}
+        />
+
+        <Button htmlType="submit">{t('form.submit')}</Button>
+      </Space>
+    </Form>
   )
 }

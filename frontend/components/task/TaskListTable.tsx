@@ -1,74 +1,55 @@
 import { useTranslation } from 'react-i18next'
-import { Button, Table } from '@mantine/core'
 import { TaskType } from '../../types/task'
 import { useRouter } from 'next/router'
 import StatusBadge from '../StatusBadge'
-import { CSSProperties } from 'react'
 import { useConvertToLocal } from '../../hooks/useConvertToLocalTime'
 import { UserType } from '../../types/user'
+import { Button, Table, TableColumnsType } from 'antd'
 
 export type TaskListTableProps = {
   taskList: TaskType[]
   userList: UserType[]
 }
 
-// TODOラベルごとにソート順を作って
-export default function TaskListTable({ taskList, userList }: TaskListTableProps) {
+export default function TaskListTable({
+  taskList,
+  userList,
+}: TaskListTableProps) {
   const { t } = useTranslation()
   const router = useRouter()
   const { toLocalDate, toLocalDateTime } = useConvertToLocal()
-  const thStyle: CSSProperties = { minWidth: '6rem', textAlign: 'center' }
-  const tdFullStyle: CSSProperties = {
-    textWrap: 'nowrap',
-  }
-  const tdReadStyle: CSSProperties = {
-    maxWidth: '10rem',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-  }
-  const labelName = (id) => {
+
+  const labelName = (id: string) => {
     const user = userList && userList.find((user) => user.id === id)
     return user ? user.username : ''
   }
-  const head = (
-    <Table.Tr>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.create')}</Table.Th>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.title')}</Table.Th>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.description')}</Table.Th>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.status')}</Table.Th>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.assignee')}</Table.Th>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.start_date')}</Table.Th>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.end_date')}</Table.Th>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.edit')}</Table.Th>
-      <Table.Th style={{ ...thStyle }}>{t('task.label.update')}</Table.Th>
-    </Table.Tr>
-  )
+  const columns: TableColumnsType = [
+    { title: t('task.label.create'), dataIndex: 'create' },
+    { title: t('task.label.title'), dataIndex: 'title' },
+    { title: t('task.label.description'), dataIndex: 'description' },
+    { title: t('task.label.status'), dataIndex: 'status' },
+    { title: t('task.label.assignee'), dataIndex: 'assignee' },
+    { title: t('task.label.start_date'), dataIndex: 'start_date' },
+    { title: t('task.label.end_date'), dataIndex: 'end_date' },
+    { title: t('task.label.edit'), dataIndex: 'edit' },
+    { title: t('task.label.update'), dataIndex: 'update' },
+  ]
+  const dataSource = taskList.map((task) => ({
+    key: task.id,
+    title: task.title,
+    create: toLocalDateTime(task.created_at),
+    description: task.description,
+    status: <StatusBadge status={task.status} />,
+    assignee: task.assignee ? labelName(task.assignee) : '',
+    start_date: task.start_date ? toLocalDate(task.start_date) : '',
+    end_date: task.end_date ? toLocalDate(task.end_date) : '',
+    edit: (
+      <Button onClick={() => router.push(`/task/${task.id}`)}>
+        {t('form.edit')}
+      </Button>
+    ),
+    update: toLocalDateTime(task.updated_at),
+  }))
 
-  const rows = taskList.map((task) => (
-    <Table.Tr key={task.id}>
-      <Table.Td style={{ ...tdFullStyle }}>{toLocalDateTime(task.created_at)}</Table.Td>
-      <Table.Td style={{ ...tdReadStyle }}>{task.title}</Table.Td>
-      <Table.Td style={{ ...tdReadStyle }}>{task.description}</Table.Td>
-      <Table.Td style={{ ...tdFullStyle }}>
-        <StatusBadge status={task.status} />
-      </Table.Td>
-      <Table.Td style={{ ...tdReadStyle }}>{labelName(task.assignee)}</Table.Td>
-      <Table.Td style={{ ...tdReadStyle }}>{toLocalDate(task.start_date)}</Table.Td>
-      <Table.Td style={{ ...tdReadStyle }}>{toLocalDate(task.end_date)}</Table.Td>
-      <Table.Td style={{ ...tdFullStyle }}>
-        <Button onClick={() => router.push(`/task/${task.id}`)}>{t('form.edit')}</Button>
-      </Table.Td>
-      <Table.Td style={{ ...tdFullStyle }}>{toLocalDateTime(task.updated_at)}</Table.Td>
-    </Table.Tr>
-  ))
-
-  return (
-    <>
-      <Table miw={1000} striped={true} stripedColor={'#fafafa'}>
-        <Table.Thead>{head}</Table.Thead>
-        {taskList && <Table.Tbody>{rows}</Table.Tbody>}
-      </Table>
-    </>
-  )
+  return <Table columns={columns} dataSource={dataSource} />
 }
