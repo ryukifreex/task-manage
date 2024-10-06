@@ -1,4 +1,3 @@
-
 module.exports = {
   i18n: {
     defaultLocale: 'ja',
@@ -7,4 +6,4 @@ module.exports = {
   },
   serverSideTranslations: true,
   ns: ['translation'], // 使用するnamespace
-};
+}
