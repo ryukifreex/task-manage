@@ -1,7 +1,7 @@
-import { Button, Form, Input, Select, Space, Flex } from 'antd'
+import { Button, Form, Input, Select, Space } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { SubmitHandler, UseFormReturn, Controller } from 'react-hook-form'
-import { TaskStatusType, TaskFormType } from '../../types/task'
+import { TaskFormType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
 import { useGetUserList } from '../../hooks/user/useGetUserList'
 import ReactDatePicker from 'react-datepicker'
@@ -26,58 +26,58 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
     <Form onFinish={handleSubmit(onSubmit)}>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {/* Title */}
-        <Form.Item
-          label={t('task.label.title')}
-          validateStatus={errors.title ? 'error' : ''}
-          help={errors.title?.message}
-        >
-          <Controller
-            name="title"
-            control={control}
-            rules={{
-              maxLength: {
-                value: 100,
-                message: t('form.validation.maxLength'),
-              },
-              required: t('form.validation.required'),
-            }}
-            render={({ field }) => (
+        <Controller
+          name="title"
+          control={control}
+          rules={{
+            maxLength: {
+              value: 100,
+              message: t('form.validation.maxLength'),
+            },
+            required: t('form.validation.required'),
+          }}
+          render={({ field }) => (
+            <Form.Item
+              label={t('task.label.title')}
+              validateStatus={errors.title ? 'error' : ''}
+              help={errors.title?.message}
+            >
               <Input placeholder={t('task.label.title')} {...field} />
-            )}
-          />
-        </Form.Item>
+            </Form.Item>
+          )}
+        />
 
         {/* Description */}
-        <Form.Item
-          label={t('task.label.description')}
-          validateStatus={errors.description ? 'error' : ''}
-          help={errors.description?.message}
-        >
-          <Controller
-            name="description"
-            control={control}
-            render={({ field }) => (
+        <Controller
+          name="description"
+          control={control}
+          render={({ field }) => (
+            <Form.Item
+              label={t('task.label.description')}
+              validateStatus={errors.description ? 'error' : ''}
+              help={errors.description?.message}
+            >
               <Input.TextArea
                 placeholder={t('task.label.description')}
                 {...field}
                 autoSize={{ minRows: 4 }}
               />
-            )}
-          />
-        </Form.Item>
+            </Form.Item>
+          )}
+        />
 
         {/* Status */}
-        <Form.Item
-          label={t('task.label.status')}
-          validateStatus={errors.status ? 'error' : ''}
-          help={errors.status?.message}
-        >
-          {ready && statusList && (
-            <Controller
-              name="status"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
+        {ready && statusList && (
+          <Controller
+            name="status"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Form.Item
+                label={t('task.label.status')}
+                validateStatus={errors.status ? 'error' : ''}
+                help={errors.status?.message}
+              >
                 <Select
                   placeholder={t('task.label.status')}
                   options={Object.keys(statusList).map((status) => ({
@@ -87,18 +87,18 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
                   {...field}
                   onChange={(value) => field.onChange(value)}
                 />
-              )}
-            />
-          )}
-        </Form.Item>
+              </Form.Item>
+            )}
+          />
+        )}
 
         {/* Assignee */}
-        <Form.Item label={t('task.label.assignee')}>
-          {userList && (
-            <Controller
-              name="assignee"
-              control={control}
-              render={({ field }) => (
+        {userList && (
+          <Controller
+            name="assignee"
+            control={control}
+            render={({ field }) => (
+              <Form.Item label={t('task.label.assignee')}>
                 <Select
                   placeholder={t('task.label.assignee')}
                   options={userList.map((user) => ({
@@ -108,10 +108,10 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
                   {...field}
                   onChange={field.onChange}
                 />
-              )}
-            />
-          )}
-        </Form.Item>
+              </Form.Item>
+            )}
+          />
+        )}
 
         {/* Start Dates */}
         <Controller

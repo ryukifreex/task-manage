@@ -1,4 +1,4 @@
-import { Button, Flex, Form, Input, Space } from 'antd'
+import { Button, Flex, Form, Input } from 'antd'
 import { LoginFormType } from '../../types/user'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -26,41 +26,41 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
         padding: '24px',
       }}
     >
-      <Form.Item
-        label={t('user.label.email')}
-        validateStatus={errors.email ? 'error' : ''}
-        help={errors.email?.message}
-      >
-        <Controller
-          name="email"
-          control={control}
-          rules={{
-            required: t('form.validation.required'),
-            pattern: {
-              value: /^\S+@\S+$/,
-              message: t('form.validation.type_email'),
-            },
-          }}
-          render={({ field }) => (
+      <Controller
+        name="email"
+        control={control}
+        rules={{
+          required: t('form.validation.required'),
+          pattern: {
+            value: /^\S+@\S+$/,
+            message: t('form.validation.type_email'),
+          },
+        }}
+        render={({ field }) => (
+          <Form.Item
+            label={t('user.label.email')}
+            validateStatus={errors.email ? 'error' : ''}
+            help={errors.email?.message}
+          >
             <Input placeholder={t('user.label.email')} {...field} />
-          )}
-        />
-      </Form.Item>
+          </Form.Item>
+        )}
+      />
 
-      <Form.Item
-        label={t('user.label.password')}
-        validateStatus={errors.password ? 'error' : ''}
-        help={errors.password?.message}
-      >
-        <Controller
-          name="password"
-          control={control}
-          rules={{ required: t('form.validation.required') }}
-          render={({ field }) => (
+      <Controller
+        name="password"
+        control={control}
+        rules={{ required: t('form.validation.required') }}
+        render={({ field }) => (
+          <Form.Item
+            label={t('user.label.password')}
+            validateStatus={errors.password ? 'error' : ''}
+            help={errors.password?.message}
+          >
             <Input.Password placeholder={t('user.label.password')} {...field} />
-          )}
-        />
-      </Form.Item>
+          </Form.Item>
+        )}
+      />
 
       <Form.Item>
         <Flex justify={'space-evenly'}>

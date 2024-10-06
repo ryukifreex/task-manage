@@ -55,56 +55,62 @@ export default function UserRegister() {
       <Col xs={24} sm={12} md={8}>
         <Typography.Title level={2}>{t('user.label.new')}</Typography.Title>
         <Form onFinish={handleSubmit(onSubmit)}>
-          <Form.Item
-            label={t('user.label.email')}
-            validateStatus={errors.email ? 'error' : ''}
-            help={errors.email?.message}
-          >
-            <Controller
-              name="email"
-              control={control}
-              rules={{
-                required: t('form.required'),
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: t('form.validation.type_email'),
-                },
-              }}
-              render={({ field }) => <Input type="email" {...field} />}
-            />
-          </Form.Item>
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: t('form.validation.required'),
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: t('form.validation.type_email'),
+              },
+            }}
+            render={({ field }) => (
+              <Form.Item
+                label={t('user.label.email')}
+                validateStatus={errors.email ? 'error' : ''}
+                help={errors.email?.message}
+              >
+                <Input type="email" {...field} />
+              </Form.Item>
+            )}
+          />
 
-          <Form.Item
-            label={t('user.label.name')}
-            validateStatus={errors.username ? 'error' : ''}
-            help={errors.username?.message}
-          >
-            <Controller
-              name="username"
-              control={control}
-              rules={{
-                required: t('form.required'),
-                minLength: { value: 3, message: t('form.validation.min3') },
-              }}
-              render={({ field }) => <Input type="text" {...field} />}
-            />
-          </Form.Item>
+          <Controller
+            name="username"
+            control={control}
+            rules={{
+              required: t('form.validation.required'),
+              minLength: { value: 3, message: t('form.validation.min3') },
+            }}
+            render={({ field }) => (
+              <Form.Item
+                label={t('user.label.name')}
+                validateStatus={errors.username ? 'error' : ''}
+                help={errors.username?.message}
+              >
+                <Input type="text" {...field} />
+              </Form.Item>
+            )}
+          />
 
-          <Form.Item
-            label={t('user.label.password')}
-            validateStatus={errors.password ? 'error' : ''}
-            help={errors.password?.message}
-          >
-            <Controller
-              name="password"
-              control={control}
-              rules={{
-                required: t('form.required'),
-                minLength: { value: 6, message: t('form.validation.min6') },
-              }}
-              render={({ field }) => <Input.Password {...field} />}
-            />
-          </Form.Item>
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: t('form.validation.required'),
+              minLength: { value: 6, message: t('form.validation.min6') },
+            }}
+            render={({ field }) => (
+              <Form.Item
+                label={t('user.label.password')}
+                validateStatus={errors.password ? 'error' : ''}
+                help={errors.password?.message}
+              >
+                <Input.Password {...field} />
+              </Form.Item>
+            )}
+          />
 
           <Form.Item>
             <Flex justify={'space-evenly'}>
