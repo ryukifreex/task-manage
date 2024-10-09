@@ -8,6 +8,7 @@ import UserForm from '../../features/user/UserForm'
 import { UserFormType } from '../../types/user'
 import EmailSent from '../../features/user/EmailSent'
 import Link from 'next/link'
+import { useModal } from '../../hooks/useModal'
 
 export default function UserRegister() {
   const useFormReturn = useForm<UserFormType>({
@@ -22,7 +23,6 @@ export default function UserRegister() {
   })
   const { isModalOpen, openModal, closeModal } = useModal()
   const { setError } = useFormReturn
-
   const { t } = useTranslation()
   const router = useRouter()
 

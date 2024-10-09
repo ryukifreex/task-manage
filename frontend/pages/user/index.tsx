@@ -10,5 +10,5 @@ export default function UserList() {
   const { data: userList, error, mutate } = useGetUserList(token)
   // TODO:リダイレクト処理
   if (!isAuthenticated) return <Loading />
-  return <UserListTable userList={userList} isAdmin={user.is_admin} />
+  return <UserListTable userList={userList} isAdmin={user?.is_admin} />
 }
