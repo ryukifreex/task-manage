@@ -32,7 +32,7 @@
     },
     "user": {
       "logout": "logout",
-      "list": "Member",
+      "list": "Team",
       "self": "Information"
     }
   },
@@ -105,6 +105,7 @@
       "admin": "Admin Permission"
     },
     "message": {
+      "success": "success!",
       "activate_success": "Account activated successfully.",
       "register_success": "Registration successful. ",
       "email_sent": "Email sent! Please check your email to activate your account.",

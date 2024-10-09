@@ -1,9 +1,9 @@
 import { SubmitHandler } from 'react-hook-form'
 import { useAuth } from '../context/AuthContext' // AuthContextをインポート
-import LoginForm from '../components/user/LoginForm'
+import LoginForm from '../features/user/LoginForm'
 import { LoginFormType } from '../types/user'
 import { useRouter } from 'next/router'
-import { Row, Col, Typography, Space } from 'antd'
+import { Row, Col, Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 export default function Login() {

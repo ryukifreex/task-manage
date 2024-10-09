@@ -5,6 +5,7 @@ import { TaskFormType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
 import { useGetUserList } from '../../hooks/user/useGetUserList'
 import ReactDatePicker from 'react-datepicker'
+import { useAuth } from '../../context/AuthContext'
 
 export type TaskFormProps = {
   useForm: UseFormReturn<TaskFormType>
@@ -13,6 +14,7 @@ export type TaskFormProps = {
 
 export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
   const { t, ready } = useTranslation()
+  const { token } = useAuth()
   const {
     control,
     handleSubmit,
@@ -20,7 +22,7 @@ export default function TaskForm({ useForm, onSubmit }: TaskFormProps) {
   } = useForm
 
   const { statusList } = useTaskStatusList()
-  const { data: userList, error, mutate } = useGetUserList()
+  const { data: userList, error, mutate } = useGetUserList(token)
 
   return (
     <Form onFinish={handleSubmit(onSubmit)}>

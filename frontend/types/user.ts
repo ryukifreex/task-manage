@@ -10,6 +10,17 @@ export type UserType = {
   organization: string
 }
 
+export type UserFormType = {
+  id?: string
+  organization?: string
+  email: string
+  password: string
+  is_admin?: boolean
+  username: string
+  first_name?: string
+  last_name?: string
+}
+
 export type LoginFormType = {
   email: string
   password: string

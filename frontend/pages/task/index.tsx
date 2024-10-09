@@ -1,22 +1,26 @@
 import { useTranslation } from 'react-i18next'
 import { useGetTaskList } from '../../hooks/task/useGetTaskList'
-import TaskCreate from '../../components/task/TaskCreate'
+import TaskCreate from '../../features/task/TaskCreate'
 import { useModal } from '../../hooks/useModal'
-import TaskListTable from '../../components/task/TaskListTable'
-import TaskError from '../../components/task/TaskError'
-import { useAuthCheck } from '../../hooks/useAuthCheck'
+import TaskListTable from '../../features/task/TaskListTable'
+import TaskError from '../../features/task/TaskError'
 import { useGetUserList } from '../../hooks/user/useGetUserList'
 import { Button, Col, Flex, Modal } from 'antd'
 import { Loading } from '../../components/Loading'
+import { useAuth } from '../../context/AuthContext'
+import { useRouter } from 'next/router'
 
 export default function Task() {
   const { t } = useTranslation()
-  const { data, error, mutate } = useGetTaskList()
-  const { data: userList, error: userError } = useGetUserList()
+  const { token } = useAuth()
+  const { data, error, mutate } = useGetTaskList(token)
+  const { data: userList, error: userError } = useGetUserList(token)
   const { isModalOpen, openModal, closeModal } = useModal()
-  const isAuthenticated = useAuthCheck()
+  const { isAuthenticated } = useAuth()
+  const router = useRouter()
 
-  if (!isAuthenticated) return <Loading />
+  // TODO認証されていないときの処理
+  if (!isAuthenticated) router.push('/login')
 
   if (error || userError) return <TaskError />
 
@@ -33,10 +37,14 @@ export default function Task() {
       <Modal
         open={isModalOpen}
         onOk={() => {
-          closeModal()
           mutate()
+          closeModal()
         }}
-        onCancel={() => closeModal()}
+        onCancel={() => {
+          mutate()
+          closeModal()
+        }}
+        footer={null}
       >
         <TaskCreate />
       </Modal>

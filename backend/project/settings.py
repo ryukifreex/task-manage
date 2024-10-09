@@ -153,7 +153,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = "ja"
+LANGUAGE_CODE = "en"
 
 TIME_ZONE = "UTC"
 

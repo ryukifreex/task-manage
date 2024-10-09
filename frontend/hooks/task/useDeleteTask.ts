@@ -1,18 +1,17 @@
-import { API_BASE_URL } from '../../config/api'
-import axios from 'axios'
+import { useState } from 'react'
+import { TaskService } from '../../services/taskService'
 
-export const useDeleteTask = (id: number) => {
-  const deleteTask = async () => {
-    const token = localStorage.getItem('auth')
+export const useDeleteTask = () => {
+  const [message, setMessage] = useState<string | null>(null)
+
+  const deleteTask = async (id: number, token) => {
     try {
-      await axios.delete(`${API_BASE_URL}/task/${id}/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    } catch (error) {
-      console.log('Failed to update task', error)
+      await TaskService.deleteTask(id, token)
+      setMessage('success')
+    } catch (error: any) {
+      setMessage('failed')
     }
   }
-  return { deleteTask }
+
+  return { deleteTask, message }
 }

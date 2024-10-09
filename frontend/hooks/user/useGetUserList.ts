@@ -1,9 +1,10 @@
 import useSWR from 'swr'
-import { API_BASE_URL } from '../../config/api'
-import { fetcher } from '../fetcher'
 import { UserType } from '../../types/user'
+import { UserService } from '../../services/userService'
 
-export const useGetUserList = () => {
-  const { data, error, mutate } = useSWR<UserType[]>(`${API_BASE_URL}/user/`, fetcher)
+export const useGetUserList = (token) => {
+  const { data, error, mutate } = useSWR<UserType[]>(`${token}-user-list`, () =>
+    UserService.getUserList(token)
+  )
   return { data, error, mutate }
 }

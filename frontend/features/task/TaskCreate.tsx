@@ -5,15 +5,15 @@ import { useCreateTask } from '../../hooks/task/useCreateTask'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
 import TaskForm from './TaskForm'
 import { useModal } from '../../hooks/useModal'
-import { useRouter } from 'next/router'
 import { Modal, Typography } from 'antd'
+import { useAuth } from '../../context/AuthContext'
 
 export default function TaskCreate() {
   const { t } = useTranslation()
   const { createTask } = useCreateTask()
   const { statusList } = useTaskStatusList()
   const { isModalOpen, openModal, closeModal } = useModal()
-  const router = useRouter()
+  const { token } = useAuth()
   const defaultStatus = statusList
     ? (Object.keys(statusList)[0] as TaskStatusType)
     : undefined
@@ -35,14 +35,17 @@ export default function TaskCreate() {
       return
     }
     // TODO:作成失敗時のエラーハドリング
-    createTask({
-      title: formData.title,
-      description: formData.description,
-      status: formData.status,
-      assignee: formData.assignee,
-      start_date: formData.start_date,
-      end_date: formData.end_date,
-    })
+    createTask(
+      {
+        title: formData.title,
+        description: formData.description,
+        status: formData.status,
+        assignee: formData.assignee,
+        start_date: formData.start_date,
+        end_date: formData.end_date,
+      },
+      token
+    )
     openModal()
   }
 
@@ -53,13 +56,10 @@ export default function TaskCreate() {
       {/* 完了時のモーダル */}
       <Modal
         open={isModalOpen}
-        onOk={() => {
-          router.push('/')
-          closeModal()
-        }}
         onCancel={() => {
           closeModal()
         }}
+        footer={null}
       >
         <Typography.Text>{t('form.success.create')}</Typography.Text>
       </Modal>

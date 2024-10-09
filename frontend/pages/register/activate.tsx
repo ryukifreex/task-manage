@@ -11,14 +11,14 @@ export default function () {
   const { t } = useTranslation()
   const { uidb64, token } = router.query
   const [message, setMessage] = useState('')
-  console.log({ uidb64, token })
+
   useEffect(() => {
     if (uidb64 && token) {
       // Django APIに認証リクエストを送信
       axios
         .get(`${API_BASE_URL}/user/activate/${uidb64}/${token}/`)
         .then((response) => {
-          setMessage(t(`user.message.${response.data.message}`))
+          setMessage(t(`user.message.activate_success`))
           // 認証が完了したらトップページに2秒後に遷移
           setTimeout(() => {
             router.push('/')

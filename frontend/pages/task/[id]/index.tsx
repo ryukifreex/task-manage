@@ -1,20 +1,21 @@
 import { useGetTask } from '../../../hooks/task/useGetTask'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-import TaskDetail from '../../../components/task/TaskDetail'
-import TaskError from '../../../components/task/TaskError'
+import TaskDetail from '../../../features/task/TaskDetail'
+import TaskError from '../../../features/task/TaskError'
 import StatusBadge from '../../../components/StatusBadge'
-import { useAuthCheck } from '../../../hooks/useAuthCheck'
 import { Col, Typography } from 'antd'
 import { Loading } from '../../../components/Loading'
+import { useAuth } from '../../../context/AuthContext'
 
 export default function Detail() {
   const { t } = useTranslation()
   const { query } = useRouter()
   const id = query.id ? Number(query.id) : undefined
-  const { data, error } = useGetTask(id)
-  const isAuthenticated = useAuthCheck()
+  const { isAuthenticated, token } = useAuth()
+  const { data, error } = useGetTask(id, token)
 
+  // TODOリダイレクト処理
   if (!isAuthenticated) return <Loading />
   if (error) {
     console.log({ error })

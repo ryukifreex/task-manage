@@ -1,12 +1,11 @@
 import useSWR from 'swr'
-import { API_BASE_URL } from '../../config/api'
+import { TaskService } from '../../services/taskService'
 import { TaskType } from '../../types/task'
-import { fetcher } from '../fetcher'
 
-export const useGetTaskList = () => {
-  const { data, error, mutate } = useSWR<TaskType[]>(
-    `${API_BASE_URL}/task/`,
-    fetcher
+export const useGetTaskList = (token) => {
+  const { data, error, mutate } = useSWR<TaskType[]>(`${token}-task-list`, () =>
+    TaskService.getTaskList(token)
   )
+
   return { data, error, mutate }
 }

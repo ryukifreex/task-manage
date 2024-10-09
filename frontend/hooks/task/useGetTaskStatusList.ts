@@ -1,12 +1,12 @@
 import useSWR from 'swr'
-import { API_BASE_URL } from '../../config/api'
+import { TaskService } from '../../services/taskService'
 import { TaskStatusListType } from '../../types/task'
-import { fetcher } from '../fetcher'
 
 export const useGetTaskStatusList = () => {
   const { data, error } = useSWR<TaskStatusListType>(
-    `${API_BASE_URL}/task/status-label/`,
-    fetcher
+    `status-label`,
+    TaskService.getTaskStatusList
   )
+
   return { data, error }
 }

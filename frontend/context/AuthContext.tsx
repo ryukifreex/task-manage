@@ -1,18 +1,18 @@
-import router from 'next/router'
+import router, { useRouter } from 'next/router'
 import {
   createContext,
   useContext,
-  useState,
   ReactNode,
   useEffect,
+  useState,
 } from 'react'
-import axios from 'axios'
-import { API_BASE_URL } from '../config/api'
-import { Loading } from '../components/Loading'
+import { AuthService } from '../services/authService'
+import { UserType } from '../types/user'
+import { UserService } from '../services/userService'
 
 type AuthContextType = {
-  loading: boolean
-  isAdmin: boolean
+  user: UserType
+  token: string
   isAuthenticated: boolean
   login: (email: string, password: string) => Promise<void>
   logout: () => void
@@ -23,57 +23,38 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 // Provider
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<UserType | undefined>(undefined)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const [token, setToken] = useState<string | undefined>(undefined)
+  const router = useRouter()
 
   useEffect(() => {
     const token = localStorage.getItem('auth')
-    if (token) {
-      setIsAuthenticated(true)
-    }
-    setLoading(false)
-  }, [])
+    setToken(token)
 
-  useEffect(() => {
-    const token = localStorage.getItem('auth')
-    const checkAdmin = async () => {
-      // 自分の権限情報を取得
-      if (isAuthenticated) {
-        try {
-          const userInfoResponse = await axios.get(
-            `${API_BASE_URL}/user/self-info/`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-          setIsAdmin(userInfoResponse.data.is_admin)
-        } catch (error) {
-          router.push('/')
-        }
+    const getData = async () => {
+      const data = await UserService.getUserData(token)
+      if (data) {
+        setIsAuthenticated(data.is_active)
+        setUser(data)
       }
     }
-    checkAdmin()
-  }, [isAuthenticated])
+
+    if (token) getData()
+  }, [])
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/token/`, {
-        email,
-        password,
-      })
-
+      const response = await AuthService.Login(email, password)
       if (response.data) {
-        // localStorage に access token を保存
         localStorage.setItem('auth', response.data.access)
         setIsAuthenticated(true)
+        setToken(response.data.access)
       }
-      router.push('/')
+      router.push('/task')
     } catch (error) {
-      console.log('Login failed:', error)
       setIsAuthenticated(false)
+      console.log('Login failed:', error)
       router.push('/login')
     }
   }
@@ -81,14 +62,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.removeItem('auth')
     setIsAuthenticated(false)
+    setToken(undefined)
     router.push('/login')
   }
-
   return (
     <AuthContext.Provider
-      value={{ loading, isAuthenticated, isAdmin, login, logout }}
+      value={{ user, isAuthenticated, token, login, logout }}
     >
-      {loading ? <Loading /> : children}
+      {children}
     </AuthContext.Provider>
   )
 }

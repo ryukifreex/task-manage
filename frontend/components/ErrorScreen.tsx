@@ -1,7 +1,6 @@
 import React from 'react'
 import { Result, Button, Row, Col } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/router'
 
 type ErrorScreenProps = {
   error?: number
@@ -9,7 +8,6 @@ type ErrorScreenProps = {
 
 export default function ErrorScreen({ error }: ErrorScreenProps) {
   const { t } = useTranslation()
-  const router = useRouter()
 
   let title, subTitle, status
 
@@ -48,7 +46,7 @@ export default function ErrorScreen({ error }: ErrorScreenProps) {
               marginBlock: '1rem',
             }}
           >
-            <Button type="primary" onClick={() => router.push('/')}>
+            <Button type="primary" onClick={() => (window.location.href = '/')}>
               {t('app.back_home')}
             </Button>
           </Col>

@@ -1,14 +1,11 @@
 import os
 from rest_framework import viewsets, status, generics, views
-from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import CustomUser
 from .serializers import UserSerializer, UserRegisterSerializer
 from django.core.mail import send_mail
-from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.tokens import default_token_generator as account_activation_token
-from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_str, force_bytes
 from .tokens import account_activation_token
@@ -26,7 +23,7 @@ class UserViewSet(viewsets.ModelViewSet):
             # 親の list メソッドを呼び出して、シリアライズとレスポンスを処理
             serializer = self.get_serializer(queryset, many=True)
         else:
-            queryset = self.get_queryset().filter(user=user)
+            queryset = self.get_queryset().filter(id=user.id)
             serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -50,7 +47,6 @@ class UserRegisterView(views.APIView):
             user = serializer.save()
             frontend_url = os.getenv("FRONTEND_BASE_URL")
             # メール認証リンクを作成
-            # current_site = get_current_site(request)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = account_activation_token.make_token(user)
             activation_link = f"{frontend_url}/register/activate?uidb64={uid}&token={token}"
@@ -68,9 +64,15 @@ class UserRegisterView(views.APIView):
                 {"message": "success"},
                 status=status.HTTP_201_CREATED,
             )
-
-        print(serializer.errors)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            errors = serializer.errors
+            if "email" in errors and errors["email"][0] == "email_exist":
+                return Response(
+                    {"email": "email_exist"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            print(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # ユーザー認証

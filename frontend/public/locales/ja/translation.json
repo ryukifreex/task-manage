@@ -32,7 +32,7 @@
     },
     "user": {
       "logout": "ログアウト",
-      "list": "メンバー",
+      "list": "チーム",
       "self": "ユーザー情報"
     }
   },
@@ -105,7 +105,8 @@
       "admin": "管理者権限"
     },
     "message": {
-      "register_success": "成功しました。. ",
+      "success": "成功!",
+      "register_success": "成功しました。",
       "email_sent": "ご入力いただいたメールアドレスに認証メールを送信しました。メッセージからURLをクリックして有効化してください",
       "redirecting": "移動中...",
       "activate_success": "認証に成功しました。ログイン画面に移動します。",

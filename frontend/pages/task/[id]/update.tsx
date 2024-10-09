@@ -1,23 +1,23 @@
 import { useGetTask } from '../../../hooks/task/useGetTask'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-import TaskUpdate from '../../../components/task/TaskUpdate'
-import TaskError from '../../../components/task/TaskError'
-import { useAuthCheck } from '../../../hooks/useAuthCheck'
+import TaskUpdate from '../../../features/task/TaskUpdate'
+import TaskError from '../../../features/task/TaskError'
 import { Col, Typography } from 'antd'
 import { Loading } from '../../../components/Loading'
+import { useAuth } from '../../../context/AuthContext'
 
 export default function Edit() {
   const { t } = useTranslation()
   const { query } = useRouter()
   const id = query.id ? Number(query.id) : undefined
-  const { data, error } = useGetTask(id)
-  const isAuthenticated = useAuthCheck()
+  const { isAuthenticated, token } = useAuth()
+  const { data, error } = useGetTask(id, token)
 
+  // TODO:リダイレクト処理
   if (!isAuthenticated) return <Loading />
 
   if (error) {
-    console.log('pare', { error })
     return <TaskError type="GET" message={t('task.error.get')} />
   }
   if (!data) return <Loading />

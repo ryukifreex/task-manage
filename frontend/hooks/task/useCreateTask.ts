@@ -1,19 +1,19 @@
-import { API_BASE_URL } from '../../config/api'
+import { useState } from 'react'
+import { TaskService } from '../../services/taskService'
 import { TaskFormType } from '../../types/task'
-import axios from 'axios'
 
 export const useCreateTask = () => {
-  const createTask = async (task: TaskFormType) => {
-    const token = localStorage.getItem('auth')
+  const [message, setMessage] = useState<string | null>(null)
+
+  const createTask = async (task: TaskFormType, token) => {
     try {
-      await axios.post(`${API_BASE_URL}/task/`, task, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    } catch (error) {
-      console.log('Failed to create task', error)
+      await TaskService.createTask(task, token)
+      setMessage('success')
+    } catch (error: any) {
+      console.error('Error in creating task:', error)
+      setMessage('failed')
     }
   }
-  return { createTask }
+
+  return { createTask, message }
 }

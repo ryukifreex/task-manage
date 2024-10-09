@@ -5,6 +5,7 @@ import { useModal } from '../../hooks/useModal'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Button, Flex, Modal, Typography } from 'antd'
+import { useAuth } from '../../context/AuthContext'
 
 export type TaskDetailProps = {
   task: TaskType
@@ -12,13 +13,14 @@ export type TaskDetailProps = {
 
 export default function TaskDetail({ task }: TaskDetailProps) {
   const { t } = useTranslation()
-  const { deleteTask } = useDeleteTask(task.id)
+  const { deleteTask } = useDeleteTask()
+  const { token } = useAuth()
   const { isModalOpen, openModal, closeModal } = useModal()
   const [deleted, setDeleted] = useState(false)
   const router = useRouter()
 
   const handleDelete = () => {
-    deleteTask()
+    deleteTask(task.id, token)
     setDeleted(true)
   }
 

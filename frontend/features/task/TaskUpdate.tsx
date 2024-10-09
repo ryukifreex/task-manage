@@ -8,6 +8,7 @@ import { TaskType } from '../../types/task'
 import { useModal } from '../../hooks/useModal'
 import { useRouter } from 'next/router'
 import { Button, Modal, Typography } from 'antd'
+import { useAuth } from '../../context/AuthContext'
 
 export type TaskUpdateFormProps = {
   task: TaskType
@@ -16,6 +17,7 @@ export type TaskUpdateFormProps = {
 export default function TaskUpdate({ task }: TaskUpdateFormProps) {
   const { t } = useTranslation()
   const { isModalOpen, openModal, closeModal } = useModal()
+  const { token } = useAuth()
   const { updateTask } = useUpdateTask()
   const router = useRouter()
 
@@ -40,15 +42,18 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
       return
     }
     try {
-      updateTask({
-        id: task.id,
-        title: formData.title,
-        description: formData.description,
-        status: formData.status,
-        assignee: formData.assignee,
-        start_date: formData.start_date,
-        end_date: formData.end_date,
-      })
+      updateTask(
+        {
+          id: task.id,
+          title: formData.title,
+          description: formData.description,
+          status: formData.status,
+          assignee: formData.assignee,
+          start_date: formData.start_date,
+          end_date: formData.end_date,
+        },
+        token
+      )
       openModal()
     } catch (error) {
       // TODO:エラーハドリング成功時のみモーダル開いて

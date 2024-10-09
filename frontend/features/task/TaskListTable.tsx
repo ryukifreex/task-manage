@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { TaskType } from '../../types/task'
 import { useRouter } from 'next/router'
-import StatusBadge from '../StatusBadge'
+import StatusBadge from '../../components/StatusBadge'
 import { useConvertToLocal } from '../../hooks/useConvertToLocalTime'
 import { UserType } from '../../types/user'
 import { Button, Table, TableColumnsType } from 'antd'
