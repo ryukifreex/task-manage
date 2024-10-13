@@ -1,6 +1,6 @@
 import { Controller, SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { Form, Input, Button, Col, Flex, Row, Checkbox } from 'antd'
+import { Form, Input, Button, Col, Flex, Row, Checkbox, Typography } from 'antd'
 import Link from 'next/link'
 import { UserFormType } from '../../types/user'
 
@@ -8,12 +8,14 @@ export type TaskFormProps = {
   useForm: UseFormReturn<UserFormType>
   onSubmit: SubmitHandler<UserFormType>
   isAdmin?: boolean
+  formError?: string
 }
 
 export default function UserForm({
   useForm,
   onSubmit,
   isAdmin,
+  formError,
 }: TaskFormProps) {
   const {
     control,
@@ -25,6 +27,12 @@ export default function UserForm({
   return (
     <Row justify="center" align="middle">
       <Col xs={24} sm={12} md={8}>
+        {formError && (
+          <Typography.Text type="danger">
+            {t(`form.validation.${formError}`)}
+          </Typography.Text>
+        )}
+
         <Form onFinish={handleSubmit(onSubmit)}>
           {/* email */}
           <Controller

@@ -3,16 +3,16 @@ import { UserService } from '../../services/userService'
 import { UserFormType } from '../../types/user'
 
 export const useCreateUser = () => {
-  const [message, setMessage] = useState<string | null>(null)
-
-  const createUser = async (user: UserFormType, token) => {
+  const [message, setMessage] = useState(null)
+  const createUser = async (user: UserFormType, token?: string) => {
     try {
-      await UserService.createUser(user, token)
-      setMessage('success')
-    } catch (error: any) {
-      setMessage('failed')
+      const response = await UserService.createUser(user, token)
+      setMessage(null)
+      return { success: true, data: response }
+    } catch (error: unknown) {
+      setMessage('create_failed')
+      return { success: false, data: error }
     }
   }
-
   return { createUser, message }
 }

@@ -37,7 +37,7 @@
     }
   },
   "form": {
-    "edit": "編集",
+    "detail": "詳細",
     "update": "更新",
     "cancel": "キャンセル",
     "submit": "送信",
@@ -48,7 +48,9 @@
       "min3": "3文字以上入力してください",
       "min6": "6文字以上入力してください",
       "type_email": "メールアドレスの形式で入力してください",
-      "email_exist": "このメールアドレスは既に使用されています"
+      "email_exist": "このメールアドレスは既に使用されています",
+      "error": "不明なエラー",
+      "create_failed": "登録に失敗しました。入力情報をご確認ください。"
     },
     "confirm": {
       "delete": "削除してよろしいですか？"
@@ -69,6 +71,7 @@
       "description": "本文",
       "status": "ステータス",
       "edit": "編集",
+      "detail": "詳細",
       "create": "作成日",
       "update": "最終更新",
       "start_date": "開始日",
@@ -102,7 +105,8 @@
       "first_name": "名",
       "last_name": "性",
       "active": "有効",
-      "admin": "管理者権限"
+      "admin": "管理者権限",
+      "create": "追加"
     },
     "message": {
       "success": "成功!",
