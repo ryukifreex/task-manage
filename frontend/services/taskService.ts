@@ -3,17 +3,12 @@ import { API_BASE_URL } from '../config/api'
 import { TaskFormType, TaskStatusListType, TaskType } from '../types/task'
 
 export class TaskService {
-  private static handleError(error: any) {
-    console.error('API Error:', error)
-    throw new Error(error?.response?.data?.message || 'Something went wrong')
-  }
-
   static async getTaskStatusList(): Promise<TaskStatusListType> {
     try {
       const response = await axios.get(`${API_BASE_URL}/task/status-label/`)
       return response.data
     } catch (error) {
-      this.handleError(error)
+      throw new Error(error?.response)
     }
   }
 
@@ -26,7 +21,7 @@ export class TaskService {
       })
       return response.data
     } catch (error) {
-      this.handleError(error)
+      throw new Error(error?.response)
     }
   }
 
@@ -39,7 +34,7 @@ export class TaskService {
       })
       return response.data
     } catch (error) {
-      this.handleError(error)
+      throw new Error(error?.response)
     }
   }
 
@@ -52,7 +47,7 @@ export class TaskService {
       })
       return response.data
     } catch (error) {
-      this.handleError(error)
+      throw new Error(error?.response)
     }
   }
 
@@ -64,7 +59,7 @@ export class TaskService {
         },
       })
     } catch (error) {
-      this.handleError(error)
+      throw new Error(error?.response)
     }
   }
 
@@ -76,7 +71,7 @@ export class TaskService {
         },
       })
     } catch (error) {
-      this.handleError(error)
+      throw new Error(error?.response)
     }
   }
 }

@@ -1,4 +1,4 @@
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import {
   createContext,
   useContext,
@@ -33,10 +33,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(token)
 
     const getData = async () => {
-      const data = await UserService.getUserData(token)
-      if (data) {
-        setIsAuthenticated(data.is_active)
-        setUser(data)
+      if (token) {
+        const data = await UserService.getUserData(token)
+        if (data) {
+          setIsAuthenticated(data.is_active)
+          setUser(data)
+        }
       }
     }
 
@@ -50,12 +52,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem('auth', response.data.access)
         setIsAuthenticated(true)
         setToken(response.data.access)
+        // router.push('/task')
       }
-      router.push('/task')
     } catch (error) {
       setIsAuthenticated(false)
       console.log('Login failed:', error)
-      router.push('/login')
     }
   }
 

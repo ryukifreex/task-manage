@@ -3,12 +3,12 @@ import { useGetTaskList } from '../../hooks/task/useGetTaskList'
 import TaskCreate from '../../features/task/TaskCreate'
 import { useModal } from '../../hooks/useModal'
 import TaskListTable from '../../features/task/TaskListTable'
-import TaskError from '../../features/task/TaskError'
 import { useGetUserList } from '../../hooks/user/useGetUserList'
-import { Button, Col, Flex, Modal } from 'antd'
+import { Button, Col, Modal, Row } from 'antd'
 import { Loading } from '../../components/Loading'
 import { useAuth } from '../../context/AuthContext'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export default function Task() {
   const { t } = useTranslation()
@@ -20,18 +20,21 @@ export default function Task() {
   const router = useRouter()
 
   // TODO認証されていないときの処理
-  if (!isAuthenticated) router.push('/login')
+  useEffect(() => {
+    if (!isAuthenticated) router.push('/login')
+  }, [isAuthenticated])
 
-  if (error || userError) return <TaskError />
+  if (error || userError) return <Loading />
 
   return (
     <Col style={{ padding: '2rem' }}>
-      {/* タスク追加ボタン */}
-      <Flex justify={'flex-end'}>
-        <Button type="primary" onClick={() => openModal()}>
-          {t('task.add')}
-        </Button>
-      </Flex>
+      <Row justify={'end'}>
+        <Col style={{ padding: '2rem' }}>
+          <Button type="primary" onClick={() => openModal()}>
+            {t('task.add')}
+          </Button>
+        </Col>
+      </Row>
 
       {/* タスク追加モーダル */}
       <Modal
