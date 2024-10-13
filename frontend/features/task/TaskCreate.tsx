@@ -10,7 +10,7 @@ import { useAuth } from '../../context/AuthContext'
 
 export default function TaskCreate() {
   const { t } = useTranslation()
-  const { createTask } = useCreateTask()
+  const { createTask, message } = useCreateTask()
   const { statusList } = useTaskStatusList()
   const { isModalOpen, openModal, closeModal } = useModal()
   const { token } = useAuth()
@@ -50,7 +50,11 @@ export default function TaskCreate() {
 
   return (
     <>
-      <TaskForm useForm={useFormReturn} onSubmit={onSubmit} />
+      <TaskForm
+        useForm={useFormReturn}
+        onSubmit={onSubmit}
+        formError={message}
+      />
 
       {/* 完了時のモーダル */}
       <Modal

@@ -1,6 +1,16 @@
 import { Controller, SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { Form, Input, Button, Col, Flex, Row, Checkbox, Typography } from 'antd'
+import {
+  Form,
+  Input,
+  Button,
+  Col,
+  Flex,
+  Row,
+  Checkbox,
+  Typography,
+  Space,
+} from 'antd'
 import Link from 'next/link'
 import { UserFormType } from '../../types/user'
 
@@ -26,7 +36,7 @@ export default function UserForm({
 
   return (
     <Row justify="center" align="middle">
-      <Col xs={24} sm={12} md={8}>
+      <Col xs={24} sm={12} md={12}>
         {formError && (
           <Typography.Text type="danger">
             {t(`form.validation.${formError}`)}
@@ -76,9 +86,10 @@ export default function UserForm({
               </Form.Item>
             )}
           />
-          <Row>
-            {/* first name */}
-            <Col xs={24} sm={12} md={10} offset={2}>
+
+          {/* first name */}
+          <Space>
+            <Flex>
               <Controller
                 name="first_name"
                 control={control}
@@ -95,9 +106,10 @@ export default function UserForm({
                   </Form.Item>
                 )}
               />
-            </Col>
+            </Flex>
+
             {/* last name */}
-            <Col span={10} offset={2}>
+            <Flex>
               <Controller
                 name="last_name"
                 control={control}
@@ -114,8 +126,8 @@ export default function UserForm({
                   </Form.Item>
                 )}
               />
-            </Col>
-          </Row>
+            </Flex>
+          </Space>
 
           {/* password */}
           <Controller

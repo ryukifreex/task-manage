@@ -8,10 +8,11 @@ export const useCreateTask = () => {
   const createTask = async (task: TaskFormType, token) => {
     try {
       await TaskService.createTask(task, token)
-      setMessage('success')
+      setMessage(null)
+      return { success: true }
     } catch (error: any) {
-      console.error('Error in creating task:', error)
-      setMessage('failed')
+      setMessage('create_failed')
+      return { success: false }
     }
   }
 

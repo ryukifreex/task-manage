@@ -13,7 +13,6 @@ export default function Create() {
 
   return (
     <Col style={{ padding: '2rem' }}>
-      <Typography.Title>{t('menu.task.create')}</Typography.Title>
       <TaskCreate />
     </Col>
   )
