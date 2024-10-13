@@ -81,6 +81,7 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
           closeModal()
           router.push('/')
         }}
+        closeIcon={null}
         footer={
           <Button
             onClick={() => {

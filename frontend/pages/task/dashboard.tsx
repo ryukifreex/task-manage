@@ -51,9 +51,6 @@ export default function TaskDashboard() {
 
   return (
     <>
-      <Row justify="center">
-        <Typography.Title>{t('menu.task.dashboard')}</Typography.Title>
-      </Row>
       <Flex justify="space-evenly">
         {statusList &&
           Object.keys(statusList).map((status: TaskStatusType) => (
@@ -72,11 +69,9 @@ export default function TaskDashboard() {
       {taskDetail && (
         <Modal
           open={isModalOpen}
-          footer={
-            <Button type="primary" onClick={() => closeModal()}>
-              OK
-            </Button>
-          }
+          onCancel={() => closeModal()}
+          footer={null}
+          closeIcon={null}
         >
           <Typography.Title>{taskDetail.title}</Typography.Title>
           <TaskDetail task={taskDetail} />

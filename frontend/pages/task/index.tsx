@@ -22,12 +22,12 @@ export default function Task() {
   // TODO認証されていないときの処理
   useEffect(() => {
     if (!isAuthenticated) router.push('/login')
-  }, [isAuthenticated])
+  }, [])
 
   if (error || userError) return <Loading />
 
   return (
-    <Col style={{ padding: '2rem' }}>
+    <Col style={{ marginInline: '1rem' }}>
       <Row justify={'end'}>
         <Col style={{ padding: '2rem' }}>
           <Button type="primary" onClick={() => openModal()}>
@@ -47,17 +47,14 @@ export default function Task() {
           mutate()
           closeModal()
         }}
+        closeIcon={null}
         footer={null}
       >
         <TaskCreate />
       </Modal>
 
       {/* タスク一覧テーブル */}
-      {data ? (
-        <TaskListTable taskList={data} userList={userList} />
-      ) : (
-        <Loading />
-      )}
+      <TaskListTable taskList={data} userList={userList} />
     </Col>
   )
 }

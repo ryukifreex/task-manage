@@ -15,7 +15,6 @@ export default function Create() {
 
   return (
     <Col style={{ padding: '2rem' }}>
-      <Typography.Title level={2}>{t('user.label.new')}</Typography.Title>
       <UserCreate />
     </Col>
   )

@@ -34,7 +34,6 @@ export default function TaskCreate() {
       })
       return
     }
-    // TODO:作成失敗時のエラーハドリング
     createTask(
       {
         title: formData.title,
@@ -60,6 +59,7 @@ export default function TaskCreate() {
           closeModal()
         }}
         footer={null}
+        closeIcon={null}
       >
         <Typography.Text>{t('form.success.create')}</Typography.Text>
       </Modal>

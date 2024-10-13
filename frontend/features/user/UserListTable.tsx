@@ -64,15 +64,6 @@ export default function UserListTable({
 
   return (
     <>
-      {isAdmin && (
-        <Row justify={'end'}>
-          <Col style={{ padding: '2rem' }}>
-            <Button type="primary">
-              <Link href={'/user/create'}>{t('user.label.create')}</Link>
-            </Button>
-          </Col>
-        </Row>
-      )}
       <Table
         dataSource={dataSource}
         columns={columns}

@@ -33,7 +33,7 @@ export default function TaskListTable({
     { title: t('task.label.detail'), dataIndex: 'detail' },
     { title: t('task.label.update'), dataIndex: 'update' },
   ]
-  const dataSource = taskList.map((task) => ({
+  const dataSource = taskList?.map((task) => ({
     key: task.id,
     title: (
       <Typography.Text onClick={() => router.push(`/task/${task.id}`)}>

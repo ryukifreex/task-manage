@@ -38,6 +38,7 @@ export default function UserRegister() {
         onCancel={() => {
           closeModal()
         }}
+        closeIcon={null}
         footer={
           <Button type="primary">
             <Link href="/">{t('app.back_home')}</Link>

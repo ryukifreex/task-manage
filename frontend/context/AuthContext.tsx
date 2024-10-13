@@ -41,9 +41,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       }
     }
-
-    if (token) getData()
-  }, [])
+    token ? getData() : logout()
+  }, [token])
 
   const login = async (email: string, password: string) => {
     try {
@@ -52,7 +51,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem('auth', response.data.access)
         setIsAuthenticated(true)
         setToken(response.data.access)
-        // router.push('/task')
       }
     } catch (error) {
       setIsAuthenticated(false)

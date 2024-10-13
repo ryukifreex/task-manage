@@ -46,6 +46,7 @@ export default function UserCreate() {
         onCancel={() => {
           closeModal()
         }}
+        closeIcon={null}
         footer={null}
       >
         <EmailSent />

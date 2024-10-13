@@ -24,6 +24,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
     setDeleted(true)
   }
 
+  // TODO:レイアウト
   return (
     <>
       <p>{task.description}</p>
@@ -47,6 +48,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
           closeModal()
         }}
         centered
+        closeIcon={null}
       >
         {deleted ? (
           // 削除後の表示
