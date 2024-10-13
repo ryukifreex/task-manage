@@ -1,7 +1,7 @@
 import {
   Button,
   Col,
-  Flex,
+  DatePicker,
   Form,
   Input,
   Row,
@@ -14,8 +14,8 @@ import { SubmitHandler, UseFormReturn, Controller } from 'react-hook-form'
 import { TaskFormType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
 import { useGetUserList } from '../../hooks/user/useGetUserList'
-import ReactDatePicker from 'react-datepicker'
 import { useAuth } from '../../context/AuthContext'
+import dayjs from 'dayjs'
 
 export type TaskFormProps = {
   useForm: UseFormReturn<TaskFormType>
@@ -149,10 +149,12 @@ export default function TaskForm({
                       label={t('task.label.start_date')}
                       help={errors.start_date?.message}
                     >
-                      <ReactDatePicker
-                        dateFormat={t('task.date_format')}
-                        selected={field.value}
-                        onChange={field.onChange}
+                      <DatePicker
+                        format={t('task.date_format')}
+                        value={field.value ? dayjs(field.value) : null}
+                        onChange={(date) => {
+                          field.onChange(date.toISOString())
+                        }}
                       />
                     </Form.Item>
                   )}
@@ -169,10 +171,10 @@ export default function TaskForm({
                       label={t('task.label.end_date')}
                       help={errors.end_date?.message}
                     >
-                      <ReactDatePicker
-                        dateFormat={t('task.date_format')}
-                        selected={field.value}
-                        onChange={field.onChange}
+                      <DatePicker
+                        format={t('task.date_format')}
+                        value={field.value ? dayjs(field.value) : null}
+                        onChange={(date) => field.onChange(date)}
                       />
                     </Form.Item>
                   )}

@@ -78,7 +78,7 @@
       "end_date": "END",
       "assignee": "ASSIGNEE"
     },
-    "date_format": "MMM/dd/yyyy",
+    "date_format": "MMM/DD/YYYY",
     "add": "Add Task",
     "error": {
       "status": "Error retrieving status label",

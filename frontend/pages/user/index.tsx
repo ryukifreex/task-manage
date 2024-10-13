@@ -23,7 +23,7 @@ export default function UserList() {
           </Col>
         </Row>
       )}
-      <UserListTable userList={userList} />)
+      <UserListTable userList={userList} />
     </>
   )
 }

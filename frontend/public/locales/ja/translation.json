@@ -78,7 +78,7 @@
       "end_date": "終了日",
       "assignee": "担当者"
     },
-    "date_format": "yyyy/MM/dd",
+    "date_format": "YYYY-MM-DD",
     "add": "タスクを追加",
     "error": {
       "status": "ステータス取得エラー",
