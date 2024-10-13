@@ -54,7 +54,7 @@ export default function UserListTable({
     Object.values(userList).map((user: UserType) => ({
       key: user.id,
       email: user.email,
-      organization: user.organization,
+      organization: user.organization.name,
       username: user.username,
       first_name: user.first_name,
       last_name: user.last_name,
@@ -68,7 +68,7 @@ export default function UserListTable({
         <Row justify={'end'}>
           <Col style={{ padding: '2rem' }}>
             <Button type="primary">
-              <Link href={'/user/create'}>{t('label.user.create')}</Link>
+              <Link href={'/user/create'}>{t('user.label.create')}</Link>
             </Button>
           </Col>
         </Row>

@@ -2,7 +2,15 @@ from rest_framework import serializers
 from .models import CustomUser, Organization
 
 
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = "__all__"
+
+
 class UserSerializer(serializers.ModelSerializer):
+    organization = OrganizationSerializer(read_only=True)
+
     class Meta:
         model = CustomUser
         fields = [
@@ -66,9 +74,3 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("email_exist")
 
         return value
-
-
-class OrganizationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Organization
-        fields = "__all__"

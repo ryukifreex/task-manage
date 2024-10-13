@@ -3,12 +3,23 @@ from rest_framework import viewsets, status, generics, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import CustomUser
-from .serializers import UserSerializer, UserRegisterSerializer
+from .serializers import OrganizationSerializer, UserSerializer, UserRegisterSerializer
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator as account_activation_token
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_str, force_bytes
 from .tokens import account_activation_token
+
+
+class OrganizationInfoView(generics.GenericAPIView):
+    serializer_class = OrganizationSerializer
+    permission_classes = [IsAuthenticated]  # 認証が必要
+
+    def get(self, request, *args, **kwargs):
+        # 現在のユーザー情報を取得
+        user = request.user
+        serializer = self.get_serializer(user.organization)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ModelViewSet):

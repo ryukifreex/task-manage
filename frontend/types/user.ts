@@ -7,7 +7,14 @@ export type UserType = {
   username: string
   first_name: string
   last_name: string
-  organization: string
+  organization: OrganizationType
+}
+
+export type OrganizationType = {
+  id: string
+  name: string
+  information: string
+  created_at: Date
 }
 
 export type UserFormType = {
