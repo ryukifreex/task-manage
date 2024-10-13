@@ -11,7 +11,12 @@ export type TaskBoardProps = {
   onClick?: (id: number) => void
 }
 
-export default function DashBoard({ label, itemList, onMove, onClick }: TaskBoardProps) {
+export default function DashBoard({
+  label,
+  itemList,
+  onMove,
+  onClick,
+}: TaskBoardProps) {
   const dropRef = useRef()
 
   // ドロップ処理
@@ -27,10 +32,25 @@ export default function DashBoard({ label, itemList, onMove, onClick }: TaskBoar
   }, [drop])
 
   return (
-    <div ref={dropRef} style={{ padding: '1rem', border: '1px solid black', width: '300px' }}>
-      <StatusBadge status={label} />
+    <div
+      ref={dropRef}
+      style={{
+        padding: '1rem',
+        border: '1px solid black',
+        width: '300px',
+        minHeight: '100vh',
+      }}
+    >
+      <div style={{ margin: '1rem' }}>
+        <StatusBadge status={label} />
+      </div>
       {itemList.map((task) => (
-        <DashboardItem key={task.id} id={task.id} label={task.title} onClick={onClick} />
+        <DashboardItem
+          key={task.id}
+          id={task.id}
+          label={task.title}
+          onClick={onClick}
+        />
       ))}
     </div>
   )
