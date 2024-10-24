@@ -14,9 +14,7 @@ export default function TaskCreate() {
   const { statusList } = useTaskStatusList()
   const { isModalOpen, openModal, closeModal } = useModal()
   const { token } = useAuth()
-  const defaultStatus = statusList
-    ? (Object.keys(statusList)[0] as TaskStatusType)
-    : undefined
+  const defaultStatus = statusList ? Object.keys(statusList)[0] : undefined
   const useFormReturn = useForm<TaskFormType>({
     defaultValues: {
       title: '',
@@ -53,6 +51,7 @@ export default function TaskCreate() {
       <TaskForm
         useForm={useFormReturn}
         onSubmit={onSubmit}
+        statusList={statusList}
         formError={message}
       />
 

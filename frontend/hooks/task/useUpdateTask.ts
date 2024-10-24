@@ -8,10 +8,11 @@ export const useUpdateTask = () => {
   const updateTask = async (task: TaskFormType, token: string) => {
     try {
       await TaskService.updateTask(task, token)
-      setMessage('success')
+      setMessage(null)
+      return { success: true }
     } catch (error) {
-      console.error('Error updating task:', error)
-      setMessage('failed')
+      setMessage('update_failed')
+      return { success: false }
     }
   }
 

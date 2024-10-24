@@ -1,6 +1,6 @@
 import UserCreate from '../../features/user/UserCreate'
 import { useTranslation } from 'react-i18next'
-import { Col, Typography } from 'antd'
+import { Col } from 'antd'
 import { Loading } from '../../components/Loading'
 import ErrorScreen from '../../components/ErrorScreen'
 import { useAuth } from '../../context/AuthContext'

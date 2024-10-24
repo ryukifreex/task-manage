@@ -9,6 +9,7 @@ import { useModal } from '../../hooks/useModal'
 import { useRouter } from 'next/router'
 import { Button, Modal, Typography } from 'antd'
 import { useAuth } from '../../context/AuthContext'
+import { useTaskStatusList } from '../../context/TaskStatusContext'
 
 export type TaskUpdateFormProps = {
   task: TaskType
@@ -18,7 +19,9 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
   const { t } = useTranslation()
   const { isModalOpen, openModal, closeModal } = useModal()
   const { token } = useAuth()
-  const { updateTask } = useUpdateTask()
+  const { statusList } = useTaskStatusList()
+
+  const { updateTask, message } = useUpdateTask()
   const router = useRouter()
 
   const useFormReturn = useForm<TaskFormType>({
@@ -33,7 +36,7 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
   })
   const { setError, reset } = useFormReturn
 
-  const onSubmit: SubmitHandler<TaskFormType> = (formData) => {
+  const onSubmit: SubmitHandler<TaskFormType> = async (formData) => {
     if (!formData.title.trim()) {
       setError('title', {
         type: 'manual',
@@ -41,24 +44,20 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
       })
       return
     }
-    try {
-      updateTask(
-        {
-          id: task.id,
-          title: formData.title,
-          description: formData.description,
-          status: formData.status,
-          assignee: formData.assignee,
-          start_date: formData.start_date,
-          end_date: formData.end_date,
-        },
-        token
-      )
+    const result = await updateTask(
+      {
+        id: task.id,
+        title: formData.title,
+        description: formData.description,
+        status: formData.status,
+        assignee: formData.assignee,
+        start_date: formData.start_date,
+        end_date: formData.end_date,
+      },
+      token
+    )
+    if (result.success) {
       openModal()
-    } catch (error) {
-      // TODO:エラーハドリング成功時のみモーダル開いて
-      console.log({ error })
-      return
     }
   }
 
@@ -95,7 +94,12 @@ export default function TaskUpdate({ task }: TaskUpdateFormProps) {
       >
         <Typography.Text>{t('form.success.update')}</Typography.Text>
       </Modal>
-      <TaskForm useForm={useFormReturn} onSubmit={onSubmit} />
+      <TaskForm
+        useForm={useFormReturn}
+        onSubmit={onSubmit}
+        statusList={statusList}
+        formError={message}
+      />
     </>
   )
 }

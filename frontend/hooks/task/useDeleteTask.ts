@@ -7,9 +7,11 @@ export const useDeleteTask = () => {
   const deleteTask = async (id: number, token) => {
     try {
       await TaskService.deleteTask(id, token)
-      setMessage('success')
+      setMessage(null)
+      return { success: true }
     } catch (error: any) {
-      setMessage('failed')
+      setMessage('delete_failed')
+      return { success: false }
     }
   }
 

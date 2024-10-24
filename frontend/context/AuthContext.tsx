@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setIsAuthenticated(data.is_active)
           setUser(data)
         }
+      } else {
+        logout()
       }
     }
     token ? getData() : logout()

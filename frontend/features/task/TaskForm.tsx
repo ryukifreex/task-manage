@@ -11,8 +11,7 @@ import {
 } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { SubmitHandler, UseFormReturn, Controller } from 'react-hook-form'
-import { TaskFormType } from '../../types/task'
-import { useTaskStatusList } from '../../context/TaskStatusContext'
+import { TaskFormType, TaskStatusListType } from '../../types/task'
 import { useGetUserList } from '../../hooks/user/useGetUserList'
 import { useAuth } from '../../context/AuthContext'
 import dayjs from 'dayjs'
@@ -20,12 +19,14 @@ import dayjs from 'dayjs'
 export type TaskFormProps = {
   useForm: UseFormReturn<TaskFormType>
   onSubmit: SubmitHandler<TaskFormType>
+  statusList: TaskStatusListType
   formError?: string
 }
 
 export default function TaskForm({
   useForm,
   onSubmit,
+  statusList,
   formError,
 }: TaskFormProps) {
   const { t, ready } = useTranslation()
@@ -36,7 +37,6 @@ export default function TaskForm({
     formState: { errors },
   } = useForm
 
-  const { statusList } = useTaskStatusList()
   const { data: userList, error, mutate } = useGetUserList(token)
 
   return (

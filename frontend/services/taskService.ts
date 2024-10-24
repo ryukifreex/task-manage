@@ -32,9 +32,10 @@ export class TaskService {
           Authorization: `Bearer ${token}`,
         },
       })
+      console.log({ response })
       return response.data
     } catch (error) {
-      throw new Error(error?.response)
+      throw new Error(error.response)
     }
   }
 
