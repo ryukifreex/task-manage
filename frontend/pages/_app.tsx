@@ -38,8 +38,15 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 export const theme: ThemeConfig = {
   token: {
+    // TODO:色設定の見直し
     fontSize: 16,
-    colorPrimary: '#52c41a',
+    colorPrimary: '#1890ff',
+    colorSuccess: '#52c41a', // アクセントカラー
+    colorBgBase: '#f0f5f5', // 背景色
+    colorTextBase: '#333333', // テキスト色
+    colorWarning: '#faad14', // 警告の色
+    colorError: '#ff4d4f', // エラーの色
+    colorInfo: '#13c2c2', // 情報の色
   },
 }
 export default appWithTranslation(MyApp)

@@ -53,5 +53,11 @@ export default function TaskListTable({
     update: toLocalDateTime(task.updated_at),
   }))
 
-  return <Table columns={columns} dataSource={dataSource} />
+  return (
+    <Table
+      columns={columns}
+      dataSource={dataSource}
+      scroll={{ x: 'max-content' }}
+    />
+  )
 }

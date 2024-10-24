@@ -28,7 +28,11 @@ export default function BoardItem({ id, label, onClick }: BoardCardProps) {
 
   return (
     <div ref={cardRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <Card onClick={() => onClick(id)} hoverable>
+      <Card
+        onClick={() => onClick(id)}
+        style={{ marginBlock: '5px', backgroundColor: '#f0f5f5' }}
+        hoverable
+      >
         {label}
       </Card>
     </div>

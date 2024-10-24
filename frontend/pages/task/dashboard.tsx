@@ -7,7 +7,7 @@ import { useTaskStatusList } from '../../context/TaskStatusContext'
 import { useUpdateTask } from '../../hooks/task/useUpdateTask'
 import TaskDetail from '../../features/task/TaskDetail'
 import { useModal } from '../../hooks/useModal'
-import { Button, Flex, Modal, Row, Typography } from 'antd'
+import { Flex, Modal } from 'antd'
 import { Loading } from '../../components/Loading'
 import { useAuth } from '../../context/AuthContext'
 
@@ -40,7 +40,7 @@ export default function TaskDashboard() {
 
   // タスクをクリックした時
   const onClick = (taskId: number) => {
-    setTaskDetail(taskList.find((task) => task.id === taskId))
+    setTaskDetail(taskList.find((task: TaskType) => task.id === taskId))
     // 詳細画面をモーダル表示
     openModal()
   }
@@ -49,6 +49,7 @@ export default function TaskDashboard() {
 
   if (!data || !taskList) return <Loading />
 
+  // TODO：レスポンシブ対応
   return (
     <>
       <Flex justify="space-evenly">
@@ -73,7 +74,6 @@ export default function TaskDashboard() {
           footer={null}
           closeIcon={null}
         >
-          <Typography.Title>{taskDetail.title}</Typography.Title>
           <TaskDetail task={taskDetail} />
         </Modal>
       )}

@@ -68,6 +68,7 @@ export default function UserListTable({
         dataSource={dataSource}
         columns={columns}
         pagination={false}
+        scroll={{ x: 'max-content' }}
         rowKey="key"
       />
     </>

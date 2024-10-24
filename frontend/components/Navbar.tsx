@@ -22,7 +22,7 @@ export default function Navbar() {
   return (
     // <div style={{ padding: '16px', borderBottom: '1px solid #d9d9d9' }}>
     <>
-      <Flex justify={'flex-end'}>
+      {/* <Flex justify={'flex-end'}>
         <Space size={'large'}>
           {isAuthenticated && (
             <Button onClick={logout} type="primary">
@@ -31,25 +31,41 @@ export default function Navbar() {
           )}
           <LanguageSwitch />
         </Space>
-      </Flex>
+      </Flex> */}
       {isAuthenticated && (
-        <Tabs
-          activeKey={pathname}
-          tabPosition="top"
-          style={{ marginTop: '16px' }}
-          centered
-        >
-          {tabs.map((tab) => (
-            <Tabs.TabPane
-              tab={
-                <Link href={tab.link} style={{ color: 'inherit' }}>
-                  {tab.title}
-                </Link>
-              }
-              key={tab.link}
-            />
-          ))}
-        </Tabs>
+        <>
+          <Flex
+            id="navbarflex"
+            justify={'space-between'}
+            style={{ marginInline: '20px' }}
+          >
+            <div>
+              <Tabs
+                activeKey={pathname}
+                tabPosition="top"
+                style={{ marginTop: '16px' }}
+                centered
+              >
+                {tabs.map((tab) => (
+                  <Tabs.TabPane
+                    tab={
+                      <Link href={tab.link} style={{ color: 'inherit' }}>
+                        {tab.title}
+                      </Link>
+                    }
+                    key={tab.link}
+                  />
+                ))}
+              </Tabs>
+            </div>
+            <Space align="center" size={'large'}>
+              <Button onClick={logout} type="primary">
+                {t('menu.user.logout')}
+              </Button>
+              <LanguageSwitch />
+            </Space>
+          </Flex>
+        </>
       )}
     </>
   )

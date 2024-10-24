@@ -32,7 +32,9 @@ export default function LanguageSwitch() {
 
   return (
     <Dropdown menu={{ items }} placement="bottomRight" arrow>
-      <Button icon={<AiOutlineGlobal size={'40'} />} />
+      <a style={{ textDecoration: 'none', color: 'black' }}>
+        <AiOutlineGlobal size={'40'} />
+      </a>
     </Dropdown>
   )
 }

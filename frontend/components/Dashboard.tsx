@@ -36,22 +36,31 @@ export default function DashBoard({
       ref={dropRef}
       style={{
         padding: '1rem',
-        border: '1px solid black',
+        backgroundColor: '#F8F9FA',
         width: '300px',
-        minHeight: '100vh',
+        maxHeight: '80vh',
+        borderRadius: '30px',
       }}
     >
       <div style={{ margin: '1rem' }}>
         <StatusBadge status={label} />
       </div>
-      {itemList.map((task) => (
-        <DashboardItem
-          key={task.id}
-          id={task.id}
-          label={task.title}
-          onClick={onClick}
-        />
-      ))}
+      <div
+        style={{
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          maxHeight: '70vh',
+        }}
+      >
+        {itemList.map((task) => (
+          <DashboardItem
+            key={task.id}
+            id={task.id}
+            label={task.title}
+            onClick={onClick}
+          />
+        ))}
+      </div>
     </div>
   )
 }

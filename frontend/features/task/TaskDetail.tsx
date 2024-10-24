@@ -13,15 +13,21 @@ export type TaskDetailProps = {
 
 export default function TaskDetail({ task }: TaskDetailProps) {
   const { t } = useTranslation()
-  const { deleteTask } = useDeleteTask()
+  const { deleteTask, message } = useDeleteTask()
   const { token } = useAuth()
   const { isModalOpen, openModal, closeModal } = useModal()
   const [deleted, setDeleted] = useState(false)
+  const [resultMessage, setResultMessage] = useState(message)
   const router = useRouter()
 
-  const handleDelete = () => {
-    deleteTask(task.id, token)
-    setDeleted(true)
+  const handleDelete = async () => {
+    const result = await deleteTask(task.id, token)
+    if (result.success) {
+      setDeleted(true)
+      setResultMessage(t('form.success.delete'))
+    } else {
+      setResultMessage(t(`form.validation.${message}`))
+    }
   }
 
   // TODO:レイアウト
@@ -41,7 +47,7 @@ export default function TaskDetail({ task }: TaskDetailProps) {
           </Button>
         </Flex>
       )}
-      {/* 削除関連モーダル */}
+      {/* 削除モーダル */}
       <Modal
         open={isModalOpen}
         onCancel={() => {
@@ -49,11 +55,12 @@ export default function TaskDetail({ task }: TaskDetailProps) {
         }}
         centered
         closeIcon={null}
+        footer={null}
       >
         {deleted ? (
           // 削除後の表示
           <>
-            <Typography.Text>{t('form.success.delete')}</Typography.Text>
+            <Typography.Text>{resultMessage}</Typography.Text>
             <Flex justify={'center'}>
               <Button
                 onClick={() => {

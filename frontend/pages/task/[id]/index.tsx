@@ -24,7 +24,7 @@ export default function Detail() {
 
   if (!data) return <Loading />
   return (
-    <Col style={{ padding: '2rem' }}>
+    <Col style={{ paddingInline: '10vw' }}>
       <Typography.Title>{data.title}</Typography.Title>
       <StatusBadge status={data.status} />
       <TaskDetail task={data} />
