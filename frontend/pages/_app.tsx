@@ -1,4 +1,5 @@
 import { AppProps } from 'next/app'
+import Head from 'next/head'
 import { appWithTranslation } from 'next-i18next'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Navbar from '../components/Navbar'
@@ -22,6 +23,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <AuthProvider>
               <LanguageProvider>
                 <TaskStatusProvider>
+                  <Head>
+                    <title>Task Manage</title>
+                  </Head>
                   <Navbar />
                   <DndProvider backend={HTML5Backend}>
                     <Component {...pageProps} />

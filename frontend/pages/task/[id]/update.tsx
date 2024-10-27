@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
 import TaskUpdate from '../../../features/task/TaskUpdate'
 import TaskError from '../../../features/task/TaskError'
-import { Col, Typography } from 'antd'
+import { Col, Row, Typography } from 'antd'
 import { Loading } from '../../../components/Loading'
 import { useAuth } from '../../../context/AuthContext'
 
@@ -22,9 +22,11 @@ export default function Edit() {
   }
   if (!data) return <Loading />
   return (
-    <Col style={{ padding: '2rem' }}>
-      <Typography.Title>{t('menu.task.edit')}</Typography.Title>
-      <TaskUpdate task={data} />
-    </Col>
+    <Row justify="center" align="middle">
+      <Col style={{ marginInline: '10vw' }}>
+        <Typography.Title level={2}>{t('menu.task.edit')}</Typography.Title>
+        <TaskUpdate task={data} />
+      </Col>
+    </Row>
   )
 }

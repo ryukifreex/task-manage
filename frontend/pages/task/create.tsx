@@ -1,6 +1,6 @@
 import TaskCreate from '../../features/task/TaskCreate'
 import { useTranslation } from 'react-i18next'
-import { Col, Typography } from 'antd'
+import { Col, Row, Typography } from 'antd'
 import { Loading } from '../../components/Loading'
 import { useAuth } from '../../context/AuthContext'
 
@@ -12,8 +12,11 @@ export default function Create() {
   if (!isAuthenticated) return <Loading />
 
   return (
-    <Col style={{ padding: '2rem' }}>
-      <TaskCreate />
-    </Col>
+    <Row justify="center" align="middle">
+      <Col style={{ marginInline: '10vw' }}>
+        <Typography.Title level={2}>{t('menu.task.add')}</Typography.Title>
+        <TaskCreate />
+      </Col>
+    </Row>
   )
 }

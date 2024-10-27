@@ -25,7 +25,7 @@
     "task": {
       "list": "Task list",
       "dashboard": "Dashboard",
-      "add": "Task add",
+      "add": "Add task",
       "edit": "Task edit",
       "create": "Task create",
       "chart": "Gantt chart"
@@ -40,7 +40,7 @@
     "detail": "Detail",
     "update": "Update",
     "delete": "Delete",
-    "cancel": "cancel",
+    "cancel": "Cancel",
     "submit": "Submit",
     "register": "Register",
     "validation": {
@@ -73,15 +73,15 @@
       "description": "DESCRIPTION",
       "status": "STATUS",
       "edit": "EDIT",
-      "create": "CREATE",
-      "update": "UPDATE",
+      "create": "CREATED",
+      "update": "UPDATED",
       "detail": "DETAIL",
       "start_date": "START",
       "end_date": "END",
       "assignee": "ASSIGNEE"
     },
     "date_format": "MMM/DD/YYYY",
-    "add": "Add Task",
+    "add": "Add",
     "error": {
       "status": "Error retrieving status label",
       "get": "Error retrieving tasks"
@@ -97,7 +97,7 @@
   },
   "user": {
     "label": {
-      "name": "name",
+      "name": "Name",
       "email": "Email",
       "password": "Password",
       "login": "Login",
@@ -107,11 +107,11 @@
       "first_name": "First name",
       "last_name": "Last name",
       "active": "Active",
-      "admin": "Admin Permission",
+      "admin": "Admin permission",
       "create": "New"
     },
     "message": {
-      "success": "success!",
+      "success": "Success!",
       "activate_success": "Account activated successfully.",
       "register_success": "Registration successful. ",
       "email_sent": "Email sent! Please check your email to activate your account.",

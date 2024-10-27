@@ -1,6 +1,6 @@
 import UserCreate from '../../features/user/UserCreate'
 import { useTranslation } from 'react-i18next'
-import { Col } from 'antd'
+import { Col, Row, Typography } from 'antd'
 import { Loading } from '../../components/Loading'
 import ErrorScreen from '../../components/ErrorScreen'
 import { useAuth } from '../../context/AuthContext'
@@ -14,8 +14,11 @@ export default function Create() {
   if (!user.is_admin) return <ErrorScreen error={404} />
 
   return (
-    <Col style={{ padding: '2rem' }}>
-      <UserCreate />
-    </Col>
+    <Row justify="center" align="middle">
+      <Col style={{ marginInline: '10vw' }}>
+        <Typography.Title level={2}>{t('user.label.new')} </Typography.Title>
+        <UserCreate />
+      </Col>
+    </Row>
   )
 }

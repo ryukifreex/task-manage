@@ -1,28 +1,18 @@
-import { useEffect } from 'react'
 import { UserType } from '../../types/user'
 import { useTranslation } from 'react-i18next'
-import { Button, Checkbox, Col, Row, Table } from 'antd'
-import Link from 'next/link'
+import { Checkbox, Table } from 'antd'
 
 type UserListTableProps = {
   userList: UserType[]
   isAdmin?: boolean
 }
 
-export default function UserListTable({
-  userList,
-  isAdmin,
-}: UserListTableProps) {
+export default function UserListTable({ userList }: UserListTableProps) {
   const { t } = useTranslation()
 
   // テーブルヘッダー
   const columns = [
     { title: t('user.label.email'), dataIndex: 'email', key: 'email' },
-    {
-      title: t('user.label.organization'),
-      dataIndex: 'organization',
-      key: 'organization',
-    },
     { title: t('user.label.username'), dataIndex: 'username', key: 'username' },
     {
       title: t('user.label.first_name'),
@@ -54,7 +44,6 @@ export default function UserListTable({
     Object.values(userList).map((user: UserType) => ({
       key: user.id,
       email: user.email,
-      organization: user.organization.name,
       username: user.username,
       first_name: user.first_name,
       last_name: user.last_name,

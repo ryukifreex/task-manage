@@ -1,4 +1,4 @@
-import { Button, Dropdown, MenuProps, Space } from 'antd'
+import { Button, Dropdown, MenuProps, Space, theme } from 'antd'
 import { AiOutlineGlobal } from 'react-icons/ai'
 import { useRouter } from 'next/router'
 import i18n from '../i18n'
@@ -10,6 +10,7 @@ export default function LanguageSwitch() {
     { value: 'ja', label: '日本語' },
     { value: 'en', label: 'English' },
   ]
+  const { token } = theme.useToken()
 
   const handleSelect = (selectedLanguage) => {
     i18n.changeLanguage(selectedLanguage)
@@ -19,7 +20,8 @@ export default function LanguageSwitch() {
     key: language.value,
     label: (
       <Button
-        type="text"
+        type="link"
+        style={{ color: token.colorTextBase }}
         onClick={() => {
           handleSelect(language.value)
           router.push({ pathname, query }, asPath, { locale: language.value })
@@ -32,7 +34,7 @@ export default function LanguageSwitch() {
 
   return (
     <Dropdown menu={{ items }} placement="bottomRight" arrow>
-      <a style={{ textDecoration: 'none', color: 'black' }}>
+      <a style={{ textDecoration: 'none', color: token.colorTextBase }}>
         <AiOutlineGlobal size={'40'} />
       </a>
     </Dropdown>

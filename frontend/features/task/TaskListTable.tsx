@@ -5,6 +5,7 @@ import StatusBadge from '../../components/StatusBadge'
 import { useConvertToLocal } from '../../hooks/useConvertToLocalTime'
 import { UserType } from '../../types/user'
 import { Button, Table, TableColumnsType, Typography } from 'antd'
+import { useFindUser } from '../../hooks/user/useFindUser'
 
 export type TaskListTableProps = {
   taskList: TaskType[]
@@ -18,13 +19,14 @@ export default function TaskListTable({
   const { t } = useTranslation()
   const router = useRouter()
   const { toLocalDate, toLocalDateTime } = useConvertToLocal()
+  const { labelName } = useFindUser()
 
-  const labelName = (id: string) => {
-    const user = userList && userList.find((user) => user.id === id)
-    return user ? user.username : ''
-  }
   const columns: TableColumnsType = [
-    { title: t('task.label.create'), dataIndex: 'create' },
+    {
+      title: t('task.label.create'),
+      dataIndex: 'create',
+      sorter: (a, b) => a.create - b.create,
+    },
     { title: t('task.label.title'), dataIndex: 'title' },
     { title: t('task.label.status'), dataIndex: 'status' },
     { title: t('task.label.assignee'), dataIndex: 'assignee' },
@@ -42,7 +44,7 @@ export default function TaskListTable({
     ),
     create: toLocalDateTime(task.created_at),
     status: <StatusBadge status={task.status} />,
-    assignee: task.assignee ? labelName(task.assignee) : '',
+    assignee: task.assignee ? labelName(userList, task.assignee) : '',
     start_date: task.start_date ? toLocalDate(task.start_date) : '',
     end_date: task.end_date ? toLocalDate(task.end_date) : '',
     detail: (

@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "タスク管理app",
+    "name": "Task Manage",
     "back_home": "ホームへ戻る",
     "back_login": "ログインへ戻る",
     "error": {
@@ -70,7 +70,7 @@
   "task": {
     "label": {
       "title": "件名",
-      "description": "本文",
+      "description": "内容",
       "status": "ステータス",
       "edit": "編集",
       "detail": "詳細",
@@ -81,7 +81,7 @@
       "assignee": "担当者"
     },
     "date_format": "YYYY-MM-DD",
-    "add": "タスクを追加",
+    "add": "追加",
     "error": {
       "status": "ステータス取得エラー",
       "get": "タスク取得エラー"

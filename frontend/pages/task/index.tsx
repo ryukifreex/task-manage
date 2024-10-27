@@ -27,9 +27,9 @@ export default function Task() {
   if (error || userError) return <Loading />
 
   return (
-    <Col style={{ marginInline: '1rem' }}>
+    <Col style={{ marginInline: '5vw' }}>
       <Row justify={'end'}>
-        <Col style={{ padding: '2rem' }}>
+        <Col style={{ padding: '1rem' }}>
           <Button type="primary" onClick={() => openModal()}>
             {t('task.add')}
           </Button>
@@ -49,6 +49,7 @@ export default function Task() {
         }}
         closeIcon={null}
         footer={null}
+        style={{ minWidth: '70vw' }}
       >
         <TaskCreate />
       </Modal>

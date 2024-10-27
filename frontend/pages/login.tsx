@@ -23,7 +23,7 @@ export default function Login() {
     <Row justify="center" align="middle">
       <Col xs={24} sm={12} md={8}>
         <Row justify="center" align="middle">
-          <Typography.Title>{t('app.name')}</Typography.Title>
+          <Typography.Title level={1}>{t('app.name')}</Typography.Title>
         </Row>
         <LoginForm onSubmit={onSubmit} />
       </Col>

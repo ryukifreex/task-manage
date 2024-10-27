@@ -1,14 +1,14 @@
-import { Row, Tag } from 'antd'
+import { Tag } from 'antd'
 import { TaskStatusType } from '../types/task'
-import { useMemo } from 'react'
+import { CSSProperties, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export type StatusBadgeProps = {
   status: TaskStatusType
-  size?: string
+  style?: CSSProperties
 }
 
-export default function StatusBadge({ status }: StatusBadgeProps) {
+export default function StatusBadge({ status, style }: StatusBadgeProps) {
   const { t } = useTranslation()
   const statusColors = useMemo(
     () => ({
@@ -24,8 +24,8 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
   const color = statusColors[status]
 
   return (
-    <Row style={{ width: '100%' }} justify={'center'}>
-      <Tag color={color}>{t(`task.status.${status}`)}</Tag>
-    </Row>
+    <Tag style={style} color={color}>
+      {t(`task.status.${status}`)}
+    </Tag>
   )
 }

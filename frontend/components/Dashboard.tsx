@@ -3,6 +3,7 @@ import { useDrop } from 'react-dnd'
 import DashboardItem from './DashboardItem'
 import { TaskStatusType, TaskType } from '../types/task'
 import StatusBadge from './StatusBadge'
+import { Row, theme } from 'antd'
 
 export type TaskBoardProps = {
   label: TaskStatusType
@@ -18,6 +19,7 @@ export default function DashBoard({
   onClick,
 }: TaskBoardProps) {
   const dropRef = useRef()
+  const { token } = theme.useToken()
 
   // ドロップ処理
   const [, drop] = useDrop({
@@ -36,15 +38,15 @@ export default function DashBoard({
       ref={dropRef}
       style={{
         padding: '1rem',
-        backgroundColor: '#F8F9FA',
+        backgroundColor: token.colorBgBase,
         width: '300px',
         maxHeight: '80vh',
         borderRadius: '30px',
       }}
     >
-      <div style={{ margin: '1rem' }}>
+      <Row style={{ margin: '1rem', width: '100%' }} justify={'center'}>
         <StatusBadge status={label} />
-      </div>
+      </Row>
       <div
         style={{
           overflowY: 'auto',

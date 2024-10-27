@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Dashboard from '../../components/Dashboard'
 import { useGetTaskList } from '../../hooks/task/useGetTaskList'
-import { useTranslation } from 'react-i18next'
 import { TaskStatusType, TaskType } from '../../types/task'
 import { useTaskStatusList } from '../../context/TaskStatusContext'
 import { useUpdateTask } from '../../hooks/task/useUpdateTask'
@@ -10,11 +9,12 @@ import { useModal } from '../../hooks/useModal'
 import { Flex, Modal } from 'antd'
 import { Loading } from '../../components/Loading'
 import { useAuth } from '../../context/AuthContext'
+import { useGetUserList } from '../../hooks/user/useGetUserList'
 
 export default function TaskDashboard() {
-  const { t } = useTranslation()
   const { token } = useAuth()
   const { data, mutate } = useGetTaskList(token)
+  const { data: userList } = useGetUserList(token)
   const { statusList } = useTaskStatusList()
   const { updateTask } = useUpdateTask()
   const [taskList, setTaskList] = useState<TaskType[] | []>(data)
@@ -49,9 +49,8 @@ export default function TaskDashboard() {
 
   if (!data || !taskList) return <Loading />
 
-  // TODO：レスポンシブ対応
   return (
-    <>
+    <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}>
       <Flex justify="space-evenly">
         {statusList &&
           Object.keys(statusList).map((status: TaskStatusType) => (
@@ -67,16 +66,17 @@ export default function TaskDashboard() {
           ))}
       </Flex>
       {/* タスク詳細モーダル */}
-      {taskDetail && (
+      {taskDetail && userList && (
         <Modal
           open={isModalOpen}
           onCancel={() => closeModal()}
           footer={null}
           closeIcon={null}
+          style={{ minWidth: '70vw' }}
         >
-          <TaskDetail task={taskDetail} />
+          <TaskDetail task={taskDetail} userList={userList} />
         </Modal>
       )}
-    </>
+    </div>
   )
 }
