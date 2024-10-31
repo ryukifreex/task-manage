@@ -17,7 +17,7 @@ export default function Create() {
     <Row justify="center" align="middle">
       <Col style={{ marginInline: '10vw' }}>
         <Typography.Title level={2}>{t('user.label.new')} </Typography.Title>
-        <UserCreate />
+        <UserCreate isAdmin={true} />
       </Col>
     </Row>
   )

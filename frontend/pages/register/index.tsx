@@ -1,12 +1,13 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { Button, Modal } from 'antd'
+import { Button, Col, Modal, Row, Typography } from 'antd'
 import UserForm from '../../features/user/UserForm'
 import { UserFormType } from '../../types/user'
 import EmailSent from '../../features/user/EmailSent'
 import Link from 'next/link'
 import { useModal } from '../../hooks/useModal'
 import { useCreateUser } from '../../hooks/user/useCreateUser'
+import UserCreate from '../../features/user/UserCreate'
 
 export default function UserRegister() {
   const useFormReturn = useForm<UserFormType>({
@@ -32,8 +33,8 @@ export default function UserRegister() {
   }
 
   return (
-    <>
-      <Modal
+    <Row justify="center" align="middle">
+      {/* <Modal
         open={isModalOpen}
         onCancel={() => {
           closeModal()
@@ -46,12 +47,17 @@ export default function UserRegister() {
         }
       >
         <EmailSent />
-      </Modal>
-      <UserForm
-        useForm={useFormReturn}
-        onSubmit={onSubmit}
-        formError={message}
-      />
-    </>
+      </Modal> */}
+      <Col style={{ marginInline: '10vw' }}>
+        <Typography.Title level={2}>{t('user.label.new')} </Typography.Title>
+        <UserCreate isAdmin={false} />
+      </Col>
+
+      {/* // <UserForm
+      //   useForm={useFormReturn}
+      //   onSubmit={onSubmit}
+      //   formError={message}
+      // /> */}
+    </Row>
   )
 }

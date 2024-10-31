@@ -20,39 +20,41 @@ export default function Navbar() {
   ]
 
   return (
-    <Flex
-      justify={'space-between'}
-      align={'center'}
-      gap={'middle'}
-      style={{ marginInline: '20px', flexWrap: 'nowrap' }}
-    >
-      {isAuthenticated && (
-        <>
-          <div style={{ flexGrow: 1 }}>
-            <Tabs
-              activeKey={pathname}
-              tabPosition="top"
-              style={{ marginTop: '16px' }}
-              centered
-            >
-              {tabs.map((tab) => (
-                <Tabs.TabPane
-                  tab={
-                    <Link href={tab.link} style={{ color: 'inherit' }}>
-                      {tab.title}
-                    </Link>
-                  }
-                  key={tab.link}
-                />
-              ))}
-            </Tabs>
-          </div>
-          <Button onClick={logout} type="primary">
-            {t('menu.user.logout')}
-          </Button>
-        </>
-      )}
-      <LanguageSwitch />
-    </Flex>
+    <>
+      <Flex
+        justify={isAuthenticated ? 'space-between' : 'end'}
+        align={'center'}
+        gap={'middle'}
+        style={{ marginInline: '20px', flexWrap: 'nowrap' }}
+      >
+        {isAuthenticated && (
+          <>
+            <div style={{ flexGrow: 1 }}>
+              <Tabs
+                activeKey={pathname}
+                tabPosition="top"
+                style={{ marginTop: '16px' }}
+                centered
+              >
+                {tabs.map((tab) => (
+                  <Tabs.TabPane
+                    tab={
+                      <Link href={tab.link} style={{ color: 'inherit' }}>
+                        {tab.title}
+                      </Link>
+                    }
+                    key={tab.link}
+                  />
+                ))}
+              </Tabs>
+            </div>
+            <Button onClick={logout} type="primary">
+              {t('menu.user.logout')}
+            </Button>
+          </>
+        )}
+        <LanguageSwitch />
+      </Flex>
+    </>
   )
 }

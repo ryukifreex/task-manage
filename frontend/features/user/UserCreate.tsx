@@ -8,7 +8,11 @@ import { useCreateUser } from '../../hooks/user/useCreateUser'
 import { useAuth } from '../../context/AuthContext'
 import EmailSent from './EmailSent'
 
-export default function UserCreate() {
+type UserCreateType = {
+  isAdmin?: boolean
+}
+
+export default function UserCreate({ isAdmin = false }: UserCreateType) {
   const { t } = useTranslation()
   const { token } = useAuth()
   const { createUser, message } = useCreateUser()
@@ -36,7 +40,7 @@ export default function UserCreate() {
       <UserForm
         useForm={useFormReturn}
         onSubmit={onSubmit}
-        isAdmin={true}
+        isAdmin={isAdmin}
         formError={message}
       />
 
