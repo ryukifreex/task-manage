@@ -1,8 +1,6 @@
 import { AppProps } from 'next/app'
-import Head from 'next/head'
 import { appWithTranslation } from 'next-i18next'
 import ErrorBoundary from '../components/ErrorBoundary'
-import Navbar from '../components/Navbar'
 import { I18nextProvider } from 'react-i18next'
 import i18n from '../i18n'
 import { DndProvider } from 'react-dnd'
@@ -13,6 +11,7 @@ import { AuthProvider } from '../context/AuthContext'
 import { ConfigProvider, ThemeConfig } from 'antd'
 import { Suspense } from 'react'
 import { Loading } from '../components/Loading'
+import AppLayout from '../components/Layout'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -23,13 +22,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             <AuthProvider>
               <LanguageProvider>
                 <TaskStatusProvider>
-                  <Head>
-                    <title>Task Manage</title>
-                  </Head>
-                  <Navbar />
-                  <DndProvider backend={HTML5Backend}>
-                    <Component {...pageProps} />
-                  </DndProvider>
+                  <AppLayout>
+                    <DndProvider backend={HTML5Backend}>
+                      <Component {...pageProps} />
+                    </DndProvider>
+                  </AppLayout>
                 </TaskStatusProvider>
               </LanguageProvider>
             </AuthProvider>
@@ -46,7 +43,7 @@ export const theme: ThemeConfig = {
     fontSize: 16,
     colorPrimary: '#1890ff',
     colorSuccess: '#52c41a', // アクセントカラー
-    colorBgBase: '#f0f5f5', // 背景色
+    colorBgBase: '#edf6f9', // 背景色
     colorTextBase: '#333333', // テキスト色
     colorWarning: '#faad14', // 警告の色
     colorError: '#ff4d4f', // エラーの色

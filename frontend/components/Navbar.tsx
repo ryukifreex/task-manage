@@ -1,4 +1,4 @@
-import { Button, Flex, Space, Tabs } from 'antd'
+import { Button, Flex, Space, Tabs, theme } from 'antd'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitch from './LanguageSwitch'
@@ -10,6 +10,7 @@ export default function Navbar() {
   const { isAuthenticated, logout } = useAuth()
   const router = useRouter()
   const { pathname } = router
+  const { token } = theme.useToken()
 
   const tabs = [
     { title: t('menu.task.list'), link: '/task' },
@@ -25,7 +26,11 @@ export default function Navbar() {
         justify={isAuthenticated ? 'space-between' : 'end'}
         align={'center'}
         gap={'middle'}
-        style={{ marginInline: '20px', flexWrap: 'nowrap' }}
+        style={{
+          paddingInline: '20px',
+          flexWrap: 'nowrap',
+          background: token.colorBgBase,
+        }}
       >
         {isAuthenticated && (
           <>
